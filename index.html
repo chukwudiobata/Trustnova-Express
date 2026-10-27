@@ -1,72 +1,716 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TrustNova Express | Worldwide Delivery</title>
-<style>
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;color:#222;background:#f4f6f8}
-header{background:#c8102e;color:white;padding:22px 16px;text-align:center}
-header h1{margin:0;font-size:28px}
-header p{margin:8px 0 0}
-nav{background:#202b3c;padding:14px;text-align:center}
-nav a{color:white;text-decoration:none;margin:0 12px;font-weight:bold}
-.hero{background:#fff;padding:45px 18px;text-align:center}
-.hero h2{font-size:30px;margin:0 0 12px}
-.hero p{color:#555;line-height:1.6}
-.tracking{max-width:550px;margin:25px auto;background:white;padding:24px;border-radius:10px;box-shadow:0 3px 15px #0001}
-input,button{width:100%;padding:14px;margin-top:12px;border-radius:5px;font-size:16px}
-input{border:1px solid #ccc}
-button{background:#c8102e;color:white;border:0;font-weight:bold;cursor:pointer}
-#result{margin-top:18px;line-height:1.8;overflow-wrap:anywhere}
-.services{padding:28px 16px;text-align:center}
-.cards{display:flex;flex-wrap:wrap;gap:15px;justify-content:center}
-.card{background:white;padding:22px;border-radius:8px;flex:1;min-width:220px;max-width:320px}
-footer{background:#202b3c;color:white;text-align:center;padding:22px;margin-top:25px}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>TrustNova Express | Worldwide Parcel Delivery</title>
+
+  <meta name="description" content="TrustNova Express provides parcel delivery information and customer support for shipments worldwide.">
+
+  <style>
+    :root {
+      --red: #d62828;
+      --dark: #171c24;
+      --light: #f5f7fa;
+      --white: #ffffff;
+      --text: #343a40;
+      --muted: #667085;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--white);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .topbar {
+      background: var(--dark);
+      color: white;
+      text-align: center;
+      padding: 9px 15px;
+      font-size: 13px;
+    }
+
+    header {
+      background: white;
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.07);
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .navbar {
+      max-width: 1150px;
+      margin: auto;
+      padding: 15px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand {
+      color: var(--dark);
+      font-size: 23px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+
+    .brand span {
+      color: var(--red);
+    }
+
+    nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    nav a {
+      color: var(--dark);
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: var(--red);
+    }
+
+    .hero {
+      background:
+        linear-gradient(115deg, rgba(18, 24, 33, 0.96), rgba(37, 45, 58, 0.86));
+      color: white;
+      padding: 95px 22px;
+    }
+
+    .hero-content {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .label {
+      display: inline-block;
+      background: rgba(214, 40, 40, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: white;
+      padding: 7px 13px;
+      border-radius: 30px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 62px);
+      line-height: 1.12;
+      max-width: 760px;
+      margin-bottom: 22px;
+    }
+
+    .hero h1 span {
+      color: #ff6262;
+    }
+
+    .hero p {
+      color: #e0e5ec;
+      max-width: 650px;
+      font-size: 17px;
+      margin-bottom: 30px;
+    }
+
+    .button {
+      display: inline-block;
+      background: var(--red);
+      color: white;
+      padding: 14px 23px;
+      border-radius: 5px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    .button:hover {
+      background: #b91f1f;
+    }
+
+    .button.secondary {
+      background: white;
+      color: var(--dark);
+      margin-left: 10px;
+    }
+
+    .section {
+      padding: 75px 22px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .section-heading {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .section-heading small {
+      color: var(--red);
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    .section-heading h2 {
+      font-size: clamp(27px, 4vw, 38px);
+      color: var(--dark);
+      margin: 8px 0 12px;
+    }
+
+    .section-heading p {
+      max-width: 650px;
+      margin: auto;
+      color: var(--muted);
+    }
+
+    .services {
+      background: var(--light);
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      background: white;
+      padding: 28px 24px;
+      border-radius: 10px;
+      border: 1px solid #e8ebef;
+      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.035);
+    }
+
+    .icon {
+      width: 52px;
+      height: 52px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #fff0f0;
+      border-radius: 10px;
+      font-size: 26px;
+      margin-bottom: 18px;
+    }
+
+    .card h3 {
+      color: var(--dark);
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 25px;
+    }
+
+    .step {
+      text-align: center;
+      padding: 20px;
+    }
+
+    .step-number {
+      width: 48px;
+      height: 48px;
+      background: var(--red);
+      color: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      font-weight: bold;
+      margin: 0 auto 17px;
+    }
+
+    .step h3 {
+      color: var(--dark);
+      margin-bottom: 9px;
+    }
+
+    .step p {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .notice {
+      background: #fff8e8;
+      border: 1px solid #f0dfb0;
+      border-radius: 8px;
+      padding: 18px;
+      color: #70551a;
+      font-size: 14px;
+      margin-top: 28px;
+    }
+
+    .complaints {
+      background: var(--light);
+    }
+
+    .complaint-box {
+      max-width: 720px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+    }
+
+    .complaint-box > p {
+      color: var(--muted);
+      margin-bottom: 22px;
+    }
+
+    .form-row {
+      margin-bottom: 17px;
+    }
+
+    label {
+      display: block;
+      color: var(--dark);
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 7px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px;
+      border: 1px solid #d7dce3;
+      border-radius: 5px;
+      font-family: inherit;
+      font-size: 15px;
+      background: white;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: 2px solid rgba(214, 40, 40, 0.2);
+      border-color: var(--red);
+    }
+
+    textarea {
+      min-height: 130px;
+      resize: vertical;
+    }
+
+    .form-note {
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 12px;
+    }
+
+    .contact-strip {
+      background: var(--dark);
+      color: white;
+      padding: 48px 22px;
+      text-align: center;
+    }
+
+    .contact-strip h2 {
+      font-size: 29px;
+      margin-bottom: 10px;
+    }
+
+    .contact-strip p {
+      color: #d6dbe2;
+      margin-bottom: 18px;
+    }
+
+    .contact-strip a.email {
+      color: white;
+      font-weight: bold;
+      text-decoration: underline;
+      overflow-wrap: anywhere;
+    }
+
+    footer {
+      background: #10141b;
+      color: #b9c0ca;
+      padding: 25px 22px;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    footer strong {
+      color: white;
+    }
+
+    @media (max-width: 750px) {
+      .navbar {
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      nav {
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .hero {
+        padding: 70px 22px;
+      }
+
+      .button.secondary {
+        margin: 12px 0 0;
+      }
+
+      .cards,
+      .steps {
+        grid-template-columns: 1fr;
+      }
+
+      .section {
+        padding: 55px 18px;
+      }
+
+      .complaint-box {
+        padding: 22px 18px;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<header>
-<h1>TrustNova Express</h1>
-<p>Your Parcel. Your Destination. Our Commitment.</p>
-</header>
-<nav>
-<a href="#home">Home</a>
-<a href="#tracking">Track Parcel</a>
-<a href="#services">Our Services</a>
-</nav>
-<section class="hero" id="home">
-<h2>Worldwide Parcel Delivery</h2>
-<p>Welcome to TrustNova Express. Track your registered shipment and check its latest delivery status.</p>
-<div class="tracking" id="tracking">
-<h2>Track Your Parcel</h2>
-<p>Enter the tracking number provided by TrustNova Express.</p>
-<form id="trackForm">
-<input id="trackingNumber" placeholder="Enter tracking number" required>
-<button type="submit">Track Shipment</button>
-</form>
-<div id="result" aria-live="polite"></div>
-</div>
-</section>
-<section class="services" id="services">
-<h2>Our Services</h2>
-<div class="cards">
-<div class="card"><h3>📦 Parcel Delivery</h3><p>Shipment registration and parcel progress updates.</p></div>
-<div class="card"><h3>🌍 International Shipping</h3><p>Support for international shipment tracking.</p></div>
-<div class="card"><h3>🔎 Shipment Tracking</h3><p>Check the latest recorded status of your parcel.</p></div>
-</div>
-</section>
-<footer>
-<p><strong>TrustNova Express</strong></p>
-<p>Your Parcel. Your Destination. Our Commitment.</p>
-<p>Tracking information is available for registered shipments.</p>
-</footer>
-<script>
-document.getElementById('trackForm').addEventListener('submit',function(e){
-e.preventDefault();
-document.getElementById('result').textContent='Tracking database setup is pending. Please check your tracking number with TrustNova Express.';
-});
-</script>
+
+  <div class="topbar">
+    Worldwide parcel delivery information and customer support
+  </div>
+
+  <header>
+    <div class="navbar">
+      <a href="#home" class="brand">
+        TRUSTNOVA <span>EXPRESS</span>
+      </a>
+
+      <nav>
+        <a href="#home">Home</a>
+        <a href="#services">Services</a>
+        <a href="#how-it-works">How It Works</a>
+        <a href="#complaints">Complaints</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <span class="label">YOUR DELIVERY, OUR COMMITMENT</span>
+
+        <h1>
+          Connecting Your World Through
+          <span>Reliable Delivery.</span>
+        </h1>
+
+        <p>
+          Welcome to TrustNova Express. We aim to make parcel delivery
+          simpler with clear communication, shipment updates and
+          responsive customer support.
+        </p>
+
+        <a class="button" href="#services">Explore Our Services</a>
+        <a class="button secondary" href="#complaints">Contact Support</a>
+      </div>
+    </section>
+
+    <section class="section services" id="services">
+      <div class="container">
+        <div class="section-heading">
+          <small>What We Offer</small>
+          <h2>Delivery Services</h2>
+          <p>
+            Explore our intended delivery service categories.
+            Availability, routes, prices and delivery times must be
+            confirmed before a shipment is accepted.
+          </p>
+        </div>
+
+        <div class="cards">
+          <div class="card">
+            <div class="icon">🌍</div>
+            <h3>International Delivery</h3>
+            <p>
+              Support for international parcel delivery enquiries,
+              subject to route availability and applicable requirements.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="icon">📦</div>
+            <h3>Parcel Handling</h3>
+            <p>
+              Shipment registration and parcel handling arrangements
+              can be confirmed directly with our support team.
+            </p>
+          </div>
+
+          <div class="card">
+            <div class="icon">📍</div>
+            <h3>Shipment Updates</h3>
+            <p>
+              Customers can contact our team for assistance with
+              registered shipments and available delivery updates.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="how-it-works">
+      <div class="container">
+        <div class="section-heading">
+          <small>A Simple Process</small>
+          <h2>How It Works</h2>
+          <p>
+            Our planned shipment process is designed to keep customers
+            informed at each stage.
+          </p>
+        </div>
+
+        <div class="steps">
+          <div class="step">
+            <div class="step-number">1</div>
+            <h3>Contact Our Team</h3>
+            <p>
+              Send an enquiry about your parcel, destination and
+              delivery requirements.
+            </p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">2</div>
+            <h3>Confirm Registration</h3>
+            <p>
+              Shipment details and applicable arrangements must be
+              confirmed before registration.
+            </p>
+          </div>
+
+          <div class="step">
+            <div class="step-number">3</div>
+            <h3>Receive Updates</h3>
+            <p>
+              Contact our support team for updates on your registered
+              shipment.
+            </p>
+          </div>
+        </div>
+
+        <div class="notice">
+          <strong>Important:</strong> This website is currently being
+          developed. Online parcel registration, automatic tracking
+          numbers and live shipment tracking are not yet available.
+          Please contact support to enquire about service availability.
+        </div>
+      </div>
+    </section>
+
+    <section class="section complaints" id="complaints">
+      <div class="container">
+        <div class="section-heading">
+          <small>We Are Here to Help</small>
+          <h2>Complaints & Enquiries</h2>
+          <p>
+            Tell us about your enquiry or concern. You can prepare an
+            email using the form below.
+          </p>
+        </div>
+
+        <div class="complaint-box">
+          <p>
+            Complete the form. When you press the button, your email
+            application will open with your message prepared for sending.
+          </p>
+
+          <form id="complaintForm">
+            <div class="form-row">
+              <label for="customerName">Your Full Name</label>
+              <input
+                id="customerName"
+                name="customerName"
+                type="text"
+                maxlength="100"
+                required
+                placeholder="Enter your full name"
+              >
+            </div>
+
+            <div class="form-row">
+              <label for="customerEmail">Your Email Address</label>
+              <input
+                id="customerEmail"
+                name="customerEmail"
+                type="email"
+                maxlength="150"
+                required
+                placeholder="Enter your email address"
+              >
+            </div>
+
+            <div class="form-row">
+              <label for="trackingNumber">
+                Tracking Number (if available)
+              </label>
+              <input
+                id="trackingNumber"
+                name="trackingNumber"
+                type="text"
+                maxlength="100"
+                placeholder="Enter tracking number, if applicable"
+              >
+            </div>
+
+            <div class="form-row">
+              <label for="complaintType">Reason for Contact</label>
+              <select id="complaintType" name="complaintType" required>
+                <option value="">Choose an option</option>
+                <option>Parcel enquiry</option>
+                <option>Delivery delay</option>
+                <option>Shipment status</option>
+                <option>Complaint</option>
+                <option>Other enquiry</option>
+              </select>
+            </div>
+
+            <div class="form-row">
+              <label for="message">Your Message</label>
+              <textarea
+                id="message"
+                name="message"
+                maxlength="4000"
+                required
+                placeholder="Explain your enquiry or complaint..."
+              ></textarea>
+            </div>
+
+            <button class="button" type="submit">
+              Prepare Email
+            </button>
+
+            <p class="form-note">
+              This form does not automatically send or store your
+              complaint. You must send the prepared email from your
+              email application.
+            </p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact-strip" id="contact">
+      <h2>Need Assistance?</h2>
+      <p>
+        Contact TrustNova Express by email for enquiries and support.
+      </p>
+
+      <a
+        class="button"
+        href="mailto:trustnovaexpress@gmail.com"
+      >
+        Email Our Team
+      </a>
+
+      <p style="margin-top: 20px; margin-bottom: 0;">
+        Support email:
+        <a class="email" href="mailto:trustnovaexpress@gmail.com">
+          trustnovaexpress@gmail.com
+        </a>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      &copy; <span id="year"></span>
+      <strong>TrustNova Express</strong>. All rights reserved.
+    </p>
+    <p>Professional service. Clear communication. Responsible delivery.</p>
+  </footer>
+
+  <script>
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
+    document.getElementById("complaintForm").addEventListener(
+      "submit",
+      function (event) {
+        event.preventDefault();
+
+        const name =
+          document.getElementById("customerName").value.trim();
+
+        const email =
+          document.getElementById("customerEmail").value.trim();
+
+        const tracking =
+          document.getElementById("trackingNumber").value.trim();
+
+        const type =
+          document.getElementById("complaintType").value;
+
+        const message =
+          document.getElementById("message").value.trim();
+
+        if (!name || !email || !type || !message) {
+          alert("Please complete all required fields.");
+          return;
+        }
+
+        const subject = encodeURIComponent(
+          "TrustNova Express - " + type
+        );
+
+        const body = encodeURIComponent(
+          "Customer name: " + name + "\n" +
+          "Customer email: " + email + "\n" +
+          "Tracking number: " + (tracking || "Not provided") + "\n" +
+          "Reason: " + type + "\n\n" +
+          "Message:\n" + message
+        );
+
+        window.location.href =
+          "mailto:trustnovaexpress@gmail.com" +
+          "?subject=" + subject +
+          "&body=" + body;
+      }
+    );
+  </script>
+
 </body>
-  </html>
+</html>
