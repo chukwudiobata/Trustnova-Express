@@ -10,68 +10,285 @@
 
 <style>
 :root {
-  --navy:#092b50;
-  --blue:#1769aa;
-  --green:#159447;
-  --light:#eaf5ff;
-  --text:#26374a;
-  --muted:#68788a;
+  --navy: #092b50;
+  --blue: #1769aa;
+  --green: #159447;
+  --light: #eaf5ff;
+  --text: #26374a;
+  --muted: #68788a;
+  --border: #dce8f2;
 }
-* {box-sizing:border-box;margin:0;padding:0}
-body {font-family:Arial,Helvetica,sans-serif;color:var(--text);line-height:1.6}
-a {text-decoration:none}
-.topbar {background:var(--navy);color:white;text-align:center;padding:9px;font-size:13px}
-header {background:white;box-shadow:0 3px 15px #092b5012}
-.navbar {max-width:1100px;margin:auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
-.brand {font-size:23px;font-weight:900;color:var(--navy)}
-.brand span {color:var(--green)}
-nav {display:flex;gap:15px;flex-wrap:wrap}
-nav a {color:var(--navy);font-size:14px;font-weight:bold}
-.hero {background:linear-gradient(125deg,var(--navy),var(--blue));color:white;padding:65px 22px 80px}
-.hero-content,.container {max-width:1100px;margin:auto}
-.hero h1 {font-size:clamp(35px,6vw,58px);line-height:1.15;margin:20px 0}
-.hero h1 span {color:#73e6a0}
-.hero p {max-width:650px;margin-bottom:24px;color:#e4effa}
-.button {display:inline-block;background:var(--green);color:white;border:0;border-radius:6px;padding:12px 18px;font-weight:bold;cursor:pointer}
-.button.blue {background:var(--blue)}
-.section {padding:55px 20px}
-.section-heading {text-align:center;margin-bottom:30px}
-.section-heading small {color:var(--green);font-weight:bold;text-transform:uppercase;letter-spacing:1px}
-.section-heading h2 {color:var(--navy);font-size:clamp(27px,4vw,36px);margin:8px 0}
-.section-heading p {color:var(--muted)}
-.cards {display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.card,.box {background:white;border:1px solid #dce8f2;border-radius:10px;padding:24px;box-shadow:0 5px 20px #092b5008}
-.card h3 {color:var(--navy);margin-bottom:8px}
-.card p {color:var(--muted);font-size:14px}
-.light {background:var(--light)}
-.box {max-width:800px;margin:auto;border-top:5px solid var(--green)}
-label {display:block;font-size:14px;font-weight:bold;color:var(--navy);margin:12px 0 5px}
-input,select,textarea {width:100%;padding:12px;border:1px solid #cad8e5;border-radius:6px;font:inherit;background:white}
-textarea {min-height:90px}
-form .button {margin-top:15px}
-.message {margin-top:14px;font-weight:bold;overflow-wrap:anywhere}
-.muted {font-size:13px;color:var(--muted);margin-top:10px}
-.hidden {display:none!important}
-.grid {display:grid;grid-template-columns:1fr 1fr;gap:12px}
-table {width:100%;border-collapse:collapse;margin-top:20px;font-size:13px}
-th,td {border:1px solid #dce8f2;padding:9px;text-align:left;overflow-wrap:anywhere}
-th {background:var(--light);color:var(--navy)}
-.table-wrap {overflow-x:auto}
-.contact {background:var(--navy);color:white;text-align:center;padding:40px 20px}
-.contact a {color:#8af0ad;text-decoration:underline}
-footer {background:#061b32;color:#c6d6e6;text-align:center;padding:22px;font-size:13px}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  line-height: 1.6;
+  background: #fff;
+}
+a { text-decoration: none; }
+.topbar {
+  background: var(--navy);
+  color: white;
+  text-align: center;
+  padding: 9px;
+  font-size: 13px;
+}
+header {
+  background: white;
+  box-shadow: 0 3px 15px #092b5012;
+}
+.navbar {
+  max-width: 1100px;
+  margin: auto;
+  padding: 16px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+.brand {
+  font-size: 23px;
+  font-weight: 900;
+  color: var(--navy);
+}
+.brand span { color: var(--green); }
+nav {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+nav a {
+  color: var(--navy);
+  font-size: 14px;
+  font-weight: bold;
+}
+.hero {
+  background: linear-gradient(125deg, var(--navy), var(--blue));
+  color: white;
+  padding: 65px 22px 80px;
+}
+.hero-content, .container {
+  max-width: 1100px;
+  margin: auto;
+}
+.hero h1 {
+  font-size: clamp(35px, 6vw, 58px);
+  line-height: 1.15;
+  margin: 20px 0;
+}
+.hero h1 span { color: #73e6a0; }
+.hero p {
+  max-width: 650px;
+  margin-bottom: 24px;
+  color: #e4effa;
+}
+.button {
+  display: inline-block;
+  background: var(--green);
+  color: white;
+  border: 0;
+  border-radius: 6px;
+  padding: 12px 18px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 14px;
+}
+.button.blue { background: var(--blue); }
+.button.red { background: #7b2635; }
+.button:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+.section { padding: 55px 20px; }
+.section-heading {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.section-heading small {
+  color: var(--green);
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.section-heading h2 {
+  color: var(--navy);
+  font-size: clamp(27px, 4vw, 36px);
+  margin: 8px 0;
+}
+.section-heading p { color: var(--muted); }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.card, .box {
+  background: white;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  box-shadow: 0 5px 20px #092b5008;
+}
+.card h3 {
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.card p {
+  color: var(--muted);
+  font-size: 14px;
+}
+.light { background: var(--light); }
+.box {
+  max-width: 900px;
+  margin: auto;
+  border-top: 5px solid var(--green);
+}
+label {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: var(--navy);
+  margin: 12px 0 5px;
+}
+input, select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #cad8e5;
+  border-radius: 6px;
+  font: inherit;
+  background: white;
+  color: var(--text);
+}
+textarea { min-height: 90px; }
+form .button { margin-top: 15px; }
+.message {
+  margin-top: 14px;
+  font-weight: bold;
+  overflow-wrap: anywhere;
+}
+.muted {
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 10px;
+}
+.hidden { display: none !important; }
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+hr {
+  margin: 25px 0;
+  border: 0;
+  border-top: 1px solid var(--border);
+}
+.admin-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+.parcel-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin-top: 20px;
+}
+.parcel-card {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  background: #fff;
+  box-shadow: 0 4px 14px #092b5008;
+  min-width: 0;
+}
+.parcel-card h4 {
+  color: var(--navy);
+  font-size: 18px;
+  overflow-wrap: anywhere;
+  margin-bottom: 10px;
+}
+.parcel-card .parcel-status {
+  display: inline-block;
+  background: #e4f7ea;
+  color: #126d34;
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+  margin-bottom: 12px;
+}
+.parcel-detail {
+  padding: 8px 0;
+  border-bottom: 1px solid #edf2f7;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.parcel-detail:last-child { border-bottom: 0; }
+.parcel-detail strong {
+  display: block;
+  color: var(--navy);
+  font-size: 13px;
+  margin-bottom: 2px;
+}
+.parcel-detail span {
+  display: block;
+  font-size: 14px;
+  white-space: pre-wrap;
+}
+.private-note {
+  background: #fff8e7;
+  border: 1px solid #f1dfaa;
+  padding: 12px;
+  border-radius: 7px;
+  margin-top: 12px;
+}
+.private-note strong { color: #75520b; }
+.empty-state {
+  padding: 18px;
+  background: #f7fafc;
+  border-radius: 8px;
+  color: var(--muted);
+}
+.contact {
+  background: var(--navy);
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+}
+.contact a {
+  color: #8af0ad;
+  text-decoration: underline;
+}
+footer {
+  background: #061b32;
+  color: #c6d6e6;
+  text-align: center;
+  padding: 22px;
+  font-size: 13px;
+}
 @media(max-width:700px) {
- .navbar {flex-direction:column}
- nav {justify-content:center}
- .cards,.grid {grid-template-columns:1fr}
- .section {padding:40px 16px}
- .box,.card {padding:18px}
+  .navbar { flex-direction: column; }
+  nav { justify-content: center; gap: 12px; }
+  .cards, .grid { grid-template-columns: 1fr; }
+  .section { padding: 40px 16px; }
+  .box, .card { padding: 18px; }
+  .hero { padding: 45px 18px 55px; }
+  .parcel-card { padding: 14px; }
+  .admin-actions .button { width: 100%; }
 }
 </style>
 </head>
 
 <body>
-<div class="topbar">Worldwide Parcel Delivery · Customer Support</div>
+
+<div class="topbar">
+  Worldwide Parcel Delivery · Customer Support
+</div>
 
 <header>
   <div class="navbar">
@@ -87,11 +304,18 @@ footer {background:#061b32;color:#c6d6e6;text-align:center;padding:22px;font-siz
 </header>
 
 <main>
+
 <section class="hero" id="home">
   <div class="hero-content">
     <p>YOUR PARCEL. YOUR DESTINATION. OUR COMMITMENT.</p>
-    <h1>Connecting Your World Through <span>Reliable Delivery.</span></h1>
-    <p>TrustNova Express provides shipment information and customer support. Delivery routes, availability, prices and timing must be confirmed before a shipment is accepted.</p>
+    <h1>Connecting Your World Through
+      <span>Reliable Delivery.</span>
+    </h1>
+    <p>
+      TrustNova Express provides shipment information and customer support.
+      Delivery routes, availability, prices and timing must be confirmed
+      before a shipment is accepted.
+    </p>
     <a class="button" href="#tracking">Track Your Parcel</a>
   </div>
 </section>
@@ -103,12 +327,21 @@ footer {background:#061b32;color:#c6d6e6;text-align:center;padding:22px;font-siz
       <h2>Track Your Parcel</h2>
       <p>Enter the tracking number issued for your registered parcel.</p>
     </div>
+
     <div class="box">
       <form id="trackingForm">
         <label for="trackingNumber">Tracking number</label>
-        <input id="trackingNumber" maxlength="100" required placeholder="e.g. TNX-20261027-ABC123">
-        <button class="button" type="submit">Track Parcel</button>
+        <input
+          id="trackingNumber"
+          maxlength="100"
+          required
+          placeholder="e.g. TNX-20261027-ABC123"
+        >
+        <button class="button" id="trackButton" type="submit">
+          Track Parcel
+        </button>
       </form>
+
       <div id="trackingMessage" class="message" role="status"></div>
     </div>
   </div>
@@ -119,12 +352,36 @@ footer {background:#061b32;color:#c6d6e6;text-align:center;padding:22px;font-siz
     <div class="section-heading">
       <small>What we offer</small>
       <h2>Our Delivery Services</h2>
-      <p>Service availability and delivery arrangements must be confirmed before acceptance.</p>
+      <p>
+        Service availability and delivery arrangements must be confirmed
+        before acceptance.
+      </p>
     </div>
+
     <div class="cards">
-      <div class="card"><h3>🌍 International Delivery</h3><p>International parcel enquiries, subject to route availability and applicable requirements.</p></div>
-      <div class="card"><h3>📦 Parcel Handling</h3><p>Parcel registration and handling arrangements can be confirmed with our support team.</p></div>
-      <div class="card"><h3>📍 Shipment Updates</h3><p>Use your tracking number to check available shipment status information.</p></div>
+      <div class="card">
+        <h3>🌍 International Delivery</h3>
+        <p>
+          International parcel enquiries, subject to route availability
+          and applicable requirements.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>📦 Parcel Handling</h3>
+        <p>
+          Parcel registration and handling arrangements can be confirmed
+          with our support team.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>📍 Shipment Updates</h3>
+        <p>
+          Use your tracking number to check available shipment status
+          information.
+        </p>
+      </div>
     </div>
   </div>
 </section>
@@ -138,36 +395,62 @@ footer {background:#061b32;color:#c6d6e6;text-align:center;padding:22px;font-siz
     </div>
 
     <div class="box">
+
       <div id="loginPanel">
         <h3>Admin Login</h3>
+
         <form id="loginForm">
           <label for="adminEmail">Email address</label>
-          <input id="adminEmail" type="email" autocomplete="username" required value="trustnovaexpress@gmail.com">
+          <input
+            id="adminEmail"
+            type="email"
+            autocomplete="username"
+            required
+            value="trustnovaexpress@gmail.com"
+          >
+
           <label for="adminPassword">Password</label>
-          <input id="adminPassword" type="password" autocomplete="current-password" required>
-          <button class="button" type="submit">Sign In</button>
+          <input
+            id="adminPassword"
+            type="password"
+            autocomplete="current-password"
+            required
+          >
+
+          <button class="button" type="submit" id="loginButton">
+            Sign In
+          </button>
         </form>
-        <p class="muted">Use the password created for your Supabase admin account. Never share it.</p>
+
+        <p class="muted">
+          Use the password created for your Supabase admin account.
+          Never share it.
+        </p>
       </div>
 
       <div id="dashboardPanel" class="hidden">
+
         <h3>Parcel Management</h3>
         <p id="signedInAs" class="muted"></p>
 
         <form id="parcelForm">
+
           <div class="grid">
             <div>
               <label for="senderName">Sender name</label>
               <input id="senderName" maxlength="150" required>
             </div>
+
             <div>
               <label for="receiverName">Receiver name</label>
               <input id="receiverName" maxlength="150" required>
             </div>
+
             <div>
               <label for="senderPhone">Sender phone</label>
               <input id="senderPhone" maxlength="40">
             </div>
+
             <div>
               <label for="receiverPhone">Receiver phone</label>
               <input id="receiverPhone" maxlength="40">
@@ -188,6 +471,7 @@ footer {background:#061b32;color:#c6d6e6;text-align:center;padding:22px;font-siz
               <label for="estimatedDelivery">Estimated delivery date</label>
               <input id="estimatedDelivery" type="date">
             </div>
+
             <div>
               <label for="parcelStatus">Initial status</label>
               <select id="parcelStatus">
@@ -201,20 +485,26 @@ footer {background:#061b32;color:#c6d6e6;text-align:center;padding:22px;font-siz
             </div>
           </div>
 
-          <label for="adminNote">Private admin note (not shown in public tracking)</label>
+          <label for="adminNote">
+            Private admin note (not shown in public tracking)
+          </label>
           <textarea id="adminNote" maxlength="1000"></textarea>
 
-          <button class="button" type="submit">Register Parcel</button>
+          <button class="button" type="submit" id="registerButton">
+            Register Parcel
+          </button>
         </form>
 
         <div id="adminMessage" class="message" role="status"></div>
 
-        <hr style="margin:25px 0;border:0;border-top:1px solid #dce8f2">
+        <hr>
 
         <h3>Update Parcel Status</h3>
+
         <form id="updateForm">
           <label for="updateTracking">Tracking number</label>
           <input id="updateTracking" required maxlength="100">
+
           <label for="updateStatus">New status</label>
           <select id="updateStatus">
             <option>Registered</option>
@@ -224,28 +514,40 @@ footer {background:#061b32;color:#c6d6e6;text-align:center;padding:22px;font-siz
             <option>Out for Delivery</option>
             <option>Delivered</option>
           </select>
+
           <label for="updateNote">Private admin note</label>
           <textarea id="updateNote" maxlength="1000"></textarea>
-          <button class="button blue" type="submit">Update Status</button>
+
+          <button class="button blue" type="submit" id="updateButton">
+            Update Status
+          </button>
         </form>
 
         <div id="updateMessage" class="message" role="status"></div>
 
-        <button id="refreshButton" class="button blue" type="button">Refresh Parcel List</button>
-        <button id="logoutButton" class="button" type="button" style="background:#7b2635">Sign Out</button>
+        <hr>
 
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Tracking</th><th>Receiver</th><th>Status</th><th>Estimated delivery</th>
-              </tr>
-            </thead>
-            <tbody id="parcelRows">
-              <tr><td colspan="4">Sign in to load your parcels.</td></tr>
-            </tbody>
-          </table>
+        <h3>Registered Parcels</h3>
+        <p class="muted">
+          Full parcel details are visible here to the authorised administrator.
+          Private notes and addresses are not included in public tracking.
+        </p>
+
+        <div class="admin-actions">
+          <button id="refreshButton" class="button blue" type="button">
+            Refresh Parcel List
+          </button>
+
+          <button id="logoutButton" class="button red" type="button">
+            Sign Out
+          </button>
         </div>
+
+        <div id="listMessage" class="message" role="status"></div>
+        <div id="parcelRows" class="parcel-list">
+          <div class="empty-state">Sign in to load your parcels.</div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -255,21 +557,31 @@ footer {background:#061b32;color:#c6d6e6;text-align:center;padding:22px;font-siz
   <div class="container" style="text-align:center">
     <h2>Need Assistance?</h2>
     <p>Contact TrustNova Express for enquiries and support.</p>
-    <p style="margin-top:15px"><a href="mailto:trustnovaexpress@gmail.com">trustnovaexpress@gmail.com</a></p>
+    <p style="margin-top:15px">
+      <a href="mailto:trustnovaexpress@gmail.com">
+        trustnovaexpress@gmail.com
+      </a>
+    </p>
   </div>
 </section>
+
 </main>
 
 <footer>
-  &copy; <span id="year"></span> <strong>TrustNova Express</strong>. All rights reserved.
+  &copy; <span id="year"></span>
+  <strong>TrustNova Express</strong>. All rights reserved.
 </footer>
 
 <script>
-document.getElementById("year").textContent = new Date().getFullYear();
+document.getElementById("year").textContent =
+  new Date().getFullYear();
 
-/* TrustNova Express Supabase connection */
-const SUPABASE_URL = "https://trydftaqqypqcxsgixto.supabase.co";
-const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_2h0EyOMhtBx3eWEiuoAOyg_qjw2QzED";
+/* Existing TrustNova Express Supabase connection */
+const SUPABASE_URL =
+  "https://trydftaqqypqcxsgixto.supabase.co";
+
+const SUPABASE_PUBLISHABLE_KEY =
+  "sb_publishable_2h0EyOMhtBx3eWEiuoAOyg_qjw2QzED";
 
 const client = window.supabase.createClient(
   SUPABASE_URL,
@@ -277,6 +589,7 @@ const client = window.supabase.createClient(
 );
 
 const ADMIN_EMAIL = "trustnovaexpress@gmail.com";
+
 const allowedStatuses = [
   "Registered",
   "Picked Up",
@@ -293,242 +606,513 @@ function message(id, text, isError = false) {
 }
 
 function safeValue(value) {
-  return value == null ? "" : String(value);
+  return value == null || value === "" ? "Not provided" : String(value);
 }
 
 function makeTrackingNumber() {
-  const date = new Date().toISOString().slice(0, 10).replaceAll("-", "");
-  const random = crypto.randomUUID().replaceAll("-", "").slice(0, 8).toUpperCase();
+  const date = new Date().toISOString()
+    .slice(0, 10)
+    .replaceAll("-", "");
+
+  const random = crypto.randomUUID()
+    .replaceAll("-", "")
+    .slice(0, 8)
+    .toUpperCase();
+
   return "TNX-" + date + "-" + random;
 }
 
 async function currentAdmin() {
   const { data, error } = await client.auth.getUser();
-  if (error || !data.user) return null;
 
-  if ((data.user.email || "").toLowerCase() !== ADMIN_EMAIL) {
+  if (error || !data.user) {
+    return null;
+  }
+
+  if (
+    (data.user.email || "").toLowerCase() !== ADMIN_EMAIL
+  ) {
     await client.auth.signOut();
     return null;
   }
+
   return data.user;
 }
 
 function showLogin() {
-  document.getElementById("loginPanel").classList.remove("hidden");
-  document.getElementById("dashboardPanel").classList.add("hidden");
+  document.getElementById("loginPanel")
+    .classList.remove("hidden");
+
+  document.getElementById("dashboardPanel")
+    .classList.add("hidden");
 }
 
 async function showDashboard(user) {
-  document.getElementById("loginPanel").classList.add("hidden");
-  document.getElementById("dashboardPanel").classList.remove("hidden");
-  document.getElementById("signedInAs").textContent = "Signed in as " + user.email;
+  document.getElementById("loginPanel")
+    .classList.add("hidden");
+
+  document.getElementById("dashboardPanel")
+    .classList.remove("hidden");
+
+  document.getElementById("signedInAs").textContent =
+    "Signed in as " + user.email;
+
   await loadParcels();
 }
 
-document.getElementById("loginForm").addEventListener("submit", async event => {
-  event.preventDefault();
-  const email = document.getElementById("adminEmail").value.trim().toLowerCase();
-  const password = document.getElementById("adminPassword").value;
+/* Admin login */
+document.getElementById("loginForm")
+  .addEventListener("submit", async event => {
+    event.preventDefault();
 
-  if (email !== ADMIN_EMAIL) {
-    message("trackingMessage", "This email is not authorised for the admin login.", true);
-    return;
-  }
+    const button = document.getElementById("loginButton");
+    button.disabled = true;
+    button.textContent = "Signing in...";
 
-  const { data, error } = await client.auth.signInWithPassword({ email, password });
+    try {
+      const email = document.getElementById("adminEmail")
+        .value.trim().toLowerCase();
 
-  if (error) {
-    alert("Login failed: " + error.message);
-    return;
-  }
+      const password =
+        document.getElementById("adminPassword").value;
 
-  if (!data.user || (data.user.email || "").toLowerCase() !== ADMIN_EMAIL) {
+      if (email !== ADMIN_EMAIL) {
+        alert("This email is not authorised for admin login.");
+        return;
+      }
+
+      const { data, error } =
+        await client.auth.signInWithPassword({
+          email,
+          password
+        });
+
+      if (error) {
+        alert("Login failed: " + error.message);
+        return;
+      }
+
+      if (
+        !data.user ||
+        (data.user.email || "").toLowerCase() !== ADMIN_EMAIL
+      ) {
+        await client.auth.signOut();
+        alert("This account is not authorised as administrator.");
+        return;
+      }
+
+      document.getElementById("adminPassword").value = "";
+
+      await showDashboard(data.user);
+
+    } catch (error) {
+      alert("Login error: " + error.message);
+    } finally {
+      button.disabled = false;
+      button.textContent = "Sign In";
+    }
+  });
+
+/* Sign out */
+document.getElementById("logoutButton")
+  .addEventListener("click", async () => {
     await client.auth.signOut();
-    alert("This account is not authorised as the administrator.");
-    return;
-  }
+    showLogin();
+    message("adminMessage", "You have signed out.");
+  });
 
-  document.getElementById("adminPassword").value = "";
-  await showDashboard(data.user);
-});
-
-document.getElementById("logoutButton").addEventListener("click", async () => {
-  await client.auth.signOut();
-  showLogin();
-  message("adminMessage", "You have signed out.");
-});
-
+/*
+  Display full parcel details in administrator-only cards.
+  These fields are never requested by the public tracking form.
+*/
 async function loadParcels() {
   const user = await currentAdmin();
+
   if (!user) {
     showLogin();
-    message("adminMessage", "Please sign in with the authorised admin account.", true);
+    message(
+      "listMessage",
+      "Please sign in with the authorised admin account.",
+      true
+    );
     return;
   }
+
+  message("listMessage", "Loading parcel details...");
 
   const { data, error } = await client
     .from("Parcels")
-    .select("tracking_number,receiver_name,status,estimated_delivery")
+    .select(`
+      tracking_number,
+      sender_name,
+      receiver_name,
+      sender_phone,
+      receiver_phone,
+      parcel_description,
+      pickup_address,
+      delivery_address,
+      status,
+      estimated_delivery,
+      admin_note,
+      created_at
+    `)
     .order("created_at", { ascending: false })
     .limit(100);
 
   if (error) {
-    message("adminMessage", "Could not load parcels: " + error.message, true);
+    message(
+      "listMessage",
+      "Could not load parcels: " + error.message,
+      true
+    );
     return;
   }
 
-  const tbody = document.getElementById("parcelRows");
-  tbody.replaceChildren();
+  const container = document.getElementById("parcelRows");
+  container.replaceChildren();
 
   if (!data || data.length === 0) {
-    const row = tbody.insertRow();
-    const cell = row.insertCell();
-    cell.colSpan = 4;
-    cell.textContent = "No parcels registered yet.";
+    const empty = document.createElement("div");
+    empty.className = "empty-state";
+    empty.textContent = "No parcels registered yet.";
+    container.appendChild(empty);
+
+    message("listMessage", "");
     return;
   }
 
   for (const parcel of data) {
-    const row = tbody.insertRow();
-    for (const value of [
-      parcel.tracking_number,
-      parcel.receiver_name,
-      parcel.status,
-      parcel.estimated_delivery
-    ]) {
-      const cell = row.insertCell();
-      cell.textContent = safeValue(value);
+    const card = document.createElement("article");
+    card.className = "parcel-card";
+
+    const heading = document.createElement("h4");
+    heading.textContent =
+      "Tracking: " + safeValue(parcel.tracking_number);
+    card.appendChild(heading);
+
+    const status = document.createElement("div");
+    status.className = "parcel-status";
+    status.textContent = safeValue(parcel.status);
+    card.appendChild(status);
+
+    function addDetail(title, value) {
+      const detail = document.createElement("div");
+      detail.className = "parcel-detail";
+
+      const label = document.createElement("strong");
+      label.textContent = title;
+
+      const content = document.createElement("span");
+      content.textContent = safeValue(value);
+
+      detail.append(label, content);
+      card.appendChild(detail);
     }
+
+    addDetail("Sender name", parcel.sender_name);
+    addDetail("Sender phone", parcel.sender_phone);
+    addDetail("Receiver name", parcel.receiver_name);
+    addDetail("Receiver phone", parcel.receiver_phone);
+    addDetail("Parcel description", parcel.parcel_description);
+    addDetail("Pickup address", parcel.pickup_address);
+    addDetail("Delivery address", parcel.delivery_address);
+    addDetail("Estimated delivery", parcel.estimated_delivery);
+
+    const note = document.createElement("div");
+    note.className = "private-note";
+
+    const noteTitle = document.createElement("strong");
+    noteTitle.textContent = "Private admin note";
+
+    const noteContent = document.createElement("div");
+    noteContent.style.whiteSpace = "pre-wrap";
+    noteContent.style.overflowWrap = "anywhere";
+    noteContent.textContent = safeValue(parcel.admin_note);
+
+    note.append(noteTitle, noteContent);
+    card.appendChild(note);
+
+    const updateButton = document.createElement("button");
+    updateButton.type = "button";
+    updateButton.className = "button blue";
+    updateButton.style.marginTop = "12px";
+    updateButton.textContent = "Use This Tracking Number";
+
+    updateButton.addEventListener("click", () => {
+      document.getElementById("updateTracking").value =
+        parcel.tracking_number || "";
+
+      document.getElementById("updateStatus").value =
+        allowedStatuses.includes(parcel.status)
+          ? parcel.status
+          : "Registered";
+
+      document.getElementById("updateNote").value =
+        parcel.admin_note || "";
+
+      document.getElementById("updateTracking")
+        .scrollIntoView({ behavior: "smooth", block: "center" });
+    });
+
+    card.appendChild(updateButton);
+    container.appendChild(card);
   }
+
+  message(
+    "listMessage",
+    "Loaded " + data.length + " parcel(s)."
+  );
 }
 
-document.getElementById("refreshButton").addEventListener("click", loadParcels);
+document.getElementById("refreshButton")
+  .addEventListener("click", loadParcels);
 
-document.getElementById("parcelForm").addEventListener("submit", async event => {
-  event.preventDefault();
+/* Register a parcel */
+document.getElementById("parcelForm")
+  .addEventListener("submit", async event => {
+    event.preventDefault();
 
-  const user = await currentAdmin();
-  if (!user) {
-    message("adminMessage", "Please sign in again.", true);
-    showLogin();
-    return;
-  }
+    const button = document.getElementById("registerButton");
+    button.disabled = true;
+    button.textContent = "Registering...";
 
-  const trackingNumber = makeTrackingNumber();
+    try {
+      const user = await currentAdmin();
 
-  const parcel = {
-    tracking_number: trackingNumber,
-    sender_name: document.getElementById("senderName").value.trim(),
-    receiver_name: document.getElementById("receiverName").value.trim(),
-    sender_phone: document.getElementById("senderPhone").value.trim(),
-    receiver_phone: document.getElementById("receiverPhone").value.trim(),
-    parcel_description: document.getElementById("parcelDescription").value.trim(),
-    pickup_address: document.getElementById("pickupAddress").value.trim(),
-    delivery_address: document.getElementById("deliveryAddress").value.trim(),
-    status: document.getElementById("parcelStatus").value,
-    estimated_delivery: document.getElementById("estimatedDelivery").value || null,
-    admin_note: document.getElementById("adminNote").value.trim()
-  };
+      if (!user) {
+        message("adminMessage", "Please sign in again.", true);
+        showLogin();
+        return;
+      }
 
-  if (!allowedStatuses.includes(parcel.status)) {
-    message("adminMessage", "Please choose a valid parcel status.", true);
-    return;
-  }
+      const trackingNumber = makeTrackingNumber();
 
-  const { error } = await client.from("Parcels").insert(parcel);
+      const parcel = {
+        tracking_number: trackingNumber,
+        sender_name: document.getElementById("senderName")
+          .value.trim(),
+        receiver_name: document.getElementById("receiverName")
+          .value.trim(),
+        sender_phone: document.getElementById("senderPhone")
+          .value.trim(),
+        receiver_phone: document.getElementById("receiverPhone")
+          .value.trim(),
+        parcel_description: document
+          .getElementById("parcelDescription").value.trim(),
+        pickup_address: document.getElementById("pickupAddress")
+          .value.trim(),
+        delivery_address: document.getElementById("deliveryAddress")
+          .value.trim(),
+        status: document.getElementById("parcelStatus").value,
+        estimated_delivery:
+          document.getElementById("estimatedDelivery").value || null,
+        admin_note: document.getElementById("adminNote")
+          .value.trim()
+      };
 
-  if (error) {
-    message("adminMessage", "Parcel was not saved: " + error.message, true);
-    return;
-  }
+      if (!allowedStatuses.includes(parcel.status)) {
+        message("adminMessage", "Please choose a valid status.", true);
+        return;
+      }
 
-  message("adminMessage", "Parcel registered. Tracking number: " + trackingNumber);
-  document.getElementById("parcelForm").reset();
-  document.getElementById("updateTracking").value = trackingNumber;
-  await loadParcels();
-});
+      const { error } = await client
+        .from("Parcels")
+        .insert(parcel);
 
-document.getElementById("updateForm").addEventListener("submit", async event => {
-  event.preventDefault();
+      if (error) {
+        message(
+          "adminMessage",
+          "Parcel was not saved: " + error.message,
+          true
+        );
+        return;
+      }
 
-  const user = await currentAdmin();
-  if (!user) {
-    message("updateMessage", "Please sign in again.", true);
-    showLogin();
-    return;
-  }
+      message(
+        "adminMessage",
+        "Parcel registered successfully. Tracking number: " +
+          trackingNumber
+      );
 
-  const trackingNumber = document.getElementById("updateTracking").value.trim();
-  const status = document.getElementById("updateStatus").value;
-  const note = document.getElementById("updateNote").value.trim();
+      document.getElementById("parcelForm").reset();
 
-  if (!allowedStatuses.includes(status)) {
-    message("updateMessage", "Please choose a valid status.", true);
-    return;
-  }
+      document.getElementById("updateTracking").value =
+        trackingNumber;
 
-  const { data, error } = await client
-    .from("Parcels")
-    .update({ status: status, admin_note: note })
-    .eq("tracking_number", trackingNumber)
-    .select("tracking_number");
+      document.getElementById("updateNote").value =
+        parcel.admin_note;
 
-  if (error) {
-    message("updateMessage", "Status update failed: " + error.message, true);
-    return;
-  }
+      await loadParcels();
 
-  if (!data || data.length === 0) {
-    message("updateMessage", "No parcel was updated. Check the tracking number and database permissions.", true);
-    return;
-  }
-
-  message("updateMessage", "Parcel status updated successfully.");
-  await loadParcels();
-});
-
-/* Public tracking calls the restricted database function.
-   It does not request private parcel addresses or phone numbers. */
-document.getElementById("trackingForm").addEventListener("submit", async event => {
-  event.preventDefault();
-
-  const number = document.getElementById("trackingNumber").value.trim();
-  if (!number) return;
-
-  message("trackingMessage", "Checking tracking information...");
-
-  const { data, error } = await client.rpc("track_parcel", {
-    p_tracking_number: number
+    } catch (error) {
+      message(
+        "adminMessage",
+        "Registration error: " + error.message,
+        true
+      );
+    } finally {
+      button.disabled = false;
+      button.textContent = "Register Parcel";
+    }
   });
 
-  if (error) {
-    message("trackingMessage", "Tracking is temporarily unavailable. Please contact trustnovaexpress@gmail.com.", true);
-    return;
-  }
+/* Update a parcel's status and private note */
+document.getElementById("updateForm")
+  .addEventListener("submit", async event => {
+    event.preventDefault();
 
-  const result = Array.isArray(data) ? data[0] : data;
+    const button = document.getElementById("updateButton");
+    button.disabled = true;
+    button.textContent = "Updating...";
 
-  if (!result || !result.tracking_number) {
-    message("trackingMessage", "No parcel was found for that tracking number.", true);
-    return;
-  }
+    try {
+      const user = await currentAdmin();
 
-  const status = document.createElement("p");
-  status.textContent = "Status: " + safeValue(result.status);
+      if (!user) {
+        message("updateMessage", "Please sign in again.", true);
+        showLogin();
+        return;
+      }
 
-  const delivery = document.createElement("p");
-  delivery.textContent = "Estimated delivery: " + safeValue(result.estimated_delivery || "Not available");
+      const trackingNumber = document
+        .getElementById("updateTracking").value.trim();
 
-  const tracking = document.createElement("p");
-  tracking.textContent = "Tracking number: " + safeValue(result.tracking_number);
+      const status =
+        document.getElementById("updateStatus").value;
 
-  const output = document.getElementById("trackingMessage");
-  output.replaceChildren(tracking, status, delivery);
-});
+      const note = document
+        .getElementById("updateNote").value.trim();
 
-/* Restore a valid admin session if one exists. */
+      if (!allowedStatuses.includes(status)) {
+        message("updateMessage", "Please choose a valid status.", true);
+        return;
+      }
+
+      const { data, error } = await client
+        .from("Parcels")
+        .update({
+          status: status,
+          admin_note: note
+        })
+        .eq("tracking_number", trackingNumber)
+        .select("tracking_number");
+
+      if (error) {
+        message(
+          "updateMessage",
+          "Status update failed: " + error.message,
+          true
+        );
+        return;
+      }
+
+      if (!data || data.length === 0) {
+        message(
+          "updateMessage",
+          "No parcel was updated. Check the tracking number and permissions.",
+          true
+        );
+        return;
+      }
+
+      message("updateMessage", "Parcel status and note updated successfully.");
+
+      await loadParcels();
+
+    } catch (error) {
+      message(
+        "updateMessage",
+        "Update error: " + error.message,
+        true
+      );
+    } finally {
+      button.disabled = false;
+      button.textContent = "Update Status";
+    }
+  });
+
+/*
+  Public tracking returns only the limited information provided
+  by the track_parcel database function.
+*/
+document.getElementById("trackingForm")
+  .addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const button = document.getElementById("trackButton");
+    button.disabled = true;
+    button.textContent = "Checking...";
+
+    try {
+      const number = document
+        .getElementById("trackingNumber").value.trim();
+
+      if (!number) return;
+
+      message("trackingMessage", "Checking tracking information...");
+
+      const { data, error } = await client.rpc("track_parcel", {
+        p_tracking_number: number
+      });
+
+      if (error) {
+        message(
+          "trackingMessage",
+          "Tracking is temporarily unavailable. Please contact trustnovaexpress@gmail.com.",
+          true
+        );
+        return;
+      }
+
+      const result = Array.isArray(data) ? data[0] : data;
+
+      if (!result || !result.tracking_number) {
+        message(
+          "trackingMessage",
+          "No parcel was found for that tracking number.",
+          true
+        );
+        return;
+      }
+
+      const output = document.getElementById("trackingMessage");
+      output.replaceChildren();
+
+      const heading = document.createElement("h3");
+      heading.textContent = "Tracking Result";
+      output.appendChild(heading);
+
+      const tracking = document.createElement("p");
+      tracking.textContent =
+        "Tracking number: " + safeValue(result.tracking_number);
+
+      const status = document.createElement("p");
+      status.textContent =
+        "Status: " + safeValue(result.status);
+
+      const delivery = document.createElement("p");
+      delivery.textContent =
+        "Estimated delivery: " +
+        safeValue(result.estimated_delivery);
+
+      output.append(tracking, status, delivery);
+
+    } catch (error) {
+      message(
+        "trackingMessage",
+        "Tracking error: " + error.message,
+        true
+      );
+    } finally {
+      button.disabled = false;
+      button.textContent = "Track Parcel";
+    }
+  });
+
+/* Restore an existing authorised admin session */
 (async function restoreSession() {
   const user = await currentAdmin();
+
   if (user) {
     await showDashboard(user);
   } else {
@@ -536,5 +1120,6 @@ document.getElementById("trackingForm").addEventListener("submit", async event =
   }
 })();
 </script>
+
 </body>
 </html>
