@@ -1082,20 +1082,28 @@ document.getElementById("trackingForm")
       heading.textContent = "Tracking Result";
       output.appendChild(heading);
 
-      const tracking = document.createElement("p");
-      tracking.textContent =
-        "Tracking number: " + safeValue(result.tracking_number);
+      function addTrackingDetail(title, value) {
+        const row = document.createElement("p");
+        row.className = "parcel-detail";
 
-      const status = document.createElement("p");
-      status.textContent =
-        "Status: " + safeValue(result.status);
+        const label = document.createElement("strong");
+        label.textContent = title + ": ";
 
-      const delivery = document.createElement("p");
-      delivery.textContent =
-        "Estimated delivery: " +
-        safeValue(result.estimated_delivery);
+        const detail = document.createElement("span");
+        detail.textContent = safeValue(value);
 
-      output.append(tracking, status, delivery);
+        row.append(label, detail);
+        output.appendChild(row);
+      }
+
+      addTrackingDetail("Tracking Number", result.tracking_number);
+      addTrackingDetail("Sender Name", result.sender_name);
+      addTrackingDetail("Sender Address", result.sender_address);
+      addTrackingDetail("Receiver Name", result.receiver_name);
+      addTrackingDetail("Receiver Address", result.receiver_address);
+      addTrackingDetail("Parcel Description", result.parcel_description);
+      addTrackingDetail("Current Status", result.status);
+      addTrackingDetail("Estimated Delivery", result.estimated_delivery);
 
     } catch (error) {
       message(
