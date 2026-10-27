@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrustNova Express | Worldwide Delivery</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;color:#222;background:#f4f6f8}
+header{background:#c8102e;color:white;padding:22px 16px;text-align:center}
+header h1{margin:0;font-size:28px}
+header p{margin:8px 0 0}
+nav{background:#202b3c;padding:14px;text-align:center}
+nav a{color:white;text-decoration:none;margin:0 12px;font-weight:bold}
+.hero{background:#fff;padding:45px 18px;text-align:center}
+.hero h2{font-size:30px;margin:0 0 12px}
+.hero p{color:#555;line-height:1.6}
+.tracking{max-width:550px;margin:25px auto;background:white;padding:24px;border-radius:10px;box-shadow:0 3px 15px #0001}
+input,button{width:100%;padding:14px;margin-top:12px;border-radius:5px;font-size:16px}
+input{border:1px solid #ccc}
+button{background:#c8102e;color:white;border:0;font-weight:bold;cursor:pointer}
+#result{margin-top:18px;line-height:1.8;overflow-wrap:anywhere}
+.services{padding:28px 16px;text-align:center}
+.cards{display:flex;flex-wrap:wrap;gap:15px;justify-content:center}
+.card{background:white;padding:22px;border-radius:8px;flex:1;min-width:220px;max-width:320px}
+footer{background:#202b3c;color:white;text-align:center;padding:22px;margin-top:25px}
+</style>
+</head>
+<body>
+<header>
+<h1>TrustNova Express</h1>
+<p>Your Parcel. Your Destination. Our Commitment.</p>
+</header>
+<nav>
+<a href="#home">Home</a>
+<a href="#tracking">Track Parcel</a>
+<a href="#services">Our Services</a>
+</nav>
+<section class="hero" id="home">
+<h2>Worldwide Parcel Delivery</h2>
+<p>Welcome to TrustNova Express. Track your registered shipment and check its latest delivery status.</p>
+<div class="tracking" id="tracking">
+<h2>Track Your Parcel</h2>
+<p>Enter the tracking number provided by TrustNova Express.</p>
+<form id="trackForm">
+<input id="trackingNumber" placeholder="Enter tracking number" required>
+<button type="submit">Track Shipment</button>
+</form>
+<div id="result" aria-live="polite"></div>
+</div>
+</section>
+<section class="services" id="services">
+<h2>Our Services</h2>
+<div class="cards">
+<div class="card"><h3>📦 Parcel Delivery</h3><p>Shipment registration and parcel progress updates.</p></div>
+<div class="card"><h3>🌍 International Shipping</h3><p>Support for international shipment tracking.</p></div>
+<div class="card"><h3>🔎 Shipment Tracking</h3><p>Check the latest recorded status of your parcel.</p></div>
+</div>
+</section>
+<footer>
+<p><strong>TrustNova Express</strong></p>
+<p>Your Parcel. Your Destination. Our Commitment.</p>
+<p>Tracking information is available for registered shipments.</p>
+</footer>
+<script>
+document.getElementById('trackForm').addEventListener('submit',function(e){
+e.preventDefault();
+document.getElementById('result').textContent='Tracking database setup is pending. Please check your tracking number with TrustNova Express.';
+});
+</script>
+</body>
+  </html>
