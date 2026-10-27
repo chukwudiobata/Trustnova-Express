@@ -228,11 +228,42 @@ nav .nav-track {
   cursor: not-allowed;
 }
 
-.hero-art {
+/* Real delivery photo */
+.hero-photo {
+  width: min(100%, 650px);
+  margin: 32px auto 0;
+  overflow: hidden;
+  border: 7px solid var(--yellow);
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+.hero-photo img {
   display: block;
-  width: min(100%, 600px);
-  height: auto;
-  margin: 28px auto 0;
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+}
+
+.photo-caption {
+  padding: 18px;
+  background: #ffffff;
+  border-top: 5px solid var(--red);
+}
+
+.photo-caption strong {
+  display: block;
+  color: var(--red);
+  font-size: 23px;
+  font-weight: 900;
+}
+
+.photo-caption span {
+  display: block;
+  margin-top: 5px;
+  color: #555555;
+  font-size: 14px;
 }
 
 .hero-strip {
@@ -585,12 +616,26 @@ footer strong {
 
   .hero {
     padding: 44px 18px 48px;
-    background: linear-gradient(155deg, #ffffff 0%, #ffffff 70%, #fff0b2 70%, #fff0b2 100%);
+    background: linear-gradient(
+      155deg,
+      #ffffff 0%,
+      #ffffff 70%,
+      #fff0b2 70%,
+      #fff0b2 100%
+    );
   }
 
   .hero-strip-inner {
     justify-content: center;
     text-align: center;
+  }
+
+  .hero-photo img {
+    height: 260px;
+  }
+
+  .photo-caption strong {
+    font-size: 20px;
   }
 
   .cards, .grid, .steps {
@@ -672,92 +717,18 @@ footer strong {
       </div>
     </div>
 
-    <!-- Decorative illustration: airplane, parcels and smiling people -->
-    <svg class="hero-art" viewBox="0 0 700 380"
-         role="img"
-         aria-label="Illustration of an airplane, smiling customers and delivery parcels">
-
-      <ellipse cx="350" cy="350" rx="270" ry="18" fill="#eee4c9"/>
-
-      <!-- Airplane -->
-      <path d="M50 92 L280 70 L390 24 Q405 18 414 27
-               L374 76 L525 70 Q557 70 575 85
-               L585 95 L388 117 L346 165 L321 167
-               L329 126 L169 139 L132 163 L111 163
-               L120 128 L50 110 Z"
-            fill="#ffffff" stroke="#d40511" stroke-width="5"
-            stroke-linejoin="round"/>
-
-      <path d="M374 76 L525 70 Q557 70 575 85 L585 95 L388 117 Z"
-            fill="#d40511"/>
-
-      <path d="M120 128 L169 139 L132 163 L111 163 Z"
-            fill="#ffcc00"/>
-
-      <!-- Left person -->
-      <path d="M65 315 Q64 235 100 215 Q137 194 165 222
-               Q185 242 187 315 Z"
-            fill="#d40511"/>
-
-      <circle cx="126" cy="180" r="39" fill="#c98554"/>
-
-      <path d="M87 178 Q80 135 122 136 Q164 134 166 176
-               L153 157 L102 158 Z"
-            fill="#49352b"/>
-
-      <circle cx="112" cy="180" r="3.5" fill="#303030"/>
-      <circle cx="140" cy="180" r="3.5" fill="#303030"/>
-
-      <path d="M111 196 Q126 209 142 196"
-            fill="none" stroke="#ffffff" stroke-width="4"
-            stroke-linecap="round"/>
-
-      <!-- Right person -->
-      <path d="M503 315 Q502 236 540 216 Q576 196 605 224
-               Q624 244 627 315 Z"
-            fill="#ffcc00"/>
-
-      <circle cx="566" cy="181" r="39" fill="#8f5739"/>
-
-      <path d="M527 178 Q524 137 565 137 Q605 137 606 178
-               L592 157 L541 159 Z"
-            fill="#303030"/>
-
-      <circle cx="552" cy="181" r="3.5" fill="#303030"/>
-      <circle cx="580" cy="181" r="3.5" fill="#303030"/>
-
-      <path d="M552 197 Q566 210 582 197"
-            fill="none" stroke="#ffffff" stroke-width="4"
-            stroke-linecap="round"/>
-
-      <!-- Parcels -->
-      <rect x="185" y="247" width="132" height="86" rx="3"
-            fill="#c98b45" stroke="#9d632a" stroke-width="3"/>
-
-      <path d="M251 248 V332 M187 272 H315"
-            stroke="#f8d28b" stroke-width="7"/>
-
-      <path d="M185 247 L206 229 L296 229 L317 247"
-            fill="#e8b978" stroke="#9d632a" stroke-width="3"/>
-
-      <rect x="329" y="264" width="107" height="69" rx="3"
-            fill="#d9a15d" stroke="#9d632a" stroke-width="3"/>
-
-      <path d="M382 265 V331 M331 284 H434"
-            stroke="#fff0b2" stroke-width="6"/>
-
-      <path d="M329 264 L347 248 L418 248 L436 264"
-            fill="#e8b978" stroke="#9d632a" stroke-width="3"/>
-
-      <!-- Decorative motion lines -->
-      <path d="M45 207 H88 M32 224 H78 M600 118 H642"
-            stroke="#d40511" stroke-width="5"
-            stroke-linecap="round"/>
-
-      <circle cx="645" cy="147" r="12" fill="#ffcc00"/>
-      <circle cx="52" cy="70" r="11" fill="#ffcc00"/>
-
-    </svg>
+    <!-- Real parcel-delivery photo -->
+    <div class="hero-photo">
+      <img
+        src="https://images.unsplash.com/photo-1607082349566-187342175e2f?auto=format&fit=crop&w=1400&q=85"
+        alt="Parcels prepared for delivery"
+        loading="lazy"
+      >
+      <div class="photo-caption">
+        <strong>Every Parcel Matters.</strong>
+        <span>Delivering Trust, Worldwide.</span>
+      </div>
+    </div>
 
   </div>
 </section>
@@ -1094,10 +1065,6 @@ footer strong {
 <script>
 document.getElementById("year").textContent = new Date().getFullYear();
 
-/*
-  Existing Supabase connection.
-  Keep the database policies secure.
-*/
 const SUPABASE_URL =
   "https://trydftaqqypqcxsgixto.supabase.co";
 
