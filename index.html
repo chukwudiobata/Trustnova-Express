@@ -17,15 +17,15 @@ button,input,select,textarea{font:inherit}
 header{background:#fff;border-bottom:4px solid var(--yellow);position:sticky;top:0;z-index:5}
 .navbar{max-width:1150px;margin:auto;padding:14px 20px;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
 .brand{display:flex;align-items:center;gap:10px;color:var(--black);font-size:22px;font-weight:900;line-height:1.1}
-.brand-icon{font-size:32px;color:var(--red);transform:rotate(-8deg)}
+.brand-icon{width:48px;height:48px;display:grid;place-items:center;background:var(--yellow);border-radius:50%;color:var(--red);box-shadow:0 3px 0 #171717;flex-shrink:0}.brand-icon svg{width:32px;height:32px;display:block}
 .brand-text span{color:var(--red)}
 .brand-text small{display:block;font-size:10px;letter-spacing:1.5px;margin-top:5px;color:#222}
 nav{display:flex;align-items:center;gap:17px;flex-wrap:wrap}
 nav a{font-size:12px;font-weight:900;color:#171717}
 nav a:hover{color:var(--red)}
 nav .nav-track{background:var(--red);color:#fff;padding:10px 13px}
-.hero{background:linear-gradient(115deg,#b9040d 0%,var(--red) 48%,var(--yellow) 48%,#ffe67b 100%);color:#fff;padding:74px 22px 78px;position:relative;overflow:hidden}
-.hero:after{content:"✈";position:absolute;right:4%;top:6%;font-size:clamp(130px,25vw,300px);color:#fff;opacity:.14;transform:rotate(-12deg);pointer-events:none}
+.hero{background:linear-gradient(112deg,#171717 0%,#171717 57%,#d40511 57%,#d40511 100%);color:#fff;padding:82px 22px 86px;position:relative;overflow:hidden;isolation:isolate}.hero:before{content:"";position:absolute;z-index:-1;right:-7%;top:-30%;width:56%;height:160%;background:var(--yellow);transform:skewX(-18deg);opacity:1}.hero-art{position:absolute;right:3%;top:12%;width:min(48%,570px);height:auto;z-index:0;filter:drop-shadow(0 22px 12px #0003);pointer-events:none}.hero-content{max-width:1100px;margin:auto;position:relative;z-index:1}.hero-content>*{max-width:640px}
+.hero:after{content:"";position:absolute;right:0;bottom:0;width:42%;height:9px;background:var(--red)}
 .hero-content,.container{max-width:1100px;margin:auto;position:relative;z-index:1}
 .hero-label{display:inline-block;background:var(--black);color:var(--yellow);padding:7px 12px;font-size:11px;font-weight:900;letter-spacing:1.3px}
 .hero h1{font-size:clamp(38px,7vw,68px);line-height:1.04;margin:23px 0 18px;max-width:790px;font-weight:900;letter-spacing:-1.7px;text-shadow:0 2px 5px #0002}
@@ -86,20 +86,20 @@ hr{margin:26px 0;border:0;border-top:1px solid var(--border)}
 .contact a{color:var(--yellow);text-decoration:underline;overflow-wrap:anywhere}
 footer{background:#090909;color:#ccc;text-align:center;padding:22px;font-size:12px}
 footer strong{color:var(--yellow)}
-@media(max-width:760px){.navbar{flex-direction:column;gap:15px}.brand{font-size:21px}nav{justify-content:center;gap:12px}nav a{font-size:11px}.hero{padding:48px 18px 52px}.hero-strip-inner{justify-content:center;text-align:center}.cards,.grid,.steps{grid-template-columns:1fr}.section{padding:42px 16px}.box,.card{padding:18px}.admin-actions .button,.hero-buttons .button{width:100%}}
+@media(max-width:760px){.hero{background:linear-gradient(155deg,#171717 0%,#171717 68%,#d40511 68%,#d40511 100%);padding:48px 18px 52px}.hero:before{right:-20%;top:45%;width:75%;height:70%;transform:skewX(-18deg)}.hero-art{position:relative;display:block;right:auto;top:auto;width:100%;max-width:360px;margin:24px auto -12px}.hero-content>*{max-width:100%}.navbar{flex-direction:column;gap:15px}.brand{font-size:21px}nav{justify-content:center;gap:12px}nav a{font-size:11px}.hero{padding:48px 18px 52px}.hero-strip-inner{justify-content:center;text-align:center}.cards,.grid,.steps{grid-template-columns:1fr}.section{padding:42px 16px}.box,.card{padding:18px}.admin-actions .button,.hero-buttons .button{width:100%}}
 </style>
 </head>
 <body>
 <div class="topbar">WORLDWIDE PARCEL DELIVERY · SHIPMENT TRACKING · CUSTOMER SUPPORT</div>
 <header><div class="navbar">
-<a href="#home" class="brand"><span class="brand-icon" aria-hidden="true">✈</span><span class="brand-text">TRUSTNOVA <span>EXPRESS</span><small>DELIVERING TRUST, WORLDWIDE</small></span></a>
+<a href="#home" class="brand"><span class="brand-icon" aria-hidden="true"><svg viewBox="0 0 64 64" role="img"><path fill="currentColor" d="M60 8c-2-2-6-1-9 1L35 20 12 12 6 17l19 13-10 10-8-2-4 4 12 7 7 12 4-4-2-8 10-10 13 19 5-6-8-23 11-16c2-3 3-5 1-7z"/></svg></span><span class="brand-text">TRUSTNOVA <span>EXPRESS</span><small>DELIVERING TRUST, WORLDWIDE</small></span></a>
 <nav><a href="#home">HOME</a><a href="#tracking">TRACK PARCEL</a><a href="#services">SERVICES</a><a href="#how">HOW IT WORKS</a><a href="#admin">ADMIN LOGIN</a><a href="#contact" class="nav-track">CONTACT US</a></nav>
 </div></header>
 <main>
-<section class="hero" id="home"><div class="hero-content">
+<section class="hero" id="home"><svg class="hero-art" viewBox="0 0 720 360" aria-hidden="true"><defs><linearGradient id="planeBody" x1="0" x2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e8e8e8"/></linearGradient></defs><path d="M55 195 L290 155 L420 55 Q438 42 450 53 L405 145 L560 120 Q595 116 615 133 L625 144 L420 204 L370 302 L335 310 L340 225 L170 250 L130 292 L105 293 L115 238 L55 218 Z" fill="url(#planeBody)" stroke="#171717" stroke-width="7" stroke-linejoin="round"/><path d="M410 146 L560 120 Q595 116 615 133 L625 144 L420 204 Z" fill="#d40511"/><path d="M340 225 L170 250 L130 292 L105 293 L115 238 Z" fill="#ffcc00"/><path d="M82 203 L270 172" stroke="#d40511" stroke-width="9" stroke-linecap="round"/></svg><div class="hero-content">
 <span class="hero-label">✈ TRUSTNOVA EXPRESS · PARCEL DELIVERY</span>
-<h1>Connecting Your World Through <span>Reliable Delivery.</span></h1>
-<p>Welcome to TrustNova Express. Check the latest available tracking information for your registered parcel and contact our team for delivery enquiries. Shipment arrangements, prices and delivery estimates must be confirmed before a parcel is accepted.</p>
+<h1>YOUR PARCEL. <span>OUR COMMITMENT.</span></h1>
+<p>From registration to tracking updates, TrustNova Express helps you follow your parcel journey with clarity. Enter your tracking number to view the latest status recorded for your shipment.</p>
 <div class="hero-buttons"><a class="button" href="#tracking">TRACK YOUR PARCEL →</a><a class="button black" href="#services">EXPLORE OUR SERVICES</a></div>
 </div></section>
 <div class="hero-strip"><div class="hero-strip-inner"><span>✈ PARCEL REGISTRATION</span><span>📍 SHIPMENT STATUS UPDATES</span><span>🌍 DELIVERY ENQUIRIES</span></div></div>
