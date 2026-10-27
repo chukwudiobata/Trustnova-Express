@@ -10,276 +10,77 @@
 
 <style>
 :root {
-  --navy: #092b50;
-  --blue: #1769aa;
-  --green: #159447;
-  --light: #eaf5ff;
-  --text: #26374a;
-  --muted: #68788a;
-  --border: #dce8f2;
+  --navy:#092b50;
+  --blue:#1769aa;
+  --green:#159447;
+  --light:#eaf5ff;
+  --text:#26374a;
+  --muted:#68788a;
+  --border:#dce8f2;
 }
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-body {
-  font-family: Arial, Helvetica, sans-serif;
-  color: var(--text);
-  line-height: 1.6;
-  background: #fff;
-}
-a { text-decoration: none; }
-.topbar {
-  background: var(--navy);
-  color: white;
-  text-align: center;
-  padding: 9px;
-  font-size: 13px;
-}
-header {
-  background: white;
-  box-shadow: 0 3px 15px #092b5012;
-}
-.navbar {
-  max-width: 1100px;
-  margin: auto;
-  padding: 16px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-.brand {
-  font-size: 23px;
-  font-weight: 900;
-  color: var(--navy);
-}
-.brand span { color: var(--green); }
-nav {
-  display: flex;
-  gap: 15px;
-  flex-wrap: wrap;
-}
-nav a {
-  color: var(--navy);
-  font-size: 14px;
-  font-weight: bold;
-}
-.hero {
-  background: linear-gradient(125deg, var(--navy), var(--blue));
-  color: white;
-  padding: 65px 22px 80px;
-}
-.hero-content, .container {
-  max-width: 1100px;
-  margin: auto;
-}
-.hero h1 {
-  font-size: clamp(35px, 6vw, 58px);
-  line-height: 1.15;
-  margin: 20px 0;
-}
-.hero h1 span { color: #73e6a0; }
-.hero p {
-  max-width: 650px;
-  margin-bottom: 24px;
-  color: #e4effa;
-}
-.button {
-  display: inline-block;
-  background: var(--green);
-  color: white;
-  border: 0;
-  border-radius: 6px;
-  padding: 12px 18px;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 14px;
-}
-.button.blue { background: var(--blue); }
-.button.red { background: #7b2635; }
-.button:disabled {
-  opacity: .6;
-  cursor: not-allowed;
-}
-.section { padding: 55px 20px; }
-.section-heading {
-  text-align: center;
-  margin-bottom: 30px;
-}
-.section-heading small {
-  color: var(--green);
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-}
-.section-heading h2 {
-  color: var(--navy);
-  font-size: clamp(27px, 4vw, 36px);
-  margin: 8px 0;
-}
-.section-heading p { color: var(--muted); }
-.cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-}
-.card, .box {
-  background: white;
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 24px;
-  box-shadow: 0 5px 20px #092b5008;
-}
-.card h3 {
-  color: var(--navy);
-  margin-bottom: 8px;
-}
-.card p {
-  color: var(--muted);
-  font-size: 14px;
-}
-.light { background: var(--light); }
-.box {
-  max-width: 900px;
-  margin: auto;
-  border-top: 5px solid var(--green);
-}
-label {
-  display: block;
-  font-size: 14px;
-  font-weight: bold;
-  color: var(--navy);
-  margin: 12px 0 5px;
-}
-input, select, textarea {
-  width: 100%;
-  padding: 12px;
-  border: 1px solid #cad8e5;
-  border-radius: 6px;
-  font: inherit;
-  background: white;
-  color: var(--text);
-}
-textarea { min-height: 90px; }
-form .button { margin-top: 15px; }
-.message {
-  margin-top: 14px;
-  font-weight: bold;
-  overflow-wrap: anywhere;
-}
-.muted {
-  font-size: 13px;
-  color: var(--muted);
-  margin-top: 10px;
-}
-.hidden { display: none !important; }
-.grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-}
-hr {
-  margin: 25px 0;
-  border: 0;
-  border-top: 1px solid var(--border);
-}
-.admin-actions {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-top: 18px;
-}
-.parcel-list {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 18px;
-  margin-top: 20px;
-}
-.parcel-card {
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 18px;
-  background: #fff;
-  box-shadow: 0 4px 14px #092b5008;
-  min-width: 0;
-}
-.parcel-card h4 {
-  color: var(--navy);
-  font-size: 18px;
-  overflow-wrap: anywhere;
-  margin-bottom: 10px;
-}
-.parcel-card .parcel-status {
-  display: inline-block;
-  background: #e4f7ea;
-  color: #126d34;
-  padding: 5px 10px;
-  border-radius: 20px;
-  font-size: 12px;
-  font-weight: bold;
-  margin-bottom: 12px;
-}
-.parcel-detail {
-  padding: 8px 0;
-  border-bottom: 1px solid #edf2f7;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-}
-.parcel-detail:last-child { border-bottom: 0; }
-.parcel-detail strong {
-  display: block;
-  color: var(--navy);
-  font-size: 13px;
-  margin-bottom: 2px;
-}
-.parcel-detail span {
-  display: block;
-  font-size: 14px;
-  white-space: pre-wrap;
-}
-.private-note {
-  background: #fff8e7;
-  border: 1px solid #f1dfaa;
-  padding: 12px;
-  border-radius: 7px;
-  margin-top: 12px;
-}
-.private-note strong { color: #75520b; }
-.empty-state {
-  padding: 18px;
-  background: #f7fafc;
-  border-radius: 8px;
-  color: var(--muted);
-}
-.contact {
-  background: var(--navy);
-  color: white;
-  text-align: center;
-  padding: 40px 20px;
-}
-.contact a {
-  color: #8af0ad;
-  text-decoration: underline;
-}
-footer {
-  background: #061b32;
-  color: #c6d6e6;
-  text-align: center;
-  padding: 22px;
-  font-size: 13px;
-}
-@media(max-width:700px) {
-  .navbar { flex-direction: column; }
-  nav { justify-content: center; gap: 12px; }
-  .cards, .grid { grid-template-columns: 1fr; }
-  .section { padding: 40px 16px; }
-  .box, .card { padding: 18px; }
-  .hero { padding: 45px 18px 55px; }
-  .parcel-card { padding: 14px; }
-  .admin-actions .button { width: 100%; }
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,Helvetica,sans-serif;color:var(--text);line-height:1.6;background:#fff}
+a{text-decoration:none}
+.topbar{background:var(--navy);color:white;text-align:center;padding:9px;font-size:13px}
+header{background:white;box-shadow:0 3px 15px #092b5012}
+.navbar{max-width:1100px;margin:auto;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.brand{font-size:23px;font-weight:900;color:var(--navy)}
+.brand span{color:var(--green)}
+nav{display:flex;gap:15px;flex-wrap:wrap}
+nav a{color:var(--navy);font-size:14px;font-weight:bold}
+.hero{background:linear-gradient(125deg,var(--navy),var(--blue));color:white;padding:65px 22px 80px}
+.hero-content,.container{max-width:1100px;margin:auto}
+.hero h1{font-size:clamp(35px,6vw,58px);line-height:1.15;margin:20px 0}
+.hero h1 span{color:#73e6a0}
+.hero p{max-width:650px;margin-bottom:24px;color:#e4effa}
+.button{display:inline-block;background:var(--green);color:white;border:0;border-radius:6px;padding:12px 18px;font-weight:bold;cursor:pointer;font-size:14px}
+.button.blue{background:var(--blue)}
+.button.red{background:#7b2635}
+.button:disabled{opacity:.6;cursor:not-allowed}
+.section{padding:55px 20px}
+.section-heading{text-align:center;margin-bottom:30px}
+.section-heading small{color:var(--green);font-weight:bold;text-transform:uppercase;letter-spacing:1px}
+.section-heading h2{color:var(--navy);font-size:clamp(27px,4vw,36px);margin:8px 0}
+.section-heading p{color:var(--muted)}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card,.box{background:white;border:1px solid var(--border);border-radius:10px;padding:24px;box-shadow:0 5px 20px #092b5008}
+.card h3{color:var(--navy);margin-bottom:8px}
+.card p{color:var(--muted);font-size:14px}
+.light{background:var(--light)}
+.box{max-width:900px;margin:auto;border-top:5px solid var(--green)}
+label{display:block;font-size:14px;font-weight:bold;color:var(--navy);margin:12px 0 5px}
+input,select,textarea{width:100%;padding:12px;border:1px solid #cad8e5;border-radius:6px;font:inherit;background:white;color:var(--text)}
+textarea{min-height:90px}
+form .button{margin-top:15px}
+.message{margin-top:14px;font-weight:bold;overflow-wrap:anywhere}
+.muted{font-size:13px;color:var(--muted);margin-top:10px}
+.hidden{display:none!important}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+hr{margin:25px 0;border:0;border-top:1px solid var(--border)}
+.admin-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.parcel-list{display:grid;grid-template-columns:1fr;gap:18px;margin-top:20px}
+.parcel-card{border:1px solid var(--border);border-radius:10px;padding:18px;background:#fff;box-shadow:0 4px 14px #092b5008;min-width:0}
+.parcel-card h4{color:var(--navy);font-size:18px;overflow-wrap:anywhere;margin-bottom:10px}
+.parcel-card .parcel-status{display:inline-block;background:#e4f7ea;color:#126d34;padding:5px 10px;border-radius:20px;font-size:12px;font-weight:bold;margin-bottom:12px}
+.parcel-detail{padding:8px 0;border-bottom:1px solid #edf2f7;overflow-wrap:anywhere;word-break:break-word}
+.parcel-detail:last-child{border-bottom:0}
+.parcel-detail strong{display:block;color:var(--navy);font-size:13px;margin-bottom:2px}
+.parcel-detail span{display:block;font-size:14px;white-space:pre-wrap}
+.private-note{background:#fff8e7;border:1px solid #f1dfaa;padding:12px;border-radius:7px;margin-top:12px}
+.private-note strong{color:#75520b}
+.empty-state{padding:18px;background:#f7fafc;border-radius:8px;color:var(--muted)}
+.contact{background:var(--navy);color:white;text-align:center;padding:40px 20px}
+.contact a{color:#8af0ad;text-decoration:underline}
+footer{background:#061b32;color:#c6d6e6;text-align:center;padding:22px;font-size:13px}
+@media(max-width:700px){
+  .navbar{flex-direction:column}
+  nav{justify-content:center;gap:12px}
+  .cards,.grid{grid-template-columns:1fr}
+  .section{padding:40px 16px}
+  .box,.card{padding:18px}
+  .hero{padding:45px 18px 55px}
+  .parcel-card{padding:14px}
+  .admin-actions .button{width:100%}
 }
 </style>
 </head>
@@ -331,17 +132,12 @@ footer {
     <div class="box">
       <form id="trackingForm">
         <label for="trackingNumber">Tracking number</label>
-        <input
-          id="trackingNumber"
-          maxlength="100"
-          required
-          placeholder="e.g. TNX-20261027-ABC123"
-        >
+        <input id="trackingNumber" maxlength="100" required
+          placeholder="e.g. TNX-20261027-ABC123">
         <button class="button" id="trackButton" type="submit">
           Track Parcel
         </button>
       </form>
-
       <div id="trackingMessage" class="message" role="status"></div>
     </div>
   </div>
@@ -361,26 +157,15 @@ footer {
     <div class="cards">
       <div class="card">
         <h3>🌍 International Delivery</h3>
-        <p>
-          International parcel enquiries, subject to route availability
-          and applicable requirements.
-        </p>
+        <p>International parcel enquiries, subject to route availability and applicable requirements.</p>
       </div>
-
       <div class="card">
         <h3>📦 Parcel Handling</h3>
-        <p>
-          Parcel registration and handling arrangements can be confirmed
-          with our support team.
-        </p>
+        <p>Parcel registration and handling arrangements can be confirmed with our support team.</p>
       </div>
-
       <div class="card">
         <h3>📍 Shipment Updates</h3>
-        <p>
-          Use your tracking number to check available shipment status
-          information.
-        </p>
+        <p>Use your tracking number to check available shipment status information.</p>
       </div>
     </div>
   </div>
@@ -395,33 +180,19 @@ footer {
     </div>
 
     <div class="box">
-
       <div id="loginPanel">
         <h3>Admin Login</h3>
-
         <form id="loginForm">
           <label for="adminEmail">Email address</label>
-          <input
-            id="adminEmail"
-            type="email"
-            autocomplete="username"
-            required
-            value="trustnovaexpress@gmail.com"
-          >
+          <input id="adminEmail" type="email" autocomplete="username"
+            required value="trustnovaexpress@gmail.com">
 
           <label for="adminPassword">Password</label>
-          <input
-            id="adminPassword"
-            type="password"
-            autocomplete="current-password"
-            required
-          >
+          <input id="adminPassword" type="password"
+            autocomplete="current-password" required>
 
-          <button class="button" type="submit" id="loginButton">
-            Sign In
-          </button>
+          <button class="button" type="submit" id="loginButton">Sign In</button>
         </form>
-
         <p class="muted">
           Use the password created for your Supabase admin account.
           Never share it.
@@ -429,28 +200,23 @@ footer {
       </div>
 
       <div id="dashboardPanel" class="hidden">
-
         <h3>Parcel Management</h3>
         <p id="signedInAs" class="muted"></p>
 
         <form id="parcelForm">
-
           <div class="grid">
             <div>
               <label for="senderName">Sender name</label>
               <input id="senderName" maxlength="150" required>
             </div>
-
             <div>
               <label for="receiverName">Receiver name</label>
               <input id="receiverName" maxlength="150" required>
             </div>
-
             <div>
               <label for="senderPhone">Sender phone</label>
               <input id="senderPhone" maxlength="40">
             </div>
-
             <div>
               <label for="receiverPhone">Receiver phone</label>
               <input id="receiverPhone" maxlength="40">
@@ -464,14 +230,15 @@ footer {
           <textarea id="pickupAddress" maxlength="1000"></textarea>
 
           <label for="deliveryAddress">Delivery address</label>
-          <textarea id="deliveryAddress" maxlength="1000" required></textarea>
+          <textarea id="deliveryAddress" maxlength="1000" required>
+
+          </textarea>
 
           <div class="grid">
             <div>
               <label for="estimatedDelivery">Estimated delivery date</label>
               <input id="estimatedDelivery" type="date">
             </div>
-
             <div>
               <label for="parcelStatus">Initial status</label>
               <select id="parcelStatus">
@@ -486,9 +253,10 @@ footer {
           </div>
 
           <label for="adminNote">
-            Private admin note (not shown in public tracking)
+            Admin note (this note will be visible to customers)
           </label>
-          <textarea id="adminNote" maxlength="1000"></textarea>
+          <textarea id="adminNote" maxlength="1000"
+            placeholder="Enter a message intended for the customer"></textarea>
 
           <button class="button" type="submit" id="registerButton">
             Register Parcel
@@ -500,7 +268,6 @@ footer {
         <hr>
 
         <h3>Update Parcel Status</h3>
-
         <form id="updateForm">
           <label for="updateTracking">Tracking number</label>
           <input id="updateTracking" required maxlength="100">
@@ -515,8 +282,9 @@ footer {
             <option>Delivered</option>
           </select>
 
-          <label for="updateNote">Private admin note</label>
-          <textarea id="updateNote" maxlength="1000"></textarea>
+          <label for="updateNote">Customer-visible admin note</label>
+          <textarea id="updateNote" maxlength="1000"
+            placeholder="Enter an update for the customer"></textarea>
 
           <button class="button blue" type="submit" id="updateButton">
             Update Status
@@ -530,14 +298,13 @@ footer {
         <h3>Registered Parcels</h3>
         <p class="muted">
           Full parcel details are visible here to the authorised administrator.
-          Private notes and addresses are not included in public tracking.
+          Only customer-appropriate notes should be entered in the note field.
         </p>
 
         <div class="admin-actions">
           <button id="refreshButton" class="button blue" type="button">
             Refresh Parcel List
           </button>
-
           <button id="logoutButton" class="button red" type="button">
             Sign Out
           </button>
@@ -547,7 +314,6 @@ footer {
         <div id="parcelRows" class="parcel-list">
           <div class="empty-state">Sign in to load your parcels.</div>
         </div>
-
       </div>
     </div>
   </div>
@@ -576,7 +342,6 @@ footer {
 document.getElementById("year").textContent =
   new Date().getFullYear();
 
-/* Existing TrustNova Express Supabase connection */
 const SUPABASE_URL =
   "https://trydftaqqypqcxsgixto.supabase.co";
 
@@ -606,7 +371,9 @@ function message(id, text, isError = false) {
 }
 
 function safeValue(value) {
-  return value == null || value === "" ? "Not provided" : String(value);
+  return value == null || value === ""
+    ? "Not provided"
+    : String(value);
 }
 
 function makeTrackingNumber() {
@@ -616,7 +383,7 @@ function makeTrackingNumber() {
 
   const random = crypto.randomUUID()
     .replaceAll("-", "")
-    .slice(0, 8)
+    .slice(0, 16)
     .toUpperCase();
 
   return "TNX-" + date + "-" + random;
@@ -625,13 +392,9 @@ function makeTrackingNumber() {
 async function currentAdmin() {
   const { data, error } = await client.auth.getUser();
 
-  if (error || !data.user) {
-    return null;
-  }
+  if (error || !data.user) return null;
 
-  if (
-    (data.user.email || "").toLowerCase() !== ADMIN_EMAIL
-  ) {
+  if ((data.user.email || "").toLowerCase() !== ADMIN_EMAIL) {
     await client.auth.signOut();
     return null;
   }
@@ -640,101 +403,79 @@ async function currentAdmin() {
 }
 
 function showLogin() {
-  document.getElementById("loginPanel")
-    .classList.remove("hidden");
-
-  document.getElementById("dashboardPanel")
-    .classList.add("hidden");
+  document.getElementById("loginPanel").classList.remove("hidden");
+  document.getElementById("dashboardPanel").classList.add("hidden");
 }
 
 async function showDashboard(user) {
-  document.getElementById("loginPanel")
-    .classList.add("hidden");
-
-  document.getElementById("dashboardPanel")
-    .classList.remove("hidden");
-
+  document.getElementById("loginPanel").classList.add("hidden");
+  document.getElementById("dashboardPanel").classList.remove("hidden");
   document.getElementById("signedInAs").textContent =
     "Signed in as " + user.email;
-
   await loadParcels();
 }
 
 /* Admin login */
-document.getElementById("loginForm")
-  .addEventListener("submit", async event => {
-    event.preventDefault();
+document.getElementById("loginForm").addEventListener("submit", async event => {
+  event.preventDefault();
 
-    const button = document.getElementById("loginButton");
-    button.disabled = true;
-    button.textContent = "Signing in...";
+  const button = document.getElementById("loginButton");
+  button.disabled = true;
+  button.textContent = "Signing in...";
 
-    try {
-      const email = document.getElementById("adminEmail")
-        .value.trim().toLowerCase();
+  try {
+    const email = document.getElementById("adminEmail")
+      .value.trim().toLowerCase();
+    const password = document.getElementById("adminPassword").value;
 
-      const password =
-        document.getElementById("adminPassword").value;
-
-      if (email !== ADMIN_EMAIL) {
-        alert("This email is not authorised for admin login.");
-        return;
-      }
-
-      const { data, error } =
-        await client.auth.signInWithPassword({
-          email,
-          password
-        });
-
-      if (error) {
-        alert("Login failed: " + error.message);
-        return;
-      }
-
-      if (
-        !data.user ||
-        (data.user.email || "").toLowerCase() !== ADMIN_EMAIL
-      ) {
-        await client.auth.signOut();
-        alert("This account is not authorised as administrator.");
-        return;
-      }
-
-      document.getElementById("adminPassword").value = "";
-
-      await showDashboard(data.user);
-
-    } catch (error) {
-      alert("Login error: " + error.message);
-    } finally {
-      button.disabled = false;
-      button.textContent = "Sign In";
+    if (email !== ADMIN_EMAIL) {
+      alert("This email is not authorised for admin login.");
+      return;
     }
-  });
+
+    const { data, error } = await client.auth.signInWithPassword({
+      email,
+      password
+    });
+
+    if (error) {
+      alert("Login failed: " + error.message);
+      return;
+    }
+
+    if (!data.user ||
+        (data.user.email || "").toLowerCase() !== ADMIN_EMAIL) {
+      await client.auth.signOut();
+      alert("This account is not authorised as administrator.");
+      return;
+    }
+
+    document.getElementById("adminPassword").value = "";
+    await showDashboard(data.user);
+
+  } catch (error) {
+    alert("Login error: " + error.message);
+  } finally {
+    button.disabled = false;
+    button.textContent = "Sign In";
+  }
+});
 
 /* Sign out */
-document.getElementById("logoutButton")
-  .addEventListener("click", async () => {
-    await client.auth.signOut();
-    showLogin();
-    message("adminMessage", "You have signed out.");
-  });
+document.getElementById("logoutButton").addEventListener("click", async () => {
+  await client.auth.signOut();
+  showLogin();
+  message("adminMessage", "You have signed out.");
+});
 
-/*
-  Display full parcel details in administrator-only cards.
-  These fields are never requested by the public tracking form.
-*/
+/* Load registered parcels for the administrator */
 async function loadParcels() {
   const user = await currentAdmin();
 
   if (!user) {
     showLogin();
-    message(
-      "listMessage",
-      "Please sign in with the authorised admin account.",
-      true
-    );
+    message("listMessage",
+      "Please sign in with the authorised admin account.", true);
     return;
   }
 
@@ -760,11 +501,7 @@ async function loadParcels() {
     .limit(100);
 
   if (error) {
-    message(
-      "listMessage",
-      "Could not load parcels: " + error.message,
-      true
-    );
+    message("listMessage", "Could not load parcels: " + error.message, true);
     return;
   }
 
@@ -776,7 +513,6 @@ async function loadParcels() {
     empty.className = "empty-state";
     empty.textContent = "No parcels registered yet.";
     container.appendChild(empty);
-
     message("listMessage", "");
     return;
   }
@@ -786,8 +522,7 @@ async function loadParcels() {
     card.className = "parcel-card";
 
     const heading = document.createElement("h4");
-    heading.textContent =
-      "Tracking: " + safeValue(parcel.tracking_number);
+    heading.textContent = "Tracking: " + safeValue(parcel.tracking_number);
     card.appendChild(heading);
 
     const status = document.createElement("div");
@@ -822,7 +557,7 @@ async function loadParcels() {
     note.className = "private-note";
 
     const noteTitle = document.createElement("strong");
-    noteTitle.textContent = "Private admin note";
+    noteTitle.textContent = "Admin note";
 
     const noteContent = document.createElement("div");
     noteContent.style.whiteSpace = "pre-wrap";
@@ -858,264 +593,205 @@ async function loadParcels() {
     container.appendChild(card);
   }
 
-  message(
-    "listMessage",
-    "Loaded " + data.length + " parcel(s)."
-  );
+  message("listMessage", "Loaded " + data.length + " parcel(s).");
 }
 
 document.getElementById("refreshButton")
   .addEventListener("click", loadParcels);
 
 /* Register a parcel */
-document.getElementById("parcelForm")
-  .addEventListener("submit", async event => {
-    event.preventDefault();
+document.getElementById("parcelForm").addEventListener("submit", async event => {
+  event.preventDefault();
 
-    const button = document.getElementById("registerButton");
-    button.disabled = true;
-    button.textContent = "Registering...";
+  const button = document.getElementById("registerButton");
+  button.disabled = true;
+  button.textContent = "Registering...";
 
-    try {
-      const user = await currentAdmin();
+  try {
+    const user = await currentAdmin();
 
-      if (!user) {
-        message("adminMessage", "Please sign in again.", true);
-        showLogin();
-        return;
-      }
-
-      const trackingNumber = makeTrackingNumber();
-
-      const parcel = {
-        tracking_number: trackingNumber,
-        sender_name: document.getElementById("senderName")
-          .value.trim(),
-        receiver_name: document.getElementById("receiverName")
-          .value.trim(),
-        sender_phone: document.getElementById("senderPhone")
-          .value.trim(),
-        receiver_phone: document.getElementById("receiverPhone")
-          .value.trim(),
-        parcel_description: document
-          .getElementById("parcelDescription").value.trim(),
-        pickup_address: document.getElementById("pickupAddress")
-          .value.trim(),
-        delivery_address: document.getElementById("deliveryAddress")
-          .value.trim(),
-        status: document.getElementById("parcelStatus").value,
-        estimated_delivery:
-          document.getElementById("estimatedDelivery").value || null,
-        admin_note: document.getElementById("adminNote")
-          .value.trim()
-      };
-
-      if (!allowedStatuses.includes(parcel.status)) {
-        message("adminMessage", "Please choose a valid status.", true);
-        return;
-      }
-
-      const { error } = await client
-        .from("Parcels")
-        .insert(parcel);
-
-      if (error) {
-        message(
-          "adminMessage",
-          "Parcel was not saved: " + error.message,
-          true
-        );
-        return;
-      }
-
-      message(
-        "adminMessage",
-        "Parcel registered successfully. Tracking number: " +
-          trackingNumber
-      );
-
-      document.getElementById("parcelForm").reset();
-
-      document.getElementById("updateTracking").value =
-        trackingNumber;
-
-      document.getElementById("updateNote").value =
-        parcel.admin_note;
-
-      await loadParcels();
-
-    } catch (error) {
-      message(
-        "adminMessage",
-        "Registration error: " + error.message,
-        true
-      );
-    } finally {
-      button.disabled = false;
-      button.textContent = "Register Parcel";
+    if (!user) {
+      message("adminMessage", "Please sign in again.", true);
+      showLogin();
+      return;
     }
-  });
 
-/* Update a parcel's status and private note */
-document.getElementById("updateForm")
-  .addEventListener("submit", async event => {
-    event.preventDefault();
+    const trackingNumber = makeTrackingNumber();
 
-    const button = document.getElementById("updateButton");
-    button.disabled = true;
-    button.textContent = "Updating...";
+    const parcel = {
+      tracking_number: trackingNumber,
+      sender_name: document.getElementById("senderName").value.trim(),
+      receiver_name: document.getElementById("receiverName").value.trim(),
+      sender_phone: document.getElementById("senderPhone").value.trim(),
+      receiver_phone: document.getElementById("receiverPhone").value.trim(),
+      parcel_description: document.getElementById("parcelDescription").value.trim(),
+      pickup_address: document.getElementById("pickupAddress").value.trim(),
+      delivery_address: document.getElementById("deliveryAddress").value.trim(),
+      status: document.getElementById("parcelStatus").value,
+      estimated_delivery:
+        document.getElementById("estimatedDelivery").value || null,
+      admin_note: document.getElementById("adminNote").value.trim()
+    };
 
-    try {
-      const user = await currentAdmin();
-
-      if (!user) {
-        message("updateMessage", "Please sign in again.", true);
-        showLogin();
-        return;
-      }
-
-      const trackingNumber = document
-        .getElementById("updateTracking").value.trim();
-
-      const status =
-        document.getElementById("updateStatus").value;
-
-      const note = document
-        .getElementById("updateNote").value.trim();
-
-      if (!allowedStatuses.includes(status)) {
-        message("updateMessage", "Please choose a valid status.", true);
-        return;
-      }
-
-      const { data, error } = await client
-        .from("Parcels")
-        .update({
-          status: status,
-          admin_note: note
-        })
-        .eq("tracking_number", trackingNumber)
-        .select("tracking_number");
-
-      if (error) {
-        message(
-          "updateMessage",
-          "Status update failed: " + error.message,
-          true
-        );
-        return;
-      }
-
-      if (!data || data.length === 0) {
-        message(
-          "updateMessage",
-          "No parcel was updated. Check the tracking number and permissions.",
-          true
-        );
-        return;
-      }
-
-      message("updateMessage", "Parcel status and note updated successfully.");
-
-      await loadParcels();
-
-    } catch (error) {
-      message(
-        "updateMessage",
-        "Update error: " + error.message,
-        true
-      );
-    } finally {
-      button.disabled = false;
-      button.textContent = "Update Status";
+    if (!allowedStatuses.includes(parcel.status)) {
+      message("adminMessage", "Please choose a valid status.", true);
+      return;
     }
-  });
 
-/*
-  Public tracking returns only the limited information provided
-  by the track_parcel database function.
-*/
-document.getElementById("trackingForm")
-  .addEventListener("submit", async event => {
-    event.preventDefault();
+    const { error } = await client.from("Parcels").insert(parcel);
 
-    const button = document.getElementById("trackButton");
-    button.disabled = true;
-    button.textContent = "Checking...";
-
-    try {
-      const number = document
-        .getElementById("trackingNumber").value.trim();
-
-      if (!number) return;
-
-      message("trackingMessage", "Checking tracking information...");
-
-      const { data, error } = await client.rpc("track_parcel", {
-        p_tracking_number: number
-      });
-
-      if (error) {
-        message(
-          "trackingMessage",
-          "Tracking is temporarily unavailable. Please contact trustnovaexpress@gmail.com.",
-          true
-        );
-        return;
-      }
-
-      const result = Array.isArray(data) ? data[0] : data;
-
-      if (!result || !result.tracking_number) {
-        message(
-          "trackingMessage",
-          "No parcel was found for that tracking number.",
-          true
-        );
-        return;
-      }
-
-      const output = document.getElementById("trackingMessage");
-      output.replaceChildren();
-
-      const heading = document.createElement("h3");
-      heading.textContent = "Tracking Result";
-      output.appendChild(heading);
-
-      function addTrackingDetail(title, value) {
-        const row = document.createElement("p");
-        row.className = "parcel-detail";
-
-        const label = document.createElement("strong");
-        label.textContent = title + ": ";
-
-        const detail = document.createElement("span");
-        detail.textContent = safeValue(value);
-
-        row.append(label, detail);
-        output.appendChild(row);
-      }
-
-      addTrackingDetail("Tracking Number", result.tracking_number);
-      addTrackingDetail("Sender Name", result.sender_name);
-      addTrackingDetail("Sender Address", result.sender_address);
-      addTrackingDetail("Receiver Name", result.receiver_name);
-      addTrackingDetail("Receiver Address", result.receiver_address);
-      addTrackingDetail("Parcel Description", result.parcel_description);
-      addTrackingDetail("Current Status", result.status);
-      addTrackingDetail("Estimated Delivery", result.estimated_delivery);
-
-    } catch (error) {
-      message(
-        "trackingMessage",
-        "Tracking error: " + error.message,
-        true
-      );
-    } finally {
-      button.disabled = false;
-      button.textContent = "Track Parcel";
+    if (error) {
+      message("adminMessage", "Parcel was not saved: " + error.message, true);
+      return;
     }
-  });
+
+    message("adminMessage",
+      "Parcel registered successfully. Tracking number: " + trackingNumber);
+
+    document.getElementById("parcelForm").reset();
+    document.getElementById("updateTracking").value = trackingNumber;
+    document.getElementById("updateNote").value = parcel.admin_note;
+
+    await loadParcels();
+
+  } catch (error) {
+    message("adminMessage", "Registration error: " + error.message, true);
+  } finally {
+    button.disabled = false;
+    button.textContent = "Register Parcel";
+  }
+});
+
+/* Update parcel status and customer-visible note */
+document.getElementById("updateForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const button = document.getElementById("updateButton");
+  button.disabled = true;
+  button.textContent = "Updating...";
+
+  try {
+    const user = await currentAdmin();
+
+    if (!user) {
+      message("updateMessage", "Please sign in again.", true);
+      showLogin();
+      return;
+    }
+
+    const trackingNumber = document.getElementById("updateTracking")
+      .value.trim();
+    const status = document.getElementById("updateStatus").value;
+    const note = document.getElementById("updateNote").value.trim();
+
+    if (!allowedStatuses.includes(status)) {
+      message("updateMessage", "Please choose a valid status.", true);
+      return;
+    }
+
+    const { data, error } = await client
+      .from("Parcels")
+      .update({ status: status, admin_note: note })
+      .eq("tracking_number", trackingNumber)
+      .select("tracking_number");
+
+    if (error) {
+      message("updateMessage", "Status update failed: " + error.message, true);
+      return;
+    }
+
+    if (!data || data.length === 0) {
+      message("updateMessage",
+        "No parcel was updated. Check the tracking number and permissions.",
+        true);
+      return;
+    }
+
+    message("updateMessage", "Parcel status and note updated successfully.");
+    await loadParcels();
+
+  } catch (error) {
+    message("updateMessage", "Update error: " + error.message, true);
+  } finally {
+    button.disabled = false;
+    button.textContent = "Update Status";
+  }
+});
+
+/* Public tracking: includes Admin Note returned by the database function */
+document.getElementById("trackingForm").addEventListener("submit", async event => {
+  event.preventDefault();
+
+  const button = document.getElementById("trackButton");
+  button.disabled = true;
+  button.textContent = "Checking...";
+
+  try {
+    const number = document.getElementById("trackingNumber").value.trim();
+
+    if (!number) return;
+
+    message("trackingMessage", "Checking tracking information...");
+
+    const { data, error } = await client.rpc("track_parcel", {
+      p_tracking_number: number
+    });
+
+    if (error) {
+      message("trackingMessage",
+        "Tracking is temporarily unavailable. Please contact trustnovaexpress@gmail.com.",
+        true);
+      return;
+    }
+
+    const result = Array.isArray(data) ? data[0] : data;
+
+    if (!result || !result.tracking_number) {
+      message("trackingMessage",
+        "No parcel was found for that tracking number.", true);
+      return;
+    }
+
+    const output = document.getElementById("trackingMessage");
+    output.replaceChildren();
+
+    const heading = document.createElement("h3");
+    heading.textContent = "Tracking Result";
+    output.appendChild(heading);
+
+    function addTrackingDetail(title, value) {
+      const row = document.createElement("p");
+      row.className = "parcel-detail";
+
+      const label = document.createElement("strong");
+      label.textContent = title + ":";
+
+      const detail = document.createElement("span");
+      detail.textContent = safeValue(value);
+
+      row.append(label, detail);
+      output.appendChild(row);
+    }
+
+    addTrackingDetail("Tracking Number", result.tracking_number);
+    addTrackingDetail("Sender Name", result.sender_name);
+    addTrackingDetail("Sender Address", result.sender_address);
+    addTrackingDetail("Receiver Name", result.receiver_name);
+    addTrackingDetail("Receiver Address", result.receiver_address);
+    addTrackingDetail("Parcel Description", result.parcel_description);
+    addTrackingDetail("Current Status", result.status);
+    addTrackingDetail("Estimated Delivery", result.estimated_delivery);
+
+    /* This is the addition that displays the Admin Note to customers. */
+    addTrackingDetail("Admin Note", result.admin_note);
+
+  } catch (error) {
+    message("trackingMessage", "Tracking error: " + error.message, true);
+  } finally {
+    button.disabled = false;
+    button.textContent = "Track Parcel";
+  }
+});
 
 /* Restore an existing authorised admin session */
 (async function restoreSession() {
