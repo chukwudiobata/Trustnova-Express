@@ -838,8 +838,7 @@
 
         /*
           Display parcel details.
-          These values must be returned by the track_parcel function.
-          The alternative names below support common database naming styles.
+          Current Package Location has been removed.
         */
 
         trackingResult.className = "message success";
@@ -917,17 +916,7 @@
           ])
         );
 
-        addDetail(
-          trackingResult,
-          "Current Package Location",
-          getParcelValue(parcel, [
-            "current_location",
-            "currentLocation",
-            "location",
-            "last_location",
-            "present_location"
-          ])
-        );
+        /* Current Package Location removed here */
 
         addDetail(
           trackingResult,
