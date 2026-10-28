@@ -1,0 +1,144 @@
+<!DOCTYPE html><html lang="en"><head>  <meta charset="UTF-8">  <meta name="viewport" content="width=device-width, initial-scale=1">  <title>TrustNova Express | Admin Dashboard</title>  <meta name="theme-color" content="#f5c400">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>    :root {      --yellow: #f5c400;      --red: #c90019;      --black: #151515;      --grey: #f4f5f7;      --white: #ffffff;      --green: #167647;    }
+    * { box-sizing: border-box; }
+    body {      margin: 0;      font-family: Arial, Helvetica, sans-serif;      background: var(--grey);      color: var(--black);      line-height: 1.6;    }
+    header {      background: var(--yellow);      border-bottom: 4px solid var(--red);      padding: 20px;    }
+    .header-inner {      max-width: 1100px;      margin: auto;      display: flex;      align-items: center;      justify-content: space-between;      gap: 15px;      flex-wrap: wrap;    }
+    h1 { margin: 0; font-size: 26px; }
+    .subtitle {      margin: 3px 0 0;      color: var(--red);      font-weight: bold;    }
+    main {      width: min(1100px, 94%);      margin: 25px auto;    }
+    .panel {      background: var(--white);      border: 1px solid #ddd;      border-radius: 10px;      padding: 22px;      margin-bottom: 22px;      box-shadow: 0 3px 12px #00000008;    }
+    h2, h3 { margin-top: 0; }
+    label {      display: block;      font-weight: bold;      margin: 12px 0 5px;    }
+    input, select, textarea, button {      font: inherit;    }
+    input, select, textarea {      width: 100%;      padding: 12px;      border: 1px solid #ccc;      border-radius: 6px;      background: white;    }
+    textarea {      min-height: 85px;      resize: vertical;    }
+    button, .button {      display: inline-block;      border: none;      border-radius: 6px;      padding: 12px 17px;      font-weight: bold;      cursor: pointer;      text-decoration: none;      text-align: center;    }
+    button:disabled {      opacity: 0.6;      cursor: wait;    }
+    .red { background: var(--red); color: white; }    .black { background: var(--black); color: white; }    .yellow { background: var(--yellow); color: var(--black); }
+    .full { width: 100%; margin-top: 18px; }
+    .form-row {      display: grid;      grid-template-columns: repeat(2, minmax(0, 1fr));      gap: 15px;    }
+    .message {      margin-top: 15px;      padding: 12px;      border-radius: 6px;      overflow-wrap: anywhere;    }
+    .message:empty { display: none; }    .success { background: #e7f6ed; color: #145c35; }    .error { background: #fff0f0; color: #9a0013; }    .info { background: #eef2f7; color: #252525; }
+    #dashboard { display: none; }
+    .stats {      display: grid;      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));      gap: 12px;      margin-bottom: 22px;    }
+    .stat {      padding: 18px;      background: white;      border: 1px solid #ddd;      border-radius: 8px;    }
+    .stat strong {      display: block;      font-size: 26px;    }
+    .parcel {      background: white;      border: 1px solid #ddd;      border-left: 5px solid var(--yellow);      border-radius: 8px;      padding: 18px;      margin-top: 15px;      overflow-wrap: anywhere;    }
+    .parcel p { margin: 5px 0; }
+    .tracking {      font-size: 18px;      font-weight: bold;      color: var(--red);      overflow-wrap: anywhere;    }
+    .private-note {      background: #fff8d6;      padding: 10px;      border-radius: 6px;      margin-top: 10px;    }
+    footer {      background: var(--black);      color: white;      text-align: center;      padding: 22px;      margin-top: 40px;    }
+    @media (max-width: 600px) {      .form-row { grid-template-columns: 1fr; gap: 0; }      .panel { padding: 16px; }      h1 { font-size: 22px; }    }  </style></head>
+<body><header>  <div class="header-inner">    <div>      <h1>TRUSTNOVA EXPRESS</h1>      <p class="subtitle">Private Admin Dashboard</p>    </div>    <a class="button black" href="index.html">Customer Website</a>  </div></header>
+<main>
+  <!-- ADMIN LOGIN -->  <section id="login-panel" class="panel">    <h2>Administrator Login</h2>    <p>Sign in using your authorised TrustNova Express administrator account.</p>
+    <form id="login-form">      <label for="email">Admin Email Address</label>      <input        id="email"        type="email"        autocomplete="username"        required      >
+      <label for="password">Password</label>      <input        id="password"        type="password"        autocomplete="current-password"        required      >
+      <button id="login-button" class="black full" type="submit">        Sign In      </button>    </form>
+    <div id="login-message" class="message" role="status"></div>  </section>
+  <!-- ADMIN DASHBOARD -->  <section id="dashboard">
+    <div class="panel">      <h2>Shipment Management</h2>      <p>Signed in as <strong id="signed-in-email"></strong></p>      <button id="logout-button" class="red" type="button">Sign Out</button>      <button id="refresh-button" class="black" type="button">Refresh Parcels</button>      <div id="dashboard-message" class="message" role="status"></div>    </div>
+    <div class="stats">      <div class="stat">        Total Parcels        <strong id="total-count">0</strong>      </div>      <div class="stat">        In Transit        <strong id="transit-count">0</strong>      </div>      <div class="stat">        Delivered        <strong id="delivered-count">0</strong>      </div>    </div>
+    <!-- REGISTER PARCEL -->    <form id="parcel-form">
+      <div class="panel">        <h2>Register New Parcel</h2>
+        <h3>Sender Information</h3>
+        <div class="form-row">          <div>            <label for="sender-name">Sender's Full Name</label>            <input id="sender-name" required>          </div>          <div>            <label for="sender-phone">Sender's Phone</label>            <input id="sender-phone" type="tel" required>          </div>        </div>
+        <label for="sender-email">Sender's Email</label>        <input id="sender-email" type="email">
+        <label for="pickup-address">Sender's Full Address</label>        <textarea id="pickup-address" required></textarea>
+        <h3>Receiver Information</h3>
+        <div class="form-row">          <div>            <label for="receiver-name">Receiver's Full Name</label>            <input id="receiver-name" required>          </div>          <div>            <label for="receiver-phone">Receiver's Phone</label>            <input id="receiver-phone" type="tel" required>          </div>        </div>
+        <label for="receiver-email">Receiver's Email</label>        <input id="receiver-email" type="email">
+        <label for="delivery-address">Receiver's Full Delivery Address</label>        <textarea id="delivery-address" required></textarea>
+        <h3>Parcel Information</h3>
+        <label for="description">Parcel Description</label>        <textarea id="description" required></textarea>
+        <label for="estimated-delivery">Estimated Delivery Date</label>        <input id="estimated-delivery" type="date">
+        <label for="admin-note">Private Admin Note</label>        <textarea id="admin-note" placeholder="Internal notes for authorised staff"></textarea>
+        <button id="register-button" class="red full" type="submit">          Register Parcel        </button>
+        <div id="parcel-message" class="message" role="status"></div>      </div>
+    </form>
+    <!-- PARCEL LIST -->    <div class="panel">      <h2>Registered Parcels</h2>      <p>View shipments and update their delivery statuses.</p>      <div id="parcel-list">Sign in to load registered parcels.</div>    </div>
+  </section></main>
+<footer>  <strong>TRUSTNOVA EXPRESS</strong>  <p>Delivering Trust, Worldwide.</p>  <p>&copy; <span id="year"></span> TrustNova Express</p></footer>
+<script>(() => {  "use strict";
+  /*    Supabase project settings from the existing website.    Never place a Supabase service-role key in browser code.  */  const SUPABASE_URL = "https://trydftaqqypqcxsgixto.supabase.co";  const SUPABASE_PUBLISHABLE_KEY =    "sb_publishable_2h0EyOMhtBx3eWEiuoAOyg_qjw2QzED";
+  const ADMIN_EMAIL = "trustnovaexpress@gmail.com";
+  /*    IMPORTANT:    This page uses the same database project as index.html.    Database policies must enforce admin access.  */  const db = window.supabase.createClient(    SUPABASE_URL,    SUPABASE_PUBLISHABLE_KEY  );
+  const $ = id => document.getElementById(id);  let currentUser = null;  let parcels = [];
+  $("year").textContent = new Date().getFullYear();
+  function message(id, text, type = "info") {    const el = $(id);    el.textContent = text;    el.className = "message " + type;  }
+  function escapeHTML(value) {    return String(value ?? "").replace(/[&<>"']/g, ch => ({      "&": "&amp;",      "<": "&lt;",      ">": "&gt;",      '"': "&quot;",      "'": "&#39;"    })[ch]);  }
+  function formatDate(value) {    if (!value) return "Not provided";    const date = new Date(value);    return Number.isNaN(date.getTime())      ? String(value)      : date.toLocaleDateString();  }
+  function isAuthorised(user) {    return Boolean(      user &&      user.email &&      user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()    );  }
+  function updateView(user) {    currentUser = user || null;
+    const authorised = isAuthorised(currentUser);
+    $("login-panel").style.display = authorised ? "none" : "block";    $("dashboard").style.display = authorised ? "block" : "none";
+    if (authorised) {      $("signed-in-email").textContent = currentUser.email;      loadParcels();    } else {      parcels = [];      $("parcel-list").textContent = "Sign in to load registered parcels.";      $("total-count").textContent = "0";      $("transit-count").textContent = "0";      $("delivered-count").textContent = "0";    }  }
+  // ADMIN LOGIN  $("login-form").addEventListener("submit", async event => {    event.preventDefault();
+    const email = $("email").value.trim();    const password = $("password").value;    const button = $("login-button");
+    if (email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {      message(        "login-message",        "Please use the authorised administrator email.",        "error"      );      return;    }
+    button.disabled = true;    button.textContent = "Signing In...";    message("login-message", "Checking your login...");
+    try {      const { data, error } = await db.auth.signInWithPassword({        email,        password      });
+      if (error) throw error;
+      if (!isAuthorised(data.user)) {        await db.auth.signOut();        throw new Error("This account is not authorised.");      }
+      message("login-message", "Login successful.", "success");      updateView(data.user);
+    } catch (error) {      message("login-message", "Login failed: " + error.message, "error");    } finally {      button.disabled = false;      button.textContent = "Sign In";    }  });
+  // ADMIN LOGOUT  $("logout-button").addEventListener("click", async () => {    const { error } = await db.auth.signOut();
+    if (error) {      message("dashboard-message", "Sign out failed.", "error");      return;    }
+    updateView(null);    message("login-message", "You have signed out.", "success");  });
+  // CREATE PARCEL  $("parcel-form").addEventListener("submit", async event => {    event.preventDefault();
+    if (!isAuthorised(currentUser)) {      message("parcel-message", "Please sign in first.", "error");      return;    }
+    const button = $("register-button");    button.disabled = true;    button.textContent = "Registering...";
+    message("parcel-message", "Saving parcel details...");
+    const parcel = {      tracking_number:        "TNX-" +        Date.now().toString(36).toUpperCase() +        "-" +        crypto.randomUUID().slice(0, 6).toUpperCase(),
+      sender_name: $("sender-name").value.trim(),      sender_phone: $("sender-phone").value.trim(),      sender_email: $("sender-email").value.trim() || null,      pickup_address: $("pickup-address").value.trim(),
+      receiver_name: $("receiver-name").value.trim(),      receiver_phone: $("receiver-phone").value.trim(),      receiver_email: $("receiver-email").value.trim() || null,      delivery_address: $("delivery-address").value.trim(),
+      parcel_description: $("description").value.trim(),      estimated_delivery: $("estimated-delivery").value || null,      admin_note: $("admin-note").value.trim() || null,      status: "Registered"    };
+    try {      /*        The table name is parcels.        PostgreSQL folds unquoted table names to lowercase.      */      const { data, error } = await db        .from("parcels")        .insert(parcel)        .select("id, tracking_number")        .single();
+      if (error) throw error;
+      message(        "parcel-message",        "Parcel registered. Tracking number: " + data.tracking_number,        "success"      );
+      $("parcel-form").reset();      await loadParcels();
+    } catch (error) {      console.error("Parcel registration failed:", error);      message(        "parcel-message",        "Could not register parcel. The database table or its access policies may need setup. " +        error.message,        "error"      );    } finally {      button.disabled = false;      button.textContent = "Register Parcel";    }  });
+  // LOAD REGISTERED PARCELS  async function loadParcels() {    if (!isAuthorised(currentUser)) return;
+    $("parcel-list").textContent = "Loading parcels...";
+    try {      const { data, error } = await db        .from("parcels")        .select("*")        .order("created_at", { ascending: false });
+      if (error) throw error;
+      parcels = data || [];
+      $("total-count").textContent = parcels.length;      $("transit-count").textContent =        parcels.filter(p => p.status === "In Transit").length;      $("delivered-count").textContent =        parcels.filter(p => p.status === "Delivered").length;
+      renderParcels();
+    } catch (error) {      console.error("Could not load parcels:", error);      $("parcel-list").textContent =        "Could not load parcels. Please check the database table and access policies.";      message("dashboard-message", error.message, "error");    }  }
+  // DISPLAY PARCELS  function renderParcels() {    const list = $("parcel-list");
+    if (!parcels.length) {      list.textContent = "No parcels registered yet.";      return;    }
+    list.replaceChildren();
+    const statuses = [      "Registered",      "Picked Up",      "In Transit",      "Arrived at Facility",      "Out for Delivery",      "Delivered",      "Delivery Exception",      "On Hold"    ];
+    parcels.forEach(parcel => {      const card = document.createElement("article");      card.className = "parcel";
+      card.innerHTML = `        <div class="tracking">          Tracking: ${escapeHTML(parcel.tracking_number)}        </div>
+        <p><strong>Status:</strong> ${escapeHTML(parcel.status)}</p>        <p><strong>Sender:</strong> ${escapeHTML(parcel.sender_name)}</p>        <p><strong>Sender phone:</strong> ${escapeHTML(parcel.sender_phone)}</p>        <p><strong>Sender email:</strong> ${escapeHTML(parcel.sender_email || "Not provided")}</p>        <p><strong>Pickup address:</strong> ${escapeHTML(parcel.pickup_address)}</p>
+        <hr>
+        <p><strong>Receiver:</strong> ${escapeHTML(parcel.receiver_name)}</p>        <p><strong>Receiver phone:</strong> ${escapeHTML(parcel.receiver_phone)}</p>        <p><strong>Receiver email:</strong> ${escapeHTML(parcel.receiver_email || "Not provided")}</p>        <p><strong>Delivery address:</strong> ${escapeHTML(parcel.delivery_address)}</p>
+        <hr>
+        <p><strong>Parcel description:</strong> ${escapeHTML(parcel.parcel_description)}</p>        <p><strong>Estimated delivery:</strong> ${escapeHTML(formatDate(parcel.estimated_delivery))}</p>        <p><strong>Date registered:</strong> ${escapeHTML(formatDate(parcel.created_at))}</p>
+        <div class="private-note">          <strong>Private admin note:</strong>          ${escapeHTML(parcel.admin_note || "None")}        </div>
+        <label>Update Delivery Status</label>        <select class="status-select"></select>        <button class="red full save-status" type="button">          Save Status        </button>        <div class="message" role="status"></div>      `;
+      const select = card.querySelector(".status-select");
+      statuses.forEach(status => {        const option = document.createElement("option");        option.value = status;        option.textContent = status;        select.appendChild(option);      });
+      if (parcel.status && !statuses.includes(parcel.status)) {        const option = document.createElement("option");        option.value = parcel.status;        option.textContent = parcel.status;        select.appendChild(option);      }
+      select.value = parcel.status || "Registered";
+      card.querySelector(".save-status").addEventListener(        "click",        event => saveStatus(parcel.id, select.value, event.currentTarget, card)      );
+      list.appendChild(card);    });  }
+  // UPDATE PARCEL STATUS  async function saveStatus(id, status, button, card) {    if (!isAuthorised(currentUser)) {      message("dashboard-message", "Please sign in again.", "error");      return;    }
+    button.disabled = true;    button.textContent = "Saving...";
+    const result = card.querySelector('[role="status"]');    result.textContent = "";
+    try {      const { error } = await db        .from("parcels")        .update({ status })        .eq("id", id);
+      if (error) throw error;
+      result.className = "message success";      result.textContent = "Delivery status updated successfully.";
+      await loadParcels();
+    } catch (error) {      console.error("Status update failed:", error);      result.className = "message error";      result.textContent = "Status update failed: " + error.message;    } finally {      button.disabled = false;      button.textContent = "Save Status";    }  }
+  $("refresh-button").addEventListener("click", loadParcels);
+  // RESTORE EXISTING SESSION  async function restoreSession() {    const { data, error } = await db.auth.getSession();
+    if (error) {      message("login-message", "Please sign in again.", "error");      return;    }
+    updateView(data.session?.user || null);  }
+  db.auth.onAuthStateChange((_event, session) => {    updateView(session?.user || null);  });
+  restoreSession();
+})();</script></body></html>
