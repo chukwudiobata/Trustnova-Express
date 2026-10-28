@@ -98,6 +98,16 @@
       letter-spacing: -1px;
     }
 
+    /* COMPANY NAME: WHITE AND RED */
+
+    .brand h1 .brand-trustnova {
+      color: var(--white);
+    }
+
+    .brand h1 .brand-express {
+      color: var(--red);
+    }
+
     .brand p {
       margin: 5px 0 0;
       font-weight: 800;
@@ -313,7 +323,7 @@
       font-size: 30px;
     }
 
-    /* CONTACT US - SIMPLE, NOT BOLD */
+    /* CONTACT US */
 
     #contact {
       background: var(--white);
@@ -344,6 +354,12 @@
       border: 1px solid #eeeeee;
       border-top: 3px solid var(--red);
       border-radius: 8px;
+    }
+
+    /* Keep contact details hidden initially */
+
+    .contact-card[hidden] {
+      display: none !important;
     }
 
     .contact-card h3 {
@@ -430,7 +446,7 @@
     TRUSTNOVA EXPRESS · DELIVERING TRUST, WORLDWIDE
   </div>
 
-  <!-- ORIGINAL HEADER AND LOGO -->
+  <!-- ORIGINAL HEADER AND AEROPLANE LOGO -->
 
   <header>
     <div class="header-inner">
@@ -474,7 +490,11 @@
       </svg>
 
       <div class="brand">
-        <h1>TRUSTNOVA EXPRESS</h1>
+        <h1>
+          <span class="brand-trustnova">TRUSTNOVA</span>
+          <span class="brand-express">EXPRESS</span>
+        </h1>
+
         <p>Delivering Trust, Worldwide</p>
       </div>
 
@@ -552,7 +572,8 @@
 
           </form>
 
-          <div id="tracking-result" class="message"
+          <div id="tracking-result"
+               class="message"
                aria-live="polite"></div>
 
           <p class="small-note">
@@ -616,7 +637,9 @@
           delivery updates.
         </p>
 
-        <div class="contact-card">
+        <!-- This card stays hidden until Contact Us is pressed -->
+
+        <div class="contact-card" id="contact-details" hidden>
 
           <h3>Email Support</h3>
 
@@ -656,7 +679,7 @@
     </p>
   </footer>
 
-  <!-- PARCEL TRACKING CONNECTION -->
+  <!-- PARCEL TRACKING AND CONTACT BUTTON -->
 
   <script>
     const SUPABASE_URL =
@@ -667,6 +690,26 @@
 
     document.getElementById("year").textContent =
       new Date().getFullYear();
+
+    /*
+      CONTACT US:
+      Reveal the email details only when the customer presses
+      Contact Us in the navigation.
+    */
+
+    const contactLink =
+      document.querySelector('nav a[href="#contact"]');
+
+    const contactDetails =
+      document.getElementById("contact-details");
+
+    contactLink.addEventListener("click", function() {
+      contactDetails.hidden = false;
+    });
+
+    /*
+      PARCEL TRACKING
+    */
 
     const trackingForm =
       document.getElementById("tracking-form");
@@ -693,6 +736,7 @@
       heading.textContent = label;
 
       const text = document.createElement("span");
+
       text.textContent =
         value === null ||
         value === undefined ||
@@ -755,7 +799,7 @@
           return;
         }
 
-        let parcel = Array.isArray(data)
+        const parcel = Array.isArray(data)
           ? data[0]
           : data;
 
