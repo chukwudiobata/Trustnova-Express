@@ -7,17 +7,24 @@
   <title>TrustNova Express | Delivering Trust, Worldwide</title>
 
   <meta name="description"
-        content="TrustNova Express provides parcel registration, shipment tracking and delivery updates.">
+        content="Track your parcels and check shipment updates with TrustNova Express.">
 
   <meta name="theme-color" content="#f5c400">
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
+    :root {
+      --yellow: #f5c400;
+      --red: #c90019;
+      --black: #151515;
+      --white: #ffffff;
+      --grey: #f4f5f7;
+      --muted: #666666;
+    }
+
     * {
       box-sizing: border-box;
-      margin: 0;
-      padding: 0;
     }
 
     html {
@@ -25,348 +32,391 @@
     }
 
     body {
+      margin: 0;
       font-family: Arial, Helvetica, sans-serif;
       background: #ffffff;
-      color: #222222;
+      color: var(--black);
       line-height: 1.6;
     }
 
-    header {
-      background: #f5c400;
-      padding: 15px 20px;
-      border-bottom: 4px solid #d71920;
+    a {
+      transition: color 0.2s ease;
     }
 
-    .header-content {
+    button,
+    input {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    /* TOP STRIP */
+
+    .top-strip {
+      background: var(--black);
+      color: var(--white);
+      text-align: center;
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+
+    /* HEADER AND ORIGINAL AEROPLANE LOGO */
+
+    header {
+      background: var(--yellow);
+      border-bottom: 4px solid var(--red);
+      padding: 18px 16px;
+    }
+
+    .header-inner {
       max-width: 1150px;
       margin: auto;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 20px;
+      gap: 15px;
       flex-wrap: wrap;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
     }
 
     .logo {
-      width: 65px;
-      height: 65px;
+      width: 100px;
+      height: 75px;
       flex-shrink: 0;
     }
 
+    .brand {
+      flex: 1;
+      min-width: 200px;
+    }
+
     .brand h1 {
-      color: #171717;
-      font-size: 23px;
+      margin: 0;
+      font-size: clamp(23px, 4vw, 36px);
       font-weight: 900;
-      line-height: 1.2;
+      line-height: 1.15;
+      letter-spacing: -1px;
     }
 
     .brand p {
+      margin: 5px 0 0;
+      font-weight: 800;
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: 1px;
       font-size: 12px;
-      font-weight: bold;
-      color: #333333;
     }
 
+    /* NAVIGATION */
+
     nav {
+      background: var(--black);
       display: flex;
-      gap: 18px;
+      justify-content: center;
+      gap: 5px;
       flex-wrap: wrap;
+      padding: 8px;
     }
 
     nav a {
-      color: #171717;
+      color: var(--white);
       text-decoration: none;
-      font-weight: bold;
+      padding: 9px 12px;
+      border-radius: 5px;
       font-size: 14px;
+      font-weight: bold;
     }
 
     nav a:hover {
-      color: #d71920;
+      background: var(--red);
     }
 
+    /* HOMEPAGE */
+
     .hero {
-      background: #171717;
-      color: #ffffff;
-      padding: 65px 20px;
+      background: linear-gradient(120deg, #fff8d6, #ffffff);
+      padding: 55px 18px;
       text-align: center;
     }
 
-    .hero-content {
+    .hero-inner {
       max-width: 850px;
       margin: auto;
     }
 
     .hero h2 {
-      font-size: 38px;
-      line-height: 1.2;
-      margin-bottom: 18px;
+      font-size: clamp(30px, 5vw, 48px);
+      line-height: 1.15;
+      margin: 0 0 16px;
+      font-weight: 900;
     }
 
     .hero h2 span {
-      color: #f5c400;
+      color: var(--red);
     }
 
     .hero p {
       max-width: 650px;
       margin: 0 auto 25px;
-      color: #eeeeee;
-      font-size: 17px;
+      color: #444444;
     }
 
     .button {
       display: inline-block;
-      padding: 13px 25px;
-      background: #d71920;
-      color: #ffffff;
-      border: none;
-      border-radius: 5px;
-      font-size: 15px;
+      border: 0;
+      border-radius: 6px;
+      padding: 12px 18px;
       font-weight: bold;
       text-decoration: none;
-      cursor: pointer;
+      text-align: center;
     }
 
-    .button:hover {
-      background: #b81219;
+    .button-red {
+      background: var(--red);
+      color: var(--white);
     }
 
-    .section {
-      padding: 55px 20px;
+    .button-red:hover {
+      background: #a90016;
     }
 
-    .section-inner {
-      max-width: 1050px;
+    .button-black {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    .container {
+      width: min(1100px, 92%);
       margin: auto;
     }
 
-    .section-title {
+    section {
+      padding: 38px 0;
+    }
+
+    .section-heading {
       text-align: center;
-      font-size: 29px;
+      margin: 0 0 25px;
+      font-size: 28px;
       font-weight: 900;
-      margin-bottom: 12px;
-      color: #171717;
     }
 
-    .section-description {
-      text-align: center;
-      max-width: 650px;
-      margin: 0 auto 30px;
-      color: #555555;
-    }
-
-    /* PARCEL TRACKING */
-
-    #track {
-      background: #f7f7f7;
-    }
+    /* TRACKING */
 
     .tracking-box {
-      max-width: 600px;
+      max-width: 720px;
       margin: auto;
-      padding: 28px;
-      background: #ffffff;
+      background: var(--white);
       border: 1px solid #dddddd;
-      border-top: 5px solid #d71920;
-      border-radius: 8px;
-      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.06);
+      border-top: 4px solid var(--red);
+      box-shadow: 0 8px 25px #0000000c;
+      padding: 22px;
+      border-radius: 12px;
     }
 
     .tracking-box label {
       display: block;
-      margin-bottom: 8px;
+      margin: 12px 0 5px;
       font-weight: bold;
+      font-size: 14px;
     }
 
-    .tracking-box input {
+    input {
+      display: block;
       width: 100%;
-      padding: 14px;
-      margin-bottom: 15px;
+      padding: 12px;
       border: 1px solid #cccccc;
-      border-radius: 5px;
-      font-size: 16px;
+      border-radius: 6px;
+      background: var(--white);
+      color: var(--black);
     }
 
     .tracking-box button {
       width: 100%;
+      margin-top: 14px;
     }
 
-    #trackingMessage {
-      margin-top: 18px;
-      overflow-wrap: anywhere;
-    }
-
-    .message-error {
-      color: #b00020;
-      font-weight: bold;
-    }
-
-    .message-success {
-      color: #176b35;
-    }
-
-    .parcel-result {
-      margin-top: 20px;
-      padding: 18px;
-      background: #fffdf2;
-      border: 1px solid #eadb99;
+    .message {
+      margin-top: 15px;
+      padding: 12px;
       border-radius: 6px;
-    }
-
-    .parcel-result h3 {
-      margin-bottom: 12px;
-      color: #171717;
-    }
-
-    .parcel-result p {
-      margin-bottom: 8px;
       overflow-wrap: anywhere;
     }
 
-    .status-badge {
+    .message:empty {
+      display: none;
+    }
+
+    .success {
+      background: #e7f6ed;
+      color: #145c35;
+    }
+
+    .error {
+      background: #fff0f0;
+      color: #9a0013;
+    }
+
+    .tracking-detail {
+      padding: 12px;
+      margin: 10px 0;
+      background: var(--white);
+      border: 1px solid #dddddd;
+      border-radius: 7px;
+      overflow-wrap: anywhere;
+    }
+
+    .tracking-detail strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .tracking-status {
       display: inline-block;
-      padding: 4px 10px;
-      background: #f5c400;
-      color: #171717;
-      border-radius: 4px;
+      padding: 6px 12px;
+      background: #fff1b7;
+      color: #333333;
+      border-radius: 20px;
       font-weight: bold;
+    }
+
+    .small-note {
+      font-size: 13px;
+      color: var(--muted);
     }
 
     /* SERVICES */
 
-    .services-grid {
+    .grey-section {
+      background: var(--grey);
+    }
+
+    .grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-      margin-top: 30px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
     }
 
-    .service-card {
-      padding: 25px 20px;
-      text-align: center;
-      background: #ffffff;
-      border: 1px solid #eeeeee;
-      border-bottom: 4px solid #f5c400;
-      border-radius: 7px;
+    .feature {
+      padding: 22px;
+      border: 1px solid #e3e3e3;
+      border-bottom: 4px solid var(--yellow);
+      border-radius: 10px;
+      background: var(--white);
     }
 
-    .service-icon {
-      font-size: 38px;
-      margin-bottom: 10px;
+    .feature h3 {
+      margin-top: 8px;
     }
 
-    .service-card h3 {
-      margin-bottom: 10px;
-      font-size: 19px;
-      color: #171717;
+    .feature-icon {
+      font-size: 30px;
     }
 
-    .service-card p {
-      color: #555555;
-      font-size: 14px;
-    }
-
-    /* CONTACT US */
+    /* CONTACT US - SIMPLE, NOT BOLD */
 
     #contact {
-      background: #ffffff;
+      background: var(--white);
+    }
+
+    .contact-heading {
+      text-align: center;
+      margin: 0 0 12px;
+      font-size: 27px;
+      font-weight: normal;
+      color: var(--red);
+    }
+
+    .contact-description {
+      text-align: center;
+      margin: 0 auto 22px;
+      max-width: 600px;
+      color: #555555;
+      font-weight: normal;
     }
 
     .contact-card {
       max-width: 430px;
-      margin: 28px auto 0;
-      padding: 28px 20px;
+      margin: auto;
+      padding: 25px 20px;
       text-align: center;
       background: #fffdf5;
       border: 1px solid #eeeeee;
-      border-top: 4px solid #f5c400;
+      border-top: 3px solid var(--red);
       border-radius: 8px;
     }
 
     .contact-card h3 {
-      color: #222222;
-      font-size: 20px;
-      margin-bottom: 10px;
+      font-size: 18px;
+      font-weight: normal;
+      color: #333333;
+      margin: 0 0 8px;
     }
 
     .contact-card p {
       color: #555555;
       font-size: 15px;
-      margin-bottom: 20px;
+      font-weight: normal;
+      margin: 0 0 15px;
     }
 
     .contact-email {
       display: block;
-      color: #222222;
-      font-weight: bold;
+      color: var(--red);
+      font-weight: normal;
       text-decoration: none;
       overflow-wrap: anywhere;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
     .contact-email:hover {
-      color: #d71920;
+      text-decoration: underline;
     }
 
     /* FOOTER */
 
     footer {
-      padding: 25px 20px;
-      background: #171717;
-      color: #ffffff;
+      background: var(--black);
+      color: var(--white);
+      padding: 28px 15px;
       text-align: center;
     }
 
     footer p {
+      margin: 5px 0;
       font-size: 13px;
-      margin-bottom: 5px;
     }
 
     footer .footer-slogan {
-      color: #f5c400;
-      font-weight: bold;
+      color: var(--yellow);
     }
 
-    @media (max-width: 700px) {
-      .header-content {
-        justify-content: center;
-      }
+    /* MOBILE DISPLAY */
 
-      .brand h1 {
-        font-size: 19px;
-      }
-
-      nav {
-        justify-content: center;
-        gap: 14px;
-      }
-
+    @media (max-width: 600px) {
       .hero {
-        padding: 50px 18px;
-      }
-
-      .hero h2 {
-        font-size: 29px;
-      }
-
-      .hero p {
-        font-size: 15px;
-      }
-
-      .services-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .section {
-        padding: 42px 16px;
+        padding: 38px 15px;
       }
 
       .tracking-box {
-        padding: 22px 16px;
+        padding: 16px;
+      }
+
+      nav a {
+        padding: 8px;
+        font-size: 13px;
+      }
+
+      .header-inner {
+        justify-content: center;
+      }
+
+      .brand {
+        min-width: 0;
+      }
+
+      .brand h1 {
+        font-size: 24px;
       }
     }
   </style>
@@ -374,184 +424,194 @@
 
 <body>
 
-  <!-- HEADER -->
+  <!-- TOP STRIP -->
+
+  <div class="top-strip">
+    TRUSTNOVA EXPRESS · DELIVERING TRUST, WORLDWIDE
+  </div>
+
+  <!-- ORIGINAL HEADER AND LOGO -->
 
   <header>
-    <div class="header-content">
+    <div class="header-inner">
+
+      <svg class="logo"
+           viewBox="0 0 220 150"
+           role="img"
+           aria-label="TrustNova Express logo">
+
+        <path d="M12 77 L87 64 L128 18 L148 18
+                 L133 59 L192 48 Q209 47 209 61
+                 Q208 72 191 76 L132 86 L114 122
+                 L97 122 L103 90 L44 99 L29 113
+                 L18 113 L23 91 L12 77 Z"
+              fill="#c90019"
+              stroke="#151515"
+              stroke-width="3"
+              stroke-linejoin="round"/>
+
+        <path d="M40 79 L99 70 L110 75 L50 85 Z"
+              fill="#f5c400"/>
+
+        <text x="112" y="69"
+              text-anchor="middle"
+              font-size="10"
+              font-weight="900"
+              fill="#ffffff"
+              transform="rotate(-5 112 69)">
+          TRUSTNOVA
+        </text>
+
+        <text x="115" y="80"
+              text-anchor="middle"
+              font-size="8"
+              font-weight="900"
+              fill="#ffffff"
+              transform="rotate(-5 115 80)">
+          EXPRESS
+        </text>
+
+      </svg>
 
       <div class="brand">
-
-        <!-- Aeroplane logo -->
-        <svg class="logo"
-             xmlns="http://www.w3.org/2000/svg"
-             viewBox="0 0 100 100"
-             role="img"
-             aria-label="TrustNova Express aeroplane logo">
-
-          <circle cx="50" cy="50" r="47" fill="#171717"/>
-
-          <path d="M15 55 L43 49 L72 22
-                   Q78 16 82 20
-                   Q86 24 80 31
-                   L59 55 L78 66
-                   Q82 69 79 73
-                   Q77 76 72 73
-                   L49 64 L32 79
-                   L33 64 L15 59 Z"
-                fill="#f5c400"
-                stroke="#ffffff"
-                stroke-width="1.5"
-                stroke-linejoin="round"/>
-
-          <path d="M17 84 Q49 94 82 78"
-                fill="none"
-                stroke="#d71920"
-                stroke-width="4"
-                stroke-linecap="round"/>
-
-        </svg>
-
-        <div>
-          <h1>TrustNova Express</h1>
-          <p>Delivering Trust, Worldwide</p>
-        </div>
-
+        <h1>TRUSTNOVA EXPRESS</h1>
+        <p>Delivering Trust, Worldwide</p>
       </div>
-
-      <nav aria-label="Main navigation">
-        <a href="#home">Home</a>
-        <a href="#track">Track Parcel</a>
-        <a href="#services">Services</a>
-        <a href="#contact">Contact Us</a>
-      </nav>
 
     </div>
   </header>
 
+  <!-- CUSTOMER NAVIGATION ONLY -->
 
-  <!-- HOMEPAGE HERO -->
+  <nav aria-label="Main navigation">
+    <a href="#home">Home</a>
+    <a href="#track">Track Parcel</a>
+    <a href="#services">Services</a>
+    <a href="#contact">Contact Us</a>
+  </nav>
 
   <main>
 
+    <!-- HOMEPAGE -->
+
     <section class="hero" id="home">
-      <div class="hero-content">
+      <div class="hero-inner">
 
         <h2>
-          Your Parcel,<br>
+          Your Parcel.<br>
           <span>Our Responsibility.</span>
         </h2>
 
         <p>
-          Welcome to TrustNova Express. Find your parcel tracking
-          information and stay updated on your delivery journey.
+          TrustNova Express helps you track your parcels and
+          check shipment updates with clear delivery information.
         </p>
 
-        <a href="#track" class="button">Track Your Parcel</a>
+        <a class="button button-red" href="#track">
+          Track Your Parcel
+        </a>
+
+        <a class="button button-black" href="#services">
+          Explore Our Services
+        </a>
 
       </div>
     </section>
 
-
     <!-- PARCEL TRACKING -->
 
-    <section class="section" id="track">
-      <div class="section-inner">
+    <section id="track">
+      <div class="container">
 
-        <h2 class="section-title">Track Your Parcel</h2>
-
-        <p class="section-description">
-          Enter your tracking number below to check the latest
-          available information about your parcel.
-        </p>
+        <h2 class="section-heading">Track Your Parcel</h2>
 
         <div class="tracking-box">
 
-          <form id="trackingForm">
+          <p>
+            Enter the tracking number supplied by TrustNova Express
+            to check the latest recorded shipment information.
+          </p>
 
-            <label for="trackingNumber">
-              Parcel Tracking Number
+          <form id="tracking-form">
+
+            <label for="tracking-number">
+              Tracking Number
             </label>
 
             <input
+              id="tracking-number"
               type="text"
-              id="trackingNumber"
-              name="trackingNumber"
               placeholder="Enter your tracking number"
               autocomplete="off"
               required
             >
 
-            <button type="submit" class="button" id="trackButton">
+            <button class="button button-red" type="submit">
               Track Parcel
             </button>
 
           </form>
 
-          <div id="trackingMessage" aria-live="polite"></div>
+          <div id="tracking-result" class="message"
+               aria-live="polite"></div>
 
-          <div id="trackingResult"></div>
+          <p class="small-note">
+            Keep your tracking number private. Only share it with
+            people who are authorised to know about your shipment.
+          </p>
 
         </div>
-
       </div>
     </section>
-
 
     <!-- SERVICES -->
 
-    <section class="section" id="services">
-      <div class="section-inner">
+    <section class="grey-section" id="services">
+      <div class="container">
 
-        <h2 class="section-title">Our Services</h2>
+        <h2 class="section-heading">Our Services</h2>
 
-        <p class="section-description">
-          We aim to make parcel information and delivery updates
-          easier for our customers.
-        </p>
+        <div class="grid">
 
-        <div class="services-grid">
-
-          <article class="service-card">
-            <div class="service-icon" aria-hidden="true">📦</div>
+          <article class="feature">
+            <div class="feature-icon">📦</div>
             <h3>Parcel Delivery</h3>
             <p>
-              Parcel delivery services with tracking information
-              available when provided for your shipment.
+              Parcel delivery services with recorded shipment
+              information where available.
             </p>
           </article>
 
-          <article class="service-card">
-            <div class="service-icon" aria-hidden="true">✈️</div>
+          <article class="feature">
+            <div class="feature-icon">🌍</div>
             <h3>Shipment Tracking</h3>
             <p>
-              Use your tracking number to check the latest
-              available information about your parcel.
+              Check the latest recorded status of your parcel
+              using your tracking number.
             </p>
           </article>
 
-          <article class="service-card">
-            <div class="service-icon" aria-hidden="true">🔔</div>
+          <article class="feature">
+            <div class="feature-icon">📧</div>
             <h3>Delivery Updates</h3>
             <p>
-              Check your parcel's recorded status and estimated
-              delivery information where available.
+              Review the shipment status and estimated delivery
+              information recorded for your parcel.
             </p>
           </article>
 
         </div>
-
       </div>
     </section>
 
+    <!-- CONTACT US -->
 
-    <!-- CONTACT US: SIMPLE AND PROFESSIONAL -->
+    <section id="contact">
+      <div class="container">
 
-    <section class="section" id="contact">
-      <div class="section-inner">
+        <h2 class="contact-heading">Contact Us</h2>
 
-        <h2 class="section-title">Contact Us</h2>
-
-        <p class="section-description">
+        <p class="contact-description">
           We're here to help with your parcel enquiries and
           delivery updates.
         </p>
@@ -561,20 +621,16 @@
           <h3>Email Support</h3>
 
           <p>
-            Get in touch with our team by email.
+            Get in touch with us by email.
           </p>
 
-          <a
-            class="contact-email"
-            href="mailto:trustnovaexpress@gmail.com"
-          >
+          <a class="contact-email"
+             href="mailto:trustnovaexpress@gmail.com">
             trustnovaexpress@gmail.com
           </a>
 
-          <a
-            class="button"
-            href="mailto:trustnovaexpress@gmail.com"
-          >
+          <a class="button button-red"
+             href="mailto:trustnovaexpress@gmail.com">
             Send Us an Email
           </a>
 
@@ -585,80 +641,69 @@
 
   </main>
 
-
   <!-- FOOTER -->
 
   <footer>
-    <p><strong>TrustNova Express</strong></p>
+    <p>TRUSTNOVA EXPRESS</p>
 
     <p class="footer-slogan">
       Delivering Trust, Worldwide
     </p>
 
     <p>
-      &copy; <span id="currentYear"></span>
+      &copy; <span id="year"></span>
       TrustNova Express. All rights reserved.
     </p>
   </footer>
 
-
   <!-- PARCEL TRACKING CONNECTION -->
 
   <script>
-    document.getElementById("currentYear").textContent =
-      new Date().getFullYear();
-
     const SUPABASE_URL =
       "https://trydftaqqypqcxsgixto.supabase.co";
 
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_2h0EyOMhtBx3eWEiuoAOyg_qjw2QzED";
 
+    document.getElementById("year").textContent =
+      new Date().getFullYear();
+
     const trackingForm =
-      document.getElementById("trackingForm");
+      document.getElementById("tracking-form");
 
     const trackingInput =
-      document.getElementById("trackingNumber");
-
-    const trackingMessage =
-      document.getElementById("trackingMessage");
+      document.getElementById("tracking-number");
 
     const trackingResult =
-      document.getElementById("trackingResult");
+      document.getElementById("tracking-result");
 
     const trackButton =
-      document.getElementById("trackButton");
+      trackingForm.querySelector('button[type="submit"]');
 
-
-    function showMessage(message, type) {
-      trackingMessage.className =
-        type === "error" ? "message-error" : "message-success";
-
-      trackingMessage.textContent = message;
+    function showTrackingMessage(message, type) {
+      trackingResult.className = "message " + type;
+      trackingResult.textContent = message;
     }
 
+    function addDetail(container, label, value) {
+      const detail = document.createElement("div");
+      detail.className = "tracking-detail";
 
-    function addResultRow(container, label, value) {
-      const row = document.createElement("p");
       const heading = document.createElement("strong");
+      heading.textContent = label;
 
-      heading.textContent = label + ": ";
+      const text = document.createElement("span");
+      text.textContent =
+        value === null ||
+        value === undefined ||
+        String(value).trim() === ""
+          ? "Not provided"
+          : String(value);
 
-      row.appendChild(heading);
-
-      row.appendChild(
-        document.createTextNode(
-          value === null ||
-          value === undefined ||
-          String(value).trim() === ""
-            ? "Not provided"
-            : String(value)
-        )
-      );
-
-      container.appendChild(row);
+      detail.appendChild(heading);
+      detail.appendChild(text);
+      container.appendChild(detail);
     }
-
 
     trackingForm.addEventListener("submit", async function(event) {
       event.preventDefault();
@@ -666,16 +711,18 @@
       const trackingNumber = trackingInput.value.trim();
 
       trackingResult.replaceChildren();
-      trackingMessage.textContent = "";
-      trackingMessage.className = "";
+      trackingResult.className = "message";
 
       if (!trackingNumber) {
-        showMessage("Please enter your tracking number.", "error");
+        showTrackingMessage(
+          "Please enter your tracking number.",
+          "error"
+        );
         return;
       }
 
       if (!window.supabase) {
-        showMessage(
+        showTrackingMessage(
           "The tracking service could not load. Please try again later.",
           "error"
         );
@@ -683,15 +730,15 @@
       }
 
       trackButton.disabled = true;
-      trackButton.textContent = "Searching...";
+      trackButton.textContent = "Checking...";
 
       try {
-        const supabaseClient = window.supabase.createClient(
+        const client = window.supabase.createClient(
           SUPABASE_URL,
           SUPABASE_PUBLISHABLE_KEY
         );
 
-        const { data, error } = await supabaseClient.rpc(
+        const { data, error } = await client.rpc(
           "track_parcel",
           {
             p_tracking_number: trackingNumber
@@ -699,103 +746,95 @@
         );
 
         if (error) {
-          console.error("Tracking request failed:", error);
+          console.error("Tracking error:", error);
 
-          showMessage(
-            "We could not complete your tracking request. Please check your tracking number and try again.",
+          showTrackingMessage(
+            "Tracking is temporarily unavailable. Please try again later.",
             "error"
           );
-
           return;
         }
 
-        let parcel = data;
-
-        if (Array.isArray(parcel)) {
-          parcel = parcel.length > 0 ? parcel[0] : null;
-        }
+        let parcel = Array.isArray(data)
+          ? data[0]
+          : data;
 
         if (!parcel || typeof parcel !== "object") {
-          showMessage(
-            "No parcel was found for that tracking number. Please check it and try again.",
+          showTrackingMessage(
+            "No parcel was found. Please check your tracking number.",
             "error"
           );
-
           return;
         }
 
-        showMessage("Parcel information found.", "success");
-
-        const resultBox = document.createElement("div");
-        resultBox.className = "parcel-result";
+        trackingResult.className = "message success";
+        trackingResult.replaceChildren();
 
         const title = document.createElement("h3");
-        title.textContent = "Parcel Information";
+        title.textContent = "Tracking Result";
+        trackingResult.appendChild(title);
 
-        resultBox.appendChild(title);
-
-        addResultRow(
-          resultBox,
+        addDetail(
+          trackingResult,
           "Tracking Number",
           parcel.tracking_number || trackingNumber
         );
 
-        const statusRow = document.createElement("p");
-        const statusLabel = document.createElement("strong");
+        const statusDetail = document.createElement("div");
+        statusDetail.className = "tracking-detail";
 
-        statusLabel.textContent = "Current Status: ";
+        const statusHeading = document.createElement("strong");
+        statusHeading.textContent = "Current Delivery Status";
 
-        const statusBadge = document.createElement("span");
-        statusBadge.className = "status-badge";
-        statusBadge.textContent = parcel.status || "Not available";
+        const status = document.createElement("span");
+        status.className = "tracking-status";
+        status.textContent = parcel.status || "Not available";
 
-        statusRow.appendChild(statusLabel);
-        statusRow.appendChild(statusBadge);
-        resultBox.appendChild(statusRow);
+        statusDetail.appendChild(statusHeading);
+        statusDetail.appendChild(status);
+        trackingResult.appendChild(statusDetail);
 
-        addResultRow(
-          resultBox,
-          "Estimated Delivery",
+        addDetail(
+          trackingResult,
+          "Estimated Delivery Date",
           parcel.estimated_delivery
         );
 
-        addResultRow(
-          resultBox,
-          "Sender Name",
+        addDetail(
+          trackingResult,
+          "Sender's Name",
           parcel.sender_name
         );
 
-        addResultRow(
-          resultBox,
-          "Sender Address",
+        addDetail(
+          trackingResult,
+          "Sender's Address",
           parcel.sender_address || parcel.pickup_address
         );
 
-        addResultRow(
-          resultBox,
-          "Receiver Name",
+        addDetail(
+          trackingResult,
+          "Receiver's Name",
           parcel.receiver_name
         );
 
-        addResultRow(
-          resultBox,
-          "Receiver Address",
+        addDetail(
+          trackingResult,
+          "Receiver's Address",
           parcel.receiver_address || parcel.delivery_address
         );
 
-        addResultRow(
-          resultBox,
+        addDetail(
+          trackingResult,
           "Parcel Description",
           parcel.parcel_description
         );
 
-        trackingResult.appendChild(resultBox);
-
       } catch (error) {
         console.error("Unexpected tracking error:", error);
 
-        showMessage(
-          "Something went wrong while tracking your parcel. Please try again later.",
+        showTrackingMessage(
+          "Something went wrong. Please try again later.",
           "error"
         );
 
