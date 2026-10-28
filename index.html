@@ -3,1257 +3,370 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-
   <title>TrustNova Express | Delivering Trust, Worldwide</title>
-
-  <meta name="description"
-        content="TrustNova Express provides parcel registration, shipment tracking and delivery updates.">
-
+  <meta name="description" content="Register parcels and track shipment updates with TrustNova Express.">
   <meta name="theme-color" content="#f5c400">
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <style>
-    :root {
-      --yellow: #f5c400;
-      --red: #c90019;
-      --black: #151515;
-      --white: #ffffff;
-      --grey: #f4f5f7;
-      --muted: #666666;
-      --green: #167647;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--white);
-      color: var(--black);
-      line-height: 1.6;
-    }
-
-    button, input, select, textarea {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .top-strip {
-      background: var(--black);
-      color: white;
-      text-align: center;
-      padding: 8px 12px;
-      font-size: 13px;
-    }
-
-    header {
-      background: var(--yellow);
-      border-bottom: 4px solid var(--red);
-      padding: 18px 16px;
-    }
-
-    .header-inner {
-      max-width: 1150px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      flex-wrap: wrap;
-    }
-
-    .logo {
-      width: 100px;
-      height: 75px;
-      flex-shrink: 0;
-    }
-
-    .brand {
-      flex: 1;
-      min-width: 200px;
-    }
-
-    .brand h1 {
-      margin: 0;
-      font-size: clamp(23px, 4vw, 36px);
-      font-weight: 900;
-      line-height: 1.15;
-      letter-spacing: -1px;
-    }
-
-    .brand p {
-      margin: 5px 0 0;
-      font-weight: 800;
-      color: var(--red);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-size: 12px;
-    }
-
-    nav {
-      background: var(--black);
-      display: flex;
-      justify-content: center;
-      gap: 5px;
-      flex-wrap: wrap;
-      padding: 8px;
-    }
-
-    nav a {
-      color: white;
-      text-decoration: none;
-      padding: 9px 12px;
-      border-radius: 5px;
-      font-size: 14px;
-      font-weight: bold;
-    }
-
-    nav a:hover {
-      background: var(--red);
-    }
-
-    .hero {
-      background: linear-gradient(120deg, #fff8d6, #ffffff);
-      padding: 55px 18px;
-      text-align: center;
-    }
-
-    .hero-inner {
-      max-width: 850px;
-      margin: auto;
-    }
-
-    .hero h2 {
-      font-size: clamp(30px, 5vw, 48px);
-      line-height: 1.15;
-      margin: 0 0 16px;
-      font-weight: 900;
-    }
-
-    .hero h2 span {
-      color: var(--red);
-    }
-
-    .hero p {
-      max-width: 650px;
-      margin: 0 auto 25px;
-      color: #444;
-    }
-
-    .button {
-      display: inline-block;
-      border: none;
-      border-radius: 6px;
-      padding: 12px 18px;
-      font-weight: bold;
-      text-decoration: none;
-      text-align: center;
-    }
-
-    .button-red {
-      background: var(--red);
-      color: white;
-    }
-
-    .button-black {
-      background: var(--black);
-      color: white;
-    }
-
-    .button-yellow {
-      background: var(--yellow);
-      color: var(--black);
-    }
-
-    .container {
-      width: min(1100px, 92%);
-      margin: auto;
-    }
-
-    section {
-      padding: 38px 0;
-    }
-
-    .section-heading {
-      text-align: center;
-      margin: 0 0 25px;
-      font-size: 28px;
-      font-weight: 900;
-    }
-
-    .tracking-box {
-      max-width: 650px;
-      margin: auto;
-      background: white;
-      border: 1px solid #ddd;
-      box-shadow: 0 8px 25px #0000000c;
-      padding: 22px;
-      border-radius: 12px;
-    }
-
-    .tracking-box label,
-    .form-card label {
-      display: block;
-      margin: 12px 0 5px;
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    input, select, textarea {
-      display: block;
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      background: white;
-      color: var(--black);
-    }
-
-    textarea {
-      min-height: 85px;
-      resize: vertical;
-    }
-
-    .tracking-box button {
-      width: 100%;
-      margin-top: 14px;
-    }
-
-    .message {
-      margin-top: 15px;
-      padding: 12px;
-      border-radius: 6px;
-      overflow-wrap: anywhere;
-    }
-
-    .message:empty {
-      display: none;
-    }
-
-    .success {
-      background: #e7f6ed;
-      color: #145c35;
-    }
-
-    .error {
-      background: #fff0f0;
-      color: #9a0013;
-    }
-
-    .info {
-      background: #f0f3f8;
-      color: #252525;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-    }
-
-    .feature {
-      padding: 22px;
-      border: 1px solid #e3e3e3;
-      border-radius: 10px;
-      background: white;
-    }
-
-    .feature h3 {
-      margin-top: 0;
-    }
-
-    .feature-icon {
-      font-size: 30px;
-    }
-
-    .grey-section {
-      background: var(--grey);
-    }
-
-    .form-card {
-      background: white;
-      border: 1px solid #ddd;
-      padding: 22px;
-      border-radius: 10px;
-      margin-bottom: 20px;
-    }
-
-    .form-card h3 {
-      border-bottom: 2px solid var(--yellow);
-      padding-bottom: 8px;
-    }
-
-    .form-row {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .admin-area {
-      display: none;
-    }
-
-    .parcel-card {
-      background: white;
-      border: 1px solid #ddd;
-      border-left: 5px solid var(--yellow);
-      border-radius: 8px;
-      padding: 18px;
-      margin-bottom: 15px;
-      overflow-wrap: anywhere;
-    }
-
-    .parcel-card h4 {
-      margin: 0 0 10px;
-      font-size: 18px;
-    }
-
-    .parcel-card p {
-      margin: 6px 0;
-    }
-
-    .status {
-      display: inline-block;
-      background: #fff1b7;
-      padding: 4px 9px;
-      border-radius: 20px;
-      font-size: 12px;
-      font-weight: bold;
-    }
-
-    .status-form {
-      margin-top: 15px;
-      padding-top: 12px;
-      border-top: 1px solid #ddd;
-    }
-
-    .status-form button {
-      margin-top: 10px;
-    }
-
-    .small-note {
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .tracking-detail {
-      padding: 12px;
-      margin: 10px 0;
-      background: white;
-      border: 1px solid #d9e9dd;
-      border-radius: 7px;
-    }
-
-    .tracking-detail strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .tracking-status {
-      display: inline-block;
-      padding: 6px 12px;
-      background: #fff1b7;
-      color: #333;
-      border-radius: 20px;
-      font-weight: bold;
-    }
-
-    footer {
-      background: var(--black);
-      color: white;
-      padding: 30px 15px;
-      text-align: center;
-    }
-
-    footer a {
-      color: var(--yellow);
-    }
-
-    @media (max-width: 600px) {
-      .form-row {
-        grid-template-columns: 1fr;
-        gap: 0;
-      }
-
-      .hero {
-        padding: 38px 15px;
-      }
-
-      .tracking-box,
-      .form-card {
-        padding: 16px;
-      }
-
-      nav a {
-        padding: 8px;
-        font-size: 13px;
-      }
-    }
+    :root{--yellow:#f5c400;--red:#c90019;--black:#151515;--white:#fff;--grey:#f4f5f7;--muted:#666}
+    *{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fff;color:var(--black);line-height:1.6}
+    button,input,select,textarea{font:inherit}button{cursor:pointer}.top-strip{background:var(--black);color:#fff;text-align:center;padding:8px 12px;font-size:13px}
+    header{background:var(--yellow);border-bottom:4px solid var(--red);padding:18px 16px}.header-inner{max-width:1150px;margin:auto;display:flex;align-items:center;gap:15px;flex-wrap:wrap}
+    .logo{width:100px;height:75px;flex-shrink:0}.brand{flex:1;min-width:200px}.brand h1{margin:0;font-size:clamp(23px,4vw,36px);font-weight:900;line-height:1.15;letter-spacing:-1px}.brand p{margin:5px 0 0;font-weight:800;color:var(--red);text-transform:uppercase;letter-spacing:1px;font-size:12px}
+    nav{background:var(--black);display:flex;justify-content:center;gap:5px;flex-wrap:wrap;padding:8px}nav a{color:#fff;text-decoration:none;padding:9px 12px;border-radius:5px;font-size:14px;font-weight:bold}nav a:hover{background:var(--red)}
+    .hero{background:linear-gradient(120deg,#fff8d6,#fff);padding:55px 18px;text-align:center}.hero-inner{max-width:850px;margin:auto}.hero h2{font-size:clamp(30px,5vw,48px);line-height:1.15;margin:0 0 16px;font-weight:900}.hero h2 span{color:var(--red)}.hero p{max-width:650px;margin:0 auto 25px;color:#444}
+    .button{display:inline-block;border:0;border-radius:6px;padding:12px 18px;font-weight:bold;text-decoration:none;text-align:center}.button-red{background:var(--red);color:#fff}.button-black{background:var(--black);color:#fff}.button-yellow{background:var(--yellow);color:var(--black)}
+    .container{width:min(1100px,92%);margin:auto}section{padding:38px 0}.section-heading{text-align:center;margin:0 0 25px;font-size:28px;font-weight:900}
+    .tracking-box{max-width:720px;margin:auto;background:#fff;border:1px solid #ddd;box-shadow:0 8px 25px #0000000c;padding:22px;border-radius:12px}
+    .tracking-box label,.form-card label{display:block;margin:12px 0 5px;font-weight:bold;font-size:14px}input,select,textarea{display:block;width:100%;padding:12px;border:1px solid #ccc;border-radius:6px;background:#fff;color:var(--black)}textarea{min-height:85px;resize:vertical}.tracking-box button{width:100%;margin-top:14px}
+    .message{margin-top:15px;padding:12px;border-radius:6px;overflow-wrap:anywhere}.message:empty{display:none}.success{background:#e7f6ed;color:#145c35}.error{background:#fff0f0;color:#9a0013}.info{background:#f0f3f8;color:#252525}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}.feature{padding:22px;border:1px solid #e3e3e3;border-radius:10px;background:#fff}.feature h3{margin-top:0}.feature-icon{font-size:30px}.grey-section{background:var(--grey)}
+    .form-card{background:#fff;border:1px solid #ddd;padding:22px;border-radius:10px;margin-bottom:20px}.form-card h3{border-bottom:2px solid var(--yellow);padding-bottom:8px}.form-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+    .admin-area{display:none}.parcel-card{background:#fff;border:1px solid #ddd;border-left:5px solid var(--yellow);border-radius:8px;padding:18px;margin-bottom:15px;overflow-wrap:anywhere}.parcel-card h4{margin:0 0 10px;font-size:18px}.parcel-card p{margin:6px 0}.status{display:inline-block;background:#fff1b7;padding:4px 9px;border-radius:20px;font-size:12px;font-weight:bold}.status-form{margin-top:15px;padding-top:12px;border-top:1px solid #ddd}.status-form button{margin-top:10px}
+    .small-note{font-size:13px;color:var(--muted)}.tracking-detail{padding:12px;margin:10px 0;background:#fff;border:1px solid #d9e9dd;border-radius:7px;overflow-wrap:anywhere}.tracking-detail strong{display:block;margin-bottom:4px}.tracking-status{display:inline-block;padding:6px 12px;background:#fff1b7;color:#333;border-radius:20px;font-weight:bold}
+    footer{background:var(--black);color:#fff;padding:30px 15px;text-align:center}footer a{color:var(--yellow)}
+    @media(max-width:600px){.form-row{grid-template-columns:1fr;gap:0}.hero{padding:38px 15px}.tracking-box,.form-card{padding:16px}nav a{padding:8px;font-size:13px}}
   </style>
 </head>
-
 <body>
-
-  <div class="top-strip">
-    TRUSTNOVA EXPRESS · DELIVERING TRUST, WORLDWIDE
-  </div>
-
-  <header>
-    <div class="header-inner">
-
-      <svg class="logo"
-           viewBox="0 0 220 150"
-           role="img"
-           aria-label="TrustNova Express aeroplane logo">
-
-        <path d="M12 77 L87 64 L128 18 L148 18 L133 59
-                 L192 48 Q209 47 209 61 Q208 72 191 76
-                 L132 86 L114 122 L97 122 L103 90
-                 L44 99 L29 113 L18 113 L23 91 L12 77 Z"
-              fill="#c90019"
-              stroke="#151515"
-              stroke-width="3"
-              stroke-linejoin="round"/>
-
-        <path d="M40 79 L99 70 L110 75 L50 85 Z"
-              fill="#f5c400"/>
-
-        <text x="112"
-              y="69"
-              text-anchor="middle"
-              font-size="10"
-              font-weight="900"
-              fill="#ffffff"
-              transform="rotate(-5 112 69)">
-          TRUSTNOVA
-        </text>
-
-        <text x="115"
-              y="80"
-              text-anchor="middle"
-              font-size="8"
-              font-weight="900"
-              fill="#ffffff"
-              transform="rotate(-5 115 80)">
-          EXPRESS
-        </text>
-
-      </svg>
-
-      <div class="brand">
-        <h1>TRUSTNOVA EXPRESS</h1>
-        <p>Delivering Trust, Worldwide</p>
-      </div>
-
-    </div>
-  </header>
-
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#track">Track Parcel</a>
-    <a href="#services">Services</a>
-    <a href="#admin-login">Admin Login</a>
-    <a href="#contact">Contact</a>
-  </nav>
-
+  <div class="top-strip">TRUSTNOVA EXPRESS · DELIVERING TRUST, WORLDWIDE</div>
+  <header><div class="header-inner">
+    <svg class="logo" viewBox="0 0 220 150" role="img" aria-label="TrustNova Express logo">
+      <path d="M12 77 L87 64 L128 18 L148 18 L133 59 L192 48 Q209 47 209 61 Q208 72 191 76 L132 86 L114 122 L97 122 L103 90 L44 99 L29 113 L18 113 L23 91 L12 77 Z" fill="#c90019" stroke="#151515" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M40 79 L99 70 L110 75 L50 85 Z" fill="#f5c400"/>
+      <text x="112" y="69" text-anchor="middle" font-size="10" font-weight="900" fill="#fff" transform="rotate(-5 112 69)">TRUSTNOVA</text>
+      <text x="115" y="80" text-anchor="middle" font-size="8" font-weight="900" fill="#fff" transform="rotate(-5 115 80)">EXPRESS</text>
+    </svg>
+    <div class="brand"><h1>TRUSTNOVA EXPRESS</h1><p>Delivering Trust, Worldwide</p></div>
+  </div></header>
+  <nav><a href="#home">Home</a><a href="#track">Track Parcel</a><a href="#services">Services</a><a href="#admin-login">Admin Login</a><a href="#contact">Contact</a></nav>
   <main>
-
-    <section class="hero" id="home">
-      <div class="hero-inner">
-        <h2>Your Parcel.<br><span>Our Responsibility.</span></h2>
-
-        <p>
-          TrustNova Express helps you register and track parcels
-          with clear delivery updates and dependable service.
-        </p>
-
-        <a class="button button-red" href="#track">
-          Track Your Parcel
-        </a>
-
-        <a class="button button-black" href="#services">
-          Explore Our Services
-        </a>
-      </div>
-    </section>
-
-    <section id="track">
-      <div class="container">
-        <h2 class="section-heading">Track Your Parcel</h2>
-
-        <div class="tracking-box">
-          <p>
-            Enter the tracking number supplied by TrustNova Express
-            to view your parcel's latest recorded information.
-          </p>
-
-          <form id="tracking-form">
-            <label for="tracking-number">Tracking Number</label>
-
-            <input
-              id="tracking-number"
-              type="text"
-              placeholder="Enter your tracking number"
-              autocomplete="off"
-              required
-            >
-
-            <button class="button button-red" type="submit">
-              Track Parcel
-            </button>
-          </form>
-
-          <div id="tracking-result"
-               class="message"
-               aria-live="polite"></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="grey-section" id="services">
-      <div class="container">
-        <h2 class="section-heading">Our Services</h2>
-
-        <div class="grid">
-          <article class="feature">
-            <div class="feature-icon">📦</div>
-            <h3>Parcel Registration</h3>
-            <p>Register shipment details and issue a unique tracking number.</p>
-          </article>
-
-          <article class="feature">
-            <div class="feature-icon">🌍</div>
-            <h3>Shipment Tracking</h3>
-            <p>Check the latest recorded status of a registered parcel.</p>
-          </article>
-
-          <article class="feature">
-            <div class="feature-icon">📧</div>
-            <h3>Email Updates</h3>
-            <p>Shipment confirmations and delivery notifications can be added through a secure email service.</p>
-          </article>
-        </div>
-      </div>
-    </section>
-
-    <section id="admin-login">
-      <div class="container">
-        <h2 class="section-heading">Admin Login</h2>
-
-        <div class="tracking-box">
-          <p class="small-note">
-            This area is for authorised TrustNova Express staff.
-          </p>
-
-          <form id="login-form">
-            <label for="admin-email">Admin Email</label>
-
-            <input
-              id="admin-email"
-              type="email"
-              autocomplete="username"
-              required
-            >
-
-            <label for="admin-password">Password</label>
-
-            <input
-              id="admin-password"
-              type="password"
-              autocomplete="current-password"
-              required
-            >
-
-            <button class="button button-black" type="submit">
-              Sign In
-            </button>
-          </form>
-
-          <button id="logout-button"
-                  class="button button-red"
-                  type="button"
-                  hidden>
-            Sign Out
-          </button>
-
-          <div id="login-message"
-               class="message"
-               aria-live="polite"></div>
-        </div>
-      </div>
-    </section>
-
-    <section id="admin-dashboard"
-             class="grey-section admin-area">
-
-      <div class="container">
-        <h2 class="section-heading">Admin Dashboard</h2>
-
-        <div class="message info">
-          You are signed in. Register parcels and manage their status below.
-        </div>
-
-        <form id="parcel-form">
-
-          <div class="form-card">
-            <h3>Sender Information</h3>
-
-            <div class="form-row">
-              <div>
-                <label for="sender-name">Sender's Full Name</label>
-                <input id="sender-name" required>
-              </div>
-
-              <div>
-                <label for="sender-phone">Sender's Phone</label>
-                <input id="sender-phone" type="tel" required>
-              </div>
-            </div>
-
-            <label for="sender-email">Sender's Email Address</label>
-            <input id="sender-email" type="email">
-
-            <label for="pickup-address">Pickup Address</label>
-            <textarea id="pickup-address" required></textarea>
-          </div>
-
-          <div class="form-card">
-            <h3>Receiver Information</h3>
-
-            <div class="form-row">
-              <div>
-                <label for="receiver-name">Receiver's Full Name</label>
-                <input id="receiver-name" required>
-              </div>
-
-              <div>
-                <label for="receiver-phone">Receiver's Phone</label>
-                <input id="receiver-phone" type="tel" required>
-              </div>
-            </div>
-
-            <label for="receiver-email">Receiver's Email Address</label>
-            <input id="receiver-email" type="email">
-
-            <label for="delivery-address">Delivery Address</label>
-            <textarea id="delivery-address" required></textarea>
-          </div>
-
-          <div class="form-card">
-            <h3>Parcel Information</h3>
-
-            <label for="parcel-description">Parcel Description</label>
-            <textarea id="parcel-description" required></textarea>
-
-            <label for="estimated-delivery">Estimated Delivery Date</label>
-            <input id="estimated-delivery" type="date">
-
-            <label for="admin-note">Private Admin Note</label>
-            <textarea id="admin-note"
-                      placeholder="Visible to authorised staff only"></textarea>
-
-            <p class="small-note">
-              Keep private admin notes out of customer-facing tracking results.
-            </p>
-
-            <button class="button button-red" type="submit">
-              Register Parcel
-            </button>
-          </div>
-
+    <section class="hero" id="home"><div class="hero-inner">
+      <h2>Your Parcel.<br><span>Our Responsibility.</span></h2>
+      <p>TrustNova Express helps you register and track parcels with clear delivery updates and dependable service.</p>
+      <a class="button button-red" href="#track">Track Your Parcel</a>
+      <a class="button button-black" href="#services">Explore Our Services</a>
+    </div></section>
+    <section id="track"><div class="container">
+      <h2 class="section-heading">Track Your Parcel</h2>
+      <div class="tracking-box">
+        <p>Enter the tracking number supplied by TrustNova Express to view the latest recorded shipment information.</p>
+        <form id="tracking-form">
+          <label for="tracking-number">Tracking Number</label>
+          <input id="tracking-number" type="text" placeholder="Enter your tracking number" autocomplete="off" required>
+          <button class="button button-red" type="submit">Track Parcel</button>
         </form>
-
-        <div id="parcel-message"
-             class="message"
-             aria-live="polite"></div>
-
-        <h3>Registered Parcels</h3>
-
-        <button id="refresh-parcels"
-                class="button button-black"
-                type="button">
-          Refresh Parcels
-        </button>
-
-        <div id="parcel-list"></div>
+        <div id="tracking-result" class="message" aria-live="polite"></div>
+        <p class="small-note">Tracking may show sender and receiver names and addresses. Do not share tracking numbers publicly; anyone with a number may be able to view its associated details.</p>
       </div>
-    </section>
-
-    <section id="contact">
-      <div class="container" style="text-align:center">
-        <h2 class="section-heading">Contact TrustNova Express</h2>
-        <p>Delivering Trust, Worldwide.</p>
-        <p>
-          Email:
-          <a href="mailto:trustnovaexpress@gmail.com">
-            trustnovaexpress@gmail.com
-          </a>
-        </p>
+    </div></section>
+    <section class="grey-section" id="services"><div class="container">
+      <h2 class="section-heading">Our Services</h2><div class="grid">
+        <article class="feature"><div class="feature-icon">📦</div><h3>Parcel Registration</h3><p>Register shipment details and issue a unique tracking number.</p></article>
+        <article class="feature"><div class="feature-icon">🌍</div><h3>Shipment Tracking</h3><p>Check the latest recorded status of a registered parcel.</p></article>
+        <article class="feature"><div class="feature-icon">📧</div><h3>Email Updates</h3><p>Shipment confirmations and delivery notifications can be added through a secure email service.</p></article>
       </div>
-    </section>
-
+    </div></section>
+    <section id="admin-login"><div class="container">
+      <h2 class="section-heading">Admin Login</h2><div class="tracking-box">
+        <p class="small-note">This area is for authorised TrustNova Express staff.</p>
+        <form id="login-form">
+          <label for="admin-email">Admin Email</label><input id="admin-email" type="email" autocomplete="username" required>
+          <label for="admin-password">Password</label><input id="admin-password" type="password" autocomplete="current-password" required>
+          <button class="button button-black" type="submit">Sign In</button>
+        </form>
+        <button id="logout-button" class="button button-red" type="button" hidden>Sign Out</button>
+        <div id="login-message" class="message" aria-live="polite"></div>
+      </div>
+    </div></section>
+    <section id="admin-dashboard" class="grey-section admin-area"><div class="container">
+      <h2 class="section-heading">Admin Dashboard</h2>
+      <div class="message info">You are signed in. Register parcels and manage their status below.</div>
+      <form id="parcel-form">
+        <div class="form-card"><h3>Sender Information</h3><div class="form-row">
+          <div><label for="sender-name">Sender's Full Name</label><input id="sender-name" required></div>
+          <div><label for="sender-phone">Sender's Phone</label><input id="sender-phone" type="tel" required></div>
+        </div>
+          <label for="sender-email">Sender's Email Address</label><input id="sender-email" type="email">
+          <label for="pickup-address">Pickup Address</label><textarea id="pickup-address" required></textarea>
+        </div>
+        <div class="form-card"><h3>Receiver Information</h3><div class="form-row">
+          <div><label for="receiver-name">Receiver's Full Name</label><input id="receiver-name" required></div>
+          <div><label for="receiver-phone">Receiver's Phone</label><input id="receiver-phone" type="tel" required></div>
+        </div>
+          <label for="receiver-email">Receiver's Email Address</label><input id="receiver-email" type="email">
+          <label for="delivery-address">Delivery Address</label><textarea id="delivery-address" required></textarea>
+        </div>
+        <div class="form-card"><h3>Parcel Information</h3>
+          <label for="parcel-description">Parcel Description</label><textarea id="parcel-description" required></textarea>
+          <label for="estimated-delivery">Estimated Delivery Date</label><input id="estimated-delivery" type="date">
+          <label for="admin-note">Private Admin Note</label><textarea id="admin-note" placeholder="Visible to authorised staff only"></textarea>
+          <p class="small-note">Private admin notes are not shown in public tracking results.</p>
+          <button class="button button-red" type="submit">Register Parcel</button>
+        </div>
+      </form>
+      <div id="parcel-message" class="message" aria-live="polite"></div>
+      <h3>Registered Parcels</h3><button id="refresh-parcels" class="button button-black" type="button">Refresh Parcels</button>
+      <div id="parcel-list"></div>
+    </div></section>
+    <section id="contact"><div class="container" style="text-align:center">
+      <h2 class="section-heading">Contact TrustNova Express</h2><p>Delivering Trust, Worldwide.</p>
+      <p>Email: <a href="mailto:trustnovaexpress@gmail.com">trustnovaexpress@gmail.com</a></p>
+    </div></section>
   </main>
+  <footer><strong>TRUSTNOVA EXPRESS</strong><p>Delivering Trust, Worldwide.</p><p>&copy; <span id="year"></span> TrustNova Express.</p></footer>
+<script>
+  /*
+    TrustNova Express configuration.
+    Use only the Supabase publishable key in browser code.
+    Never put a service-role key here.
+  */
+  const SUPABASE_URL = "https://trydftaqqypqcxsgixto.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_2h0EyOMhtBx3eWEiuoAOyg_qjw2QzED";
+  const ADMIN_EMAIL = "trustnovaexpress@gmail.com";
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+  const $ = (id) => document.getElementById(id);
+  let currentUser = null;
+  $("year").textContent = new Date().getFullYear();
 
-  <footer>
-    <strong>TRUSTNOVA EXPRESS</strong>
-    <p>Delivering Trust, Worldwide.</p>
-    <p>&copy; <span id="year"></span> TrustNova Express.</p>
-  </footer>
-
-  <script>
-    /*
-      TRUSTNOVA EXPRESS CONFIGURATION
-
-      Never put a Supabase service-role key in browser code.
-    */
-
-    const SUPABASE_URL =
-      "https://trydftaqqypqcxsgixto.supabase.co";
-
-    const SUPABASE_PUBLISHABLE_KEY =
-      "sb_publishable_2h0EyOMhtBx3eWEiuoAOyg_qjw2QzED";
-
-    const ADMIN_EMAIL =
-      "trustnovaexpress@gmail.com";
-
-    const supabaseClient = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
-
-    const $ = (id) => document.getElementById(id);
-
-    let currentUser = null;
-
-    $("year").textContent = new Date().getFullYear();
-
-    function showMessage(id, text, type = "info") {
-      const element = $(id);
-      element.textContent = text;
-      element.className = "message " + type;
+  function showMessage(id, text, type = "info") {
+    const element = $(id);
+    element.textContent = text;
+    element.className = "message " + type;
+  }
+  function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    })[character]);
+  }
+  function displayDate(value) {
+    if (!value) return "Not provided";
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleDateString();
+  }
+  function setAdminVisibility(user) {
+    currentUser = user || null;
+    const authorised = !!user && !!user.email && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+    $("admin-dashboard").style.display = authorised ? "block" : "none";
+    $("logout-button").hidden = !user;
+    if (user && !authorised) showMessage("login-message", "This account is not authorised for the admin dashboard.", "error");
+    if (authorised) {
+      $("login-message").textContent = "";
+      loadParcels();
     }
+  }
 
-    function escapeHTML(value) {
-      return String(value ?? "").replace(/[&<>"']/g, (character) => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#39;"
-      })[character]);
+  $("login-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    showMessage("login-message", "Signing in…");
+    const email = $("admin-email").value.trim();
+    const password = $("admin-password").value;
+    if (email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+      showMessage("login-message", "Please use the authorised admin email address.", "error");
+      return;
     }
-
-    function displayDate(value) {
-      if (!value) return "Not provided";
-
-      const date = new Date(value);
-
-      if (Number.isNaN(date.getTime())) {
-        return String(value);
-      }
-
-      return date.toLocaleDateString();
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if (error) {
+      showMessage("login-message", "Login failed: " + error.message, "error");
+      return;
     }
+    setAdminVisibility(data.user);
+    showMessage("login-message", "Signed in successfully.", "success");
+  });
 
-    function setAdminVisibility(user) {
-      currentUser = user || null;
+  $("logout-button").addEventListener("click", async () => {
+    await supabaseClient.auth.signOut();
+    setAdminVisibility(null);
+    $("parcel-list").replaceChildren();
+    showMessage("login-message", "You have signed out.", "success");
+  });
 
-      const authorised =
-        !!user &&
-        user.email &&
-        user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
-
-      $("admin-dashboard").style.display =
-        authorised ? "block" : "none";
-
-      $("logout-button").hidden = !user;
-
-      if (user && !authorised) {
-        showMessage(
-          "login-message",
-          "This account is not authorised for the admin dashboard.",
-          "error"
-        );
-      }
-
-      if (authorised) {
-        $("login-message").textContent = "";
-        loadParcels();
-      }
+  async function restoreSession() {
+    const { data, error } = await supabaseClient.auth.getSession();
+    if (error) {
+      showMessage("login-message", "Could not check your session. Please sign in again.", "error");
+      return;
     }
+    setAdminVisibility(data.session?.user || null);
+  }
 
-    /*
-      ADMIN SIGN-IN
-    */
-
-    $("login-form").addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      showMessage("login-message", "Signing in…");
-
-      const email = $("admin-email").value.trim();
-      const password = $("admin-password").value;
-
-      if (email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
-        showMessage(
-          "login-message",
-          "Please use the authorised admin email address.",
-          "error"
-        );
-        return;
-      }
-
-      const { data, error } =
-        await supabaseClient.auth.signInWithPassword({
-          email,
-          password
-        });
-
-      if (error) {
-        showMessage(
-          "login-message",
-          "Login failed: " + error.message,
-          "error"
-        );
-        return;
-      }
-
-      setAdminVisibility(data.user);
-
-      showMessage(
-        "login-message",
-        "Signed in successfully.",
-        "success"
-      );
-    });
-
-    $("logout-button").addEventListener("click", async () => {
-      await supabaseClient.auth.signOut();
-
-      setAdminVisibility(null);
-
-      $("parcel-list").replaceChildren();
-
-      showMessage(
-        "login-message",
-        "You have signed out.",
-        "success"
-      );
-    });
-
-    async function restoreSession() {
-      const { data, error } =
-        await supabaseClient.auth.getSession();
-
-      if (error) {
-        showMessage(
-          "login-message",
-          "Could not check your session. Please sign in again.",
-          "error"
-        );
-        return;
-      }
-
-      setAdminVisibility(data.session?.user || null);
+  /*
+    Public tracking function currently returns:
+    tracking_number, sender_name, sender_address, receiver_name,
+    receiver_address, parcel_description, status, estimated_delivery.
+    It does not return phone numbers or email addresses.
+  */
+  $("tracking-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const trackingNumber = $("tracking-number").value.trim();
+    if (!trackingNumber) {
+      showMessage("tracking-result", "Please enter your tracking number.", "error");
+      return;
     }
-
-    /*
-      CUSTOMER TRACKING
-
-      The public track_parcel function should return only:
-      tracking_number, parcel_description, status and estimated_delivery.
-    */
-
-    $("tracking-form").addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      const trackingNumber =
-        $("tracking-number").value.trim();
-
-      if (!trackingNumber) {
-        showMessage(
-          "tracking-result",
-          "Please enter your tracking number.",
-          "error"
-        );
-        return;
-      }
-
-      const submitButton =
-        $("tracking-form").querySelector('button[type="submit"]');
-
-      submitButton.disabled = true;
-      submitButton.textContent = "Checking…";
-
-      showMessage(
-        "tracking-result",
-        "Checking your tracking number…"
-      );
-
-      try {
-        const { data, error } = await supabaseClient.rpc(
-          "track_parcel",
-          {
-            p_tracking_number: trackingNumber
-          }
-        );
-
-        if (error) {
-          console.error("Tracking error:", error);
-
-          showMessage(
-            "tracking-result",
-            "Tracking is temporarily unavailable. Please try again later or contact TrustNova Express.",
-            "error"
-          );
-          return;
-        }
-
-        const parcel = Array.isArray(data) ? data[0] : data;
-
-        if (!parcel) {
-          showMessage(
-            "tracking-result",
-            "No parcel was found for that tracking number. Please check the number and try again.",
-            "error"
-          );
-          return;
-        }
-
-        const result = $("tracking-result");
-
-        result.className = "message success";
-
-        result.innerHTML = `
-          <h3>📦 Parcel Tracking Result</h3>
-
-          <div class="tracking-detail">
-            <strong>Tracking Number</strong>
-            ${escapeHTML(parcel.tracking_number || trackingNumber)}
-          </div>
-
-          <div class="tracking-detail">
-            <strong>Parcel Description</strong>
-            ${escapeHTML(parcel.parcel_description || "Not provided")}
-          </div>
-
-          <div class="tracking-detail">
-            <strong>Current Delivery Status</strong>
-            <span class="tracking-status">
-              ${escapeHTML(parcel.status || "Registered")}
-            </span>
-          </div>
-
-          <div class="tracking-detail">
-            <strong>Estimated Delivery</strong>
-            ${escapeHTML(displayDate(parcel.estimated_delivery))}
-          </div>
-
-          <p class="small-note">
-            These details show the latest shipment information recorded by
-            TrustNova Express. Estimated delivery dates may change.
-            For assistance, please contact our support team.
-          </p>
-        `;
-      } catch (error) {
-        console.error("Unexpected tracking error:", error);
-
-        showMessage(
-          "tracking-result",
-          "Something went wrong while checking the tracking number. Please try again.",
-          "error"
-        );
-      } finally {
-        submitButton.disabled = false;
-        submitButton.textContent = "Track Parcel";
-      }
-    });
-
-    /*
-      REGISTER A PARCEL
-
-      Email notifications are not sent by this browser code.
-      A secure backend function is required for sending emails.
-    */
-
-    $("parcel-form").addEventListener("submit", async (event) => {
-      event.preventDefault();
-
-      if (
-        !currentUser ||
-        currentUser.email?.toLowerCase() !== ADMIN_EMAIL.toLowerCase()
-      ) {
-        showMessage(
-          "parcel-message",
-          "Please sign in with the authorised admin account first.",
-          "error"
-        );
-        return;
-      }
-
-      showMessage(
-        "parcel-message",
-        "Registering parcel…"
-      );
-
-      const trackingNumber =
-        "TNX-" +
-        Date.now().toString(36).toUpperCase() +
-        "-" +
-        crypto.randomUUID().slice(0, 6).toUpperCase();
-
-      const parcel = {
-        tracking_number: trackingNumber,
-
-        sender_name: $("sender-name").value.trim(),
-        sender_phone: $("sender-phone").value.trim(),
-        sender_email: $("sender-email").value.trim() || null,
-        pickup_address: $("pickup-address").value.trim(),
-
-        receiver_name: $("receiver-name").value.trim(),
-        receiver_phone: $("receiver-phone").value.trim(),
-        receiver_email: $("receiver-email").value.trim() || null,
-        delivery_address: $("delivery-address").value.trim(),
-
-        parcel_description: $("parcel-description").value.trim(),
-        estimated_delivery: $("estimated-delivery").value || null,
-        admin_note: $("admin-note").value.trim() || null,
-
-        status: "Registered"
-      };
-
-      const { data, error } = await supabaseClient
-        .from("Parcels")
-        .insert(parcel)
-        .select()
-        .single();
-
-      if (error) {
-        console.error("Parcel registration error:", error);
-
-        showMessage(
-          "parcel-message",
-          "Parcel registration failed. Details: " + error.message,
-          "error"
-        );
-        return;
-      }
-
-      showMessage(
-        "parcel-message",
-        "Parcel registered successfully. Tracking number: " +
-          data.tracking_number +
-          ". Email notifications still need to be configured.",
-        "success"
-      );
-
-      $("parcel-form").reset();
-
-      await loadParcels();
-    });
-
-    /*
-      ADMIN PARCEL LIST
-    */
-
-    async function loadParcels() {
-      if (
-        !currentUser ||
-        currentUser.email?.toLowerCase() !== ADMIN_EMAIL.toLowerCase()
-      ) {
-        return;
-      }
-
-      $("parcel-list").textContent = "Loading parcels…";
-
-      const { data, error } = await supabaseClient
-        .from("Parcels")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (error) {
-        console.error("Parcel list error:", error);
-
-        $("parcel-list").textContent =
-          "Could not load parcels. Check the Supabase table and admin database policies.";
-
-        return;
-      }
-
-      const list = $("parcel-list");
-      list.replaceChildren();
-
-      if (!data || data.length === 0) {
-        list.textContent = "No parcels have been registered yet.";
-        return;
-      }
-
-      data.forEach((parcel) => {
-        const card = document.createElement("article");
-        card.className = "parcel-card";
-
-        card.innerHTML = `
-          <h4>Tracking: ${escapeHTML(parcel.tracking_number)}</h4>
-
-          <p><strong>Status:</strong>
-            <span class="status">${escapeHTML(parcel.status)}</span>
-          </p>
-
-          <p><strong>Sender:</strong>
-            ${escapeHTML(parcel.sender_name)}</p>
-
-          <p><strong>Sender phone:</strong>
-            ${escapeHTML(parcel.sender_phone)}</p>
-
-          <p><strong>Sender email:</strong>
-            ${escapeHTML(parcel.sender_email || "Not provided")}</p>
-
-          <p><strong>Pickup address:</strong>
-            ${escapeHTML(parcel.pickup_address)}</p>
-
-          <hr>
-
-          <p><strong>Receiver:</strong>
-            ${escapeHTML(parcel.receiver_name)}</p>
-
-          <p><strong>Receiver phone:</strong>
-            ${escapeHTML(parcel.receiver_phone)}</p>
-
-          <p><strong>Receiver email:</strong>
-            ${escapeHTML(parcel.receiver_email || "Not provided")}</p>
-
-          <p><strong>Delivery address:</strong>
-            ${escapeHTML(parcel.delivery_address)}</p>
-
-          <hr>
-
-          <p><strong>Parcel description:</strong>
-            ${escapeHTML(parcel.parcel_description)}</p>
-
-          <p><strong>Estimated delivery:</strong>
-            ${escapeHTML(displayDate(parcel.estimated_delivery))}</p>
-
-          <p><strong>Private admin note:</strong>
-            ${escapeHTML(parcel.admin_note || "None")}</p>
-
-          <p><strong>Created:</strong>
-            ${escapeHTML(displayDate(parcel.created_at))}</p>
-
-          <div class="status-form">
-            <label for="status-${escapeHTML(parcel.id)}">
-              Update Delivery Status
-            </label>
-
-            <select id="status-${escapeHTML(parcel.id)}">
-              <option>Registered</option>
-              <option>Picked Up</option>
-              <option>In Transit</option>
-              <option>Arrived at Facility</option>
-              <option>Out for Delivery</option>
-              <option>Delivered</option>
-              <option>Delivery Exception</option>
-              <option>On Hold</option>
-            </select>
-
-            <button class="button button-red"
-                    type="button"
-                    data-update-id="${escapeHTML(parcel.id)}">
-              Save Status
-            </button>
-          </div>
-        `;
-
-        const select = card.querySelector("select");
-
-        const options = Array.from(select.options);
-
-        if (options.some((option) => option.value === parcel.status)) {
-          select.value = parcel.status;
-        } else {
-          const customOption = document.createElement("option");
-          customOption.value = parcel.status || "Registered";
-          customOption.textContent = parcel.status || "Registered";
-          select.appendChild(customOption);
-          select.value = parcel.status || "Registered";
-        }
-
-        list.appendChild(card);
+    const submitButton = $("tracking-form").querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    submitButton.textContent = "Checking…";
+    showMessage("tracking-result", "Checking your tracking number…");
+
+    try {
+      const { data, error } = await supabaseClient.rpc("track_parcel", {
+        p_tracking_number: trackingNumber
       });
-
-      list.querySelectorAll("[data-update-id]").forEach((button) => {
-        button.addEventListener("click", async () => {
-          await updateParcelStatus(button.dataset.updateId, button);
-        });
-      });
-    }
-
-    /*
-      UPDATE STATUS
-    */
-
-    async function updateParcelStatus(parcelId, button) {
-      if (
-        !currentUser ||
-        currentUser.email?.toLowerCase() !== ADMIN_EMAIL.toLowerCase()
-      ) {
-        alert("Please sign in with the authorised admin account.");
+      if (error) {
+        console.error("Tracking error:", error);
+        showMessage("tracking-result", "Tracking is temporarily unavailable. Please try again later.", "error");
         return;
       }
+      const parcel = Array.isArray(data) ? data[0] : data;
+      if (!parcel) {
+        showMessage("tracking-result", "No parcel was found. Please check your tracking number.", "error");
+        return;
+      }
+      const result = $("tracking-result");
+      result.className = "message success";
+      result.innerHTML = `
+        <h3>📦 TrustNova Express — Tracking Result</h3>
+        <h4>Tracking Information</h4>
+        <div class="tracking-detail"><strong>Tracking Number</strong>${escapeHTML(parcel.tracking_number || trackingNumber)}</div>
+        <div class="tracking-detail"><strong>Current Delivery Status</strong><span class="tracking-status">${escapeHTML(parcel.status || "Registered")}</span></div>
+        <div class="tracking-detail"><strong>Estimated Delivery Date</strong>${escapeHTML(displayDate(parcel.estimated_delivery))}</div>
+        <h4>Sender Information</h4>
+        <div class="tracking-detail"><strong>Sender's Full Name</strong>${escapeHTML(parcel.sender_name || "Not provided")}</div>
+        <div class="tracking-detail"><strong>Sender's Full Address</strong>${escapeHTML(parcel.sender_address || "Not provided")}</div>
+        <h4>Receiver Information</h4>
+        <div class="tracking-detail"><strong>Receiver's Full Name</strong>${escapeHTML(parcel.receiver_name || "Not provided")}</div>
+        <div class="tracking-detail"><strong>Receiver's Full Delivery Address</strong>${escapeHTML(parcel.receiver_address || "Not provided")}</div>
+        <h4>Parcel Details</h4>
+        <div class="tracking-detail"><strong>Parcel Description</strong>${escapeHTML(parcel.parcel_description || "Not provided")}</div>
+        <p class="small-note">These details reflect the latest shipment information recorded by TrustNova Express. Estimated delivery dates may change.</p>
+      `;
+    } catch (error) {
+      console.error("Unexpected tracking error:", error);
+      showMessage("tracking-result", "Something went wrong. Please try again.", "error");
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "Track Parcel";
+    }
+  });
 
-      const card = button.closest(".parcel-card");
+  $("parcel-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!currentUser || currentUser.email?.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+      showMessage("parcel-message", "Please sign in with the authorised admin account first.", "error");
+      return;
+    }
+    showMessage("parcel-message", "Registering parcel…");
+    const trackingNumber = "TNX-" + Date.now().toString(36).toUpperCase() + "-" + crypto.randomUUID().slice(0, 6).toUpperCase();
+    const parcel = {
+      tracking_number: trackingNumber,
+      sender_name: $("sender-name").value.trim(),
+      sender_phone: $("sender-phone").value.trim(),
+      sender_email: $("sender-email").value.trim() || null,
+      pickup_address: $("pickup-address").value.trim(),
+      receiver_name: $("receiver-name").value.trim(),
+      receiver_phone: $("receiver-phone").value.trim(),
+      receiver_email: $("receiver-email").value.trim() || null,
+      delivery_address: $("delivery-address").value.trim(),
+      parcel_description: $("parcel-description").value.trim(),
+      estimated_delivery: $("estimated-delivery").value || null,
+      admin_note: $("admin-note").value.trim() || null,
+      status: "Registered"
+    };
+    const { data, error } = await supabaseClient.from("Parcels").insert(parcel).select().single();
+    if (error) {
+      console.error("Parcel registration error:", error);
+      showMessage("parcel-message", "Parcel registration failed: " + error.message, "error");
+      return;
+    }
+    showMessage("parcel-message", "Parcel registered successfully. Tracking number: " + data.tracking_number + ". Email notifications still need to be configured.", "success");
+    $("parcel-form").reset();
+    await loadParcels();
+  });
+
+  async function loadParcels() {
+    if (!currentUser || currentUser.email?.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) return;
+    $("parcel-list").textContent = "Loading parcels…";
+    const { data, error } = await supabaseClient.from("Parcels").select("*").order("created_at", { ascending: false });
+    if (error) {
+      console.error("Parcel list error:", error);
+      $("parcel-list").textContent = "Could not load parcels. Check the Supabase table and admin database policies.";
+      return;
+    }
+    const list = $("parcel-list");
+    list.replaceChildren();
+    if (!data || data.length === 0) {
+      list.textContent = "No parcels have been registered yet.";
+      return;
+    }
+    data.forEach((parcel) => {
+      const card = document.createElement("article");
+      card.className = "parcel-card";
+      card.innerHTML = `
+        <h4>Tracking: ${escapeHTML(parcel.tracking_number)}</h4>
+        <p><strong>Status:</strong> <span class="status">${escapeHTML(parcel.status)}</span></p>
+        <p><strong>Sender:</strong> ${escapeHTML(parcel.sender_name)}</p>
+        <p><strong>Sender phone:</strong> ${escapeHTML(parcel.sender_phone)}</p>
+        <p><strong>Sender email:</strong> ${escapeHTML(parcel.sender_email || "Not provided")}</p>
+        <p><strong>Pickup address:</strong> ${escapeHTML(parcel.pickup_address)}</p><hr>
+        <p><strong>Receiver:</strong> ${escapeHTML(parcel.receiver_name)}</p>
+        <p><strong>Receiver phone:</strong> ${escapeHTML(parcel.receiver_phone)}</p>
+        <p><strong>Receiver email:</strong> ${escapeHTML(parcel.receiver_email || "Not provided")}</p>
+        <p><strong>Delivery address:</strong> ${escapeHTML(parcel.delivery_address)}</p><hr>
+        <p><strong>Parcel description:</strong> ${escapeHTML(parcel.parcel_description)}</p>
+        <p><strong>Estimated delivery:</strong> ${escapeHTML(displayDate(parcel.estimated_delivery))}</p>
+        <p><strong>Private admin note:</strong> ${escapeHTML(parcel.admin_note || "None")}</p>
+        <p><strong>Created:</strong> ${escapeHTML(displayDate(parcel.created_at))}</p>
+        <div class="status-form">
+          <label for="status-${escapeHTML(parcel.id)}">Update Delivery Status</label>
+          <select id="status-${escapeHTML(parcel.id)}">
+            <option>Registered</option><option>Picked Up</option><option>In Transit</option>
+            <option>Arrived at Facility</option><option>Out for Delivery</option>
+            <option>Delivered</option><option>Delivery Exception</option><option>On Hold</option>
+          </select>
+          <button class="button button-red" type="button" data-update-id="${escapeHTML(parcel.id)}">Save Status</button>
+        </div>`;
       const select = card.querySelector("select");
-      const newStatus = select.value;
-
-      button.disabled = true;
-      button.textContent = "Saving…";
-
-      const { error } = await supabaseClient
-        .from("Parcels")
-        .update({
-          status: newStatus
-        })
-        .eq("id", parcelId);
-
-      button.disabled = false;
-      button.textContent = "Save Status";
-
-      if (error) {
-        console.error("Status update error:", error);
-
-        alert(
-          "Status update failed. Check the database permissions. " +
-          error.message
-        );
-
-        return;
+      const options = Array.from(select.options);
+      if (options.some((option) => option.value === parcel.status)) {
+        select.value = parcel.status;
+      } else {
+        const customOption = document.createElement("option");
+        customOption.value = parcel.status || "Registered";
+        customOption.textContent = parcel.status || "Registered";
+        select.appendChild(customOption);
+        select.value = parcel.status || "Registered";
       }
-
-      alert(
-        "Parcel status updated to: " +
-        newStatus +
-        ". Automatic email notification still needs to be configured."
-      );
-
-      await loadParcels();
-    }
-
-    $("refresh-parcels").addEventListener("click", loadParcels);
-
-    /*
-      Restore the current Supabase login session.
-    */
-
-    supabaseClient.auth.onAuthStateChange((_event, session) => {
-      setAdminVisibility(session?.user || null);
+      list.appendChild(card);
     });
+    list.querySelectorAll("[data-update-id]").forEach((button) => {
+      button.addEventListener("click", async () => updateParcelStatus(button.dataset.updateId, button));
+    });
+  }
 
-    restoreSession();
-  </script>
+  async function updateParcelStatus(parcelId, button) {
+    if (!currentUser || currentUser.email?.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+      alert("Please sign in with the authorised admin account.");
+      return;
+    }
+    const card = button.closest(".parcel-card");
+    const newStatus = card.querySelector("select").value;
+    button.disabled = true;
+    button.textContent = "Saving…";
+    const { error } = await supabaseClient.from("Parcels").update({ status: newStatus }).eq("id", parcelId);
+    button.disabled = false;
+    button.textContent = "Save Status";
+    if (error) {
+      console.error("Status update error:", error);
+      alert("Status update failed. Check database permissions. " + error.message);
+      return;
+    }
+    alert("Parcel status updated to: " + newStatus + ". Automatic email notification still needs to be configured.");
+    await loadParcels();
+  }
 
+  $("refresh-parcels").addEventListener("click", loadParcels);
+  supabaseClient.auth.onAuthStateChange((_event, session) => setAdminVisibility(session?.user || null));
+  restoreSession();
+</script>
 </body>
 </html>
