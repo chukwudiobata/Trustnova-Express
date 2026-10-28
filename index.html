@@ -57,8 +57,6 @@
       font-size: 13px;
     }
 
-    /* HEADER AND ORIGINAL AEROPLANE LOGO */
-
     header {
       background: var(--yellow);
       border-bottom: 4px solid var(--red);
@@ -110,8 +108,6 @@
       font-size: 12px;
     }
 
-    /* NAVIGATION */
-
     nav {
       background: var(--black);
       display: flex;
@@ -133,8 +129,6 @@
     nav a:hover {
       background: var(--red);
     }
-
-    /* HOMEPAGE */
 
     .hero {
       background: linear-gradient(120deg, #fff8d6, #ffffff);
@@ -169,8 +163,6 @@
       margin: 0 0 25px;
       color: #444444;
     }
-
-    /* DELIVERY-MAN PICTURE */
 
     .hero-photo-wrap {
       width: 100%;
@@ -229,8 +221,6 @@
       font-size: 28px;
       font-weight: 900;
     }
-
-    /* TRACKING */
 
     .tracking-box {
       max-width: 720px;
@@ -314,8 +304,6 @@
       color: var(--muted);
     }
 
-    /* SERVICES */
-
     .grey-section {
       background: var(--grey);
     }
@@ -341,8 +329,6 @@
     .feature-icon {
       font-size: 30px;
     }
-
-    /* CONTACT US */
 
     #contact {
       background: var(--white);
@@ -406,8 +392,6 @@
       text-decoration: underline;
     }
 
-    /* FOOTER */
-
     footer {
       background: var(--black);
       color: var(--white);
@@ -423,8 +407,6 @@
     footer .footer-slogan {
       color: var(--yellow);
     }
-
-    /* MOBILE DISPLAY */
 
     @media (max-width: 700px) {
       .hero {
@@ -476,8 +458,6 @@
     TRUSTNOVA EXPRESS · DELIVERING TRUST, WORLDWIDE
   </div>
 
-  <!-- HEADER AND ORIGINAL AEROPLANE LOGO -->
-
   <header>
     <div class="header-inner">
 
@@ -526,8 +506,6 @@
     </div>
   </header>
 
-  <!-- CUSTOMER NAVIGATION -->
-
   <nav aria-label="Main navigation">
     <a href="#home">Home</a>
     <a href="#track">Track Parcel</a>
@@ -536,8 +514,6 @@
   </nav>
 
   <main>
-
-    <!-- HOMEPAGE WITH DELIVERY PICTURE -->
 
     <section class="hero" id="home">
       <div class="hero-inner">
@@ -562,8 +538,6 @@
           </a>
         </div>
 
-        <!-- The uploaded picture must be named delivery-man.png -->
-
         <div class="hero-photo-wrap">
           <img
             class="hero-photo"
@@ -574,8 +548,6 @@
 
       </div>
     </section>
-
-    <!-- PARCEL TRACKING -->
 
     <section id="track">
       <div class="container">
@@ -617,8 +589,6 @@
       </div>
     </section>
 
-    <!-- SERVICES -->
-
     <section class="grey-section" id="services">
       <div class="container">
 
@@ -657,8 +627,6 @@
       </div>
     </section>
 
-    <!-- CONTACT US -->
-
     <section id="contact">
       <div class="container">
 
@@ -668,8 +636,6 @@
           We're here to help with your parcel enquiries and
           delivery updates.
         </p>
-
-        <!-- Email details are hidden until Contact Us is pressed -->
 
         <div class="contact-card" id="contact-details" hidden>
 
@@ -694,8 +660,6 @@
 
   </main>
 
-  <!-- FOOTER -->
-
   <footer>
     <p>TRUSTNOVA EXPRESS</p>
 
@@ -709,8 +673,6 @@
     </p>
   </footer>
 
-  <!-- TRACKING AND CONTACT FUNCTIONALITY -->
-
   <script>
     const SUPABASE_URL =
       "https://trydftaqqypqcxsgixto.supabase.co";
@@ -721,7 +683,7 @@
     document.getElementById("year").textContent =
       new Date().getFullYear();
 
-    /* Show the email when Contact Us is pressed */
+    /* Show contact email when Contact Us is selected */
 
     const contactLink =
       document.querySelector('nav a[href="#contact"]');
@@ -748,11 +710,47 @@
       trackingForm.querySelector('button[type="submit"]');
 
     function showTrackingMessage(message, type) {
+      trackingResult.replaceChildren();
       trackingResult.className = "message " + type;
       trackingResult.textContent = message;
     }
 
-    function addDetail(container, label, value) {
+    function getParcelValue(parcel, possibleNames) {
+      for (const name of possibleNames) {
+        if (
+          Object.prototype.hasOwnProperty.call(parcel, name) &&
+          parcel[name] !== null &&
+          parcel[name] !== undefined &&
+          String(parcel[name]).trim() !== ""
+        ) {
+          return parcel[name];
+        }
+      }
+
+      return null;
+    }
+
+    function formatDate(value) {
+      if (!value) {
+        return "Not available";
+      }
+
+      const date = new Date(value);
+
+      if (Number.isNaN(date.getTime())) {
+        return String(value);
+      }
+
+      return date.toLocaleString(undefined, {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    function addDetail(container, label, value, options = {}) {
       const detail = document.createElement("div");
       detail.className = "tracking-detail";
 
@@ -760,12 +758,18 @@
       heading.textContent = label;
 
       const text = document.createElement("span");
-      text.textContent =
+
+      if (
         value === null ||
         value === undefined ||
         String(value).trim() === ""
-          ? "Not available"
-          : String(value);
+      ) {
+        text.textContent = "Not available";
+      } else if (options.date) {
+        text.textContent = formatDate(value);
+      } else {
+        text.textContent = String(value);
+      }
 
       detail.appendChild(heading);
       detail.appendChild(text);
@@ -832,18 +836,46 @@
           return;
         }
 
+        /*
+          Display parcel details.
+          These values must be returned by the track_parcel function.
+          The alternative names below support common database naming styles.
+        */
+
         trackingResult.className = "message success";
         trackingResult.replaceChildren();
 
         const title = document.createElement("h3");
-        title.textContent = "Tracking Result";
+        title.textContent = "Your Parcel Details";
         trackingResult.appendChild(title);
 
         addDetail(
           trackingResult,
-          "Tracking Number",
-          parcel.tracking_number || trackingNumber
+          "Customer Name",
+          getParcelValue(parcel, [
+            "customer_name",
+            "full_name",
+            "recipient_name",
+            "receiver_name",
+            "name"
+          ])
         );
+
+        addDetail(
+          trackingResult,
+          "Tracking Number",
+          getParcelValue(parcel, [
+            "tracking_number",
+            "trackingNumber"
+          ]) || trackingNumber
+        );
+
+        const statusValue = getParcelValue(parcel, [
+          "status",
+          "parcel_status",
+          "shipment_status",
+          "delivery_status"
+        ]);
 
         const statusDetail = document.createElement("div");
         statusDetail.className = "tracking-detail";
@@ -853,7 +885,7 @@
 
         const status = document.createElement("span");
         status.className = "tracking-status";
-        status.textContent = parcel.status || "Not available";
+        status.textContent = statusValue || "Not available";
 
         statusDetail.appendChild(statusHeading);
         statusDetail.appendChild(status);
@@ -861,8 +893,77 @@
 
         addDetail(
           trackingResult,
+          "Origin",
+          getParcelValue(parcel, [
+            "origin",
+            "origin_address",
+            "sender_address",
+            "from_location",
+            "from_address",
+            "sender_location"
+          ])
+        );
+
+        addDetail(
+          trackingResult,
+          "Destination",
+          getParcelValue(parcel, [
+            "destination",
+            "destination_address",
+            "receiver_address",
+            "to_location",
+            "to_address",
+            "delivery_address"
+          ])
+        );
+
+        addDetail(
+          trackingResult,
+          "Current Package Location",
+          getParcelValue(parcel, [
+            "current_location",
+            "currentLocation",
+            "location",
+            "last_location",
+            "present_location"
+          ])
+        );
+
+        addDetail(
+          trackingResult,
           "Estimated Delivery Date",
-          parcel.estimated_delivery
+          getParcelValue(parcel, [
+            "estimated_delivery",
+            "estimated_delivery_date",
+            "expected_delivery",
+            "delivery_date"
+          ]),
+          { date: true }
+        );
+
+        addDetail(
+          trackingResult,
+          "Admin Note",
+          getParcelValue(parcel, [
+            "admin_note",
+            "adminNote",
+            "admin_notes",
+            "note",
+            "shipment_note",
+            "delivery_note"
+          ])
+        );
+
+        addDetail(
+          trackingResult,
+          "Last Updated",
+          getParcelValue(parcel, [
+            "updated_at",
+            "last_updated",
+            "lastUpdated",
+            "modified_at"
+          ]),
+          { date: true }
         );
 
       } catch (error) {
