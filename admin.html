@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>TrustNova Express | Admin Dashboard</title>
-
 <meta name="theme-color" content="#f5c400">
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -14,8 +13,8 @@
 :root {
   --yellow: #f5c400;
   --black: #171717;
+  --dark: #222222;
   --white: #ffffff;
-  --background: #f5f6f8;
   --green: #16834a;
   --red: #c62828;
   --border: #e2e5e9;
@@ -28,15 +27,15 @@
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
-  background: var(--background);
-  color: var(--black);
+  background: var(--black);
+  color: #222;
 }
 
 header {
   background: var(--yellow);
   color: var(--black);
   padding: 20px;
-  border-bottom: 4px solid var(--black);
+  border-bottom: 4px solid #fff;
 }
 
 .header-inner {
@@ -45,8 +44,8 @@ header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 15px;
   flex-wrap: wrap;
+  gap: 15px;
 }
 
 .brand {
@@ -56,9 +55,8 @@ header {
 
 .brand small {
   display: block;
-  margin-top: 5px;
   font-size: 12px;
-  font-weight: 600;
+  margin-top: 5px;
 }
 
 header a {
@@ -79,19 +77,21 @@ header a {
   margin-bottom: 22px;
   border-radius: 12px;
   border: 1px solid var(--border);
-  box-shadow: 0 3px 12px rgba(0,0,0,.04);
-}
-
-h1, h2, h3 {
-  margin-top: 0;
+  box-shadow: 0 5px 20px rgba(0,0,0,.2);
 }
 
 h1 {
   font-size: 27px;
+  margin-top: 0;
 }
 
 h2 {
   font-size: 21px;
+  margin-top: 0;
+}
+
+h3 {
+  margin-top: 25px;
 }
 
 p {
@@ -116,7 +116,7 @@ input, select, textarea {
 }
 
 textarea {
-  min-height: 85px;
+  min-height: 80px;
   resize: vertical;
 }
 
@@ -129,10 +129,6 @@ input:focus, select:focus, textarea:focus {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
-}
-
-.field {
-  min-width: 0;
 }
 
 .full {
@@ -149,8 +145,8 @@ button {
 }
 
 button:disabled {
-  opacity: .55;
-  cursor: not-allowed;
+  opacity: .6;
+  cursor: wait;
 }
 
 .btn-primary {
@@ -188,57 +184,25 @@ button:disabled {
 }
 
 .stat {
-  background: white;
-  border: 1px solid var(--border);
+  background: var(--yellow);
   border-radius: 12px;
-  padding: 18px;
+  padding: 20px;
+  color: var(--black);
 }
 
 .stat span {
   display: block;
-  color: #666;
   font-size: 13px;
   margin-bottom: 8px;
 }
 
 .stat strong {
-  font-size: 27px;
-}
-
-.status {
-  display: inline-block;
-  padding: 5px 9px;
-  border-radius: 20px;
-  background: #e9edf2;
-  font-size: 12px;
-  font-weight: bold;
-}
-
-.status[data-status="Delivered"] {
-  background: #d9f5e4;
-  color: #126b38;
-}
-
-.status[data-status="In Transit"],
-.status[data-status="Out for Delivery"] {
-  background: #fff0bd;
-  color: #775600;
-}
-
-.status[data-status="Cancelled"] {
-  background: #ffe1e1;
-  color: #a30000;
-}
-
-.status[data-status="Pending"],
-.status[data-status="Registered"] {
-  background: #e9edf2;
-  color: #333;
+  font-size: 28px;
 }
 
 .notice {
   display: none;
-  padding: 12px 14px;
+  padding: 13px;
   border-radius: 8px;
   margin: 15px 0;
   overflow-wrap: anywhere;
@@ -289,14 +253,29 @@ th {
   background: #f8f8f8;
 }
 
-td select {
-  min-width: 150px;
-  padding: 9px;
+.status {
+  display: inline-block;
+  padding: 5px 9px;
+  border-radius: 20px;
+  background: #e9edf2;
+  font-size: 12px;
+  font-weight: bold;
 }
 
-.tracking {
-  font-weight: bold;
-  overflow-wrap: anywhere;
+.status[data-status="Delivered"] {
+  background: #d9f5e4;
+  color: #126b38;
+}
+
+.status[data-status="In Transit"],
+.status[data-status="Out for Delivery"] {
+  background: #fff0bd;
+  color: #775600;
+}
+
+.status[data-status="Cancelled"] {
+  background: #ffe1e1;
+  color: #a30000;
 }
 
 .muted {
@@ -304,9 +283,14 @@ td select {
   font-size: 13px;
 }
 
+.tracking {
+  font-weight: bold;
+  overflow-wrap: anywhere;
+}
+
 footer {
   text-align: center;
-  color: #777;
+  color: #ddd;
   padding: 25px 15px;
   font-size: 12px;
 }
@@ -324,12 +308,12 @@ footer {
     grid-template-columns: 1fr;
   }
 
-  .brand {
-    font-size: 21px;
-  }
-
   .card {
     padding: 16px;
+  }
+
+  .brand {
+    font-size: 21px;
   }
 }
 </style>
@@ -350,12 +334,11 @@ footer {
 
 <main class="container">
 
-  <!-- ADMIN LOGIN -->
   <section id="loginPanel" class="card">
-    <h1>Admin Login</h1>
+    <h1>Administrator Login</h1>
 
     <p class="muted">
-      Sign in with your authorized TrustNova Express administrator account.
+      Sign in with your authorized administrator account.
     </p>
 
     <div id="loginNotice" class="notice" role="status"></div>
@@ -363,24 +346,16 @@ footer {
     <form id="loginForm">
       <div class="form-grid">
 
-        <div class="field full">
+        <div class="full">
           <label for="adminEmail">Administrator Email</label>
-          <input
-            id="adminEmail"
-            type="email"
-            autocomplete="username"
-            placeholder="Enter administrator email"
-            required>
+          <input id="adminEmail" type="email"
+                 autocomplete="username" required>
         </div>
 
-        <div class="field full">
+        <div class="full">
           <label for="adminPassword">Password</label>
-          <input
-            id="adminPassword"
-            type="password"
-            autocomplete="current-password"
-            placeholder="Enter your password"
-            required>
+          <input id="adminPassword" type="password"
+                 autocomplete="current-password" required>
         </div>
 
       </div>
@@ -394,22 +369,19 @@ footer {
   </section>
 
 
-  <!-- ADMIN DASHBOARD -->
   <section id="dashboard" class="hidden">
 
     <div class="card">
       <h1>Parcel Management</h1>
 
-      <p>
-        Welcome to the TrustNova Express administration area.
-      </p>
+      <p>Manage parcel registrations and delivery updates.</p>
 
       <p class="muted">
         Signed in as: <strong id="signedInEmail"></strong>
       </p>
 
       <div class="actions">
-        <button id="refreshButton" class="btn-secondary" type="button">
+        <button id="refreshButton" class="btn-yellow" type="button">
           Refresh Parcels
         </button>
 
@@ -422,9 +394,7 @@ footer {
     </div>
 
 
-    <!-- STATISTICS -->
     <div class="stats">
-
       <div class="stat">
         <span>Total Parcels</span>
         <strong id="totalCount">0</strong>
@@ -439,17 +409,14 @@ footer {
         <span>Delivered</span>
         <strong id="deliveredCount">0</strong>
       </div>
-
     </div>
 
 
-    <!-- REGISTER PARCEL -->
     <section class="card">
       <h2>Register a New Parcel</h2>
 
       <p class="muted">
-        Complete the parcel details below. The system will generate a
-        tracking number when the record is saved successfully.
+        Required fields are marked with an asterisk.
       </p>
 
       <form id="parcelForm">
@@ -458,22 +425,22 @@ footer {
 
         <div class="form-grid">
 
-          <div class="field">
+          <div>
             <label for="senderName">Sender Full Name *</label>
             <input id="senderName" required maxlength="150">
           </div>
 
-          <div class="field">
+          <div>
             <label for="senderPhone">Sender Phone</label>
             <input id="senderPhone" type="tel" maxlength="40">
           </div>
 
-          <div class="field">
+          <div>
             <label for="senderEmail">Sender Email</label>
             <input id="senderEmail" type="email" maxlength="254">
           </div>
 
-          <div class="field">
+          <div>
             <label for="pickupAddress">Pickup Address *</label>
             <textarea id="pickupAddress" required maxlength="1000"></textarea>
           </div>
@@ -481,26 +448,26 @@ footer {
         </div>
 
 
-        <h3 style="margin-top:25px">Receiver Information</h3>
+        <h3>Receiver Information</h3>
 
         <div class="form-grid">
 
-          <div class="field">
+          <div>
             <label for="receiverName">Receiver Full Name *</label>
             <input id="receiverName" required maxlength="150">
           </div>
 
-          <div class="field">
+          <div>
             <label for="receiverPhone">Receiver Phone</label>
             <input id="receiverPhone" type="tel" maxlength="40">
           </div>
 
-          <div class="field">
+          <div>
             <label for="receiverEmail">Receiver Email</label>
             <input id="receiverEmail" type="email" maxlength="254">
           </div>
 
-          <div class="field">
+          <div>
             <label for="deliveryAddress">Delivery Address *</label>
             <textarea id="deliveryAddress" required maxlength="1000"></textarea>
           </div>
@@ -508,39 +475,32 @@ footer {
         </div>
 
 
-        <h3 style="margin-top:25px">Parcel Information</h3>
+        <h3>Parcel Details</h3>
 
         <div class="form-grid">
 
-          <div class="field full">
+          <div class="full">
             <label for="parcelDescription">Parcel Description *</label>
-            <textarea
-              id="parcelDescription"
-              required
-              maxlength="1000"
-              placeholder="Describe the parcel"></textarea>
+            <textarea id="parcelDescription" required maxlength="1000"></textarea>
           </div>
 
-          <div class="field">
-            <label for="estimatedDelivery">Estimated Delivery Date</label>
+          <div>
+            <label for="estimatedDelivery">Estimated Delivery</label>
             <input id="estimatedDelivery" type="date">
           </div>
 
-          <div class="field">
+          <div>
             <label for="initialStatus">Initial Status</label>
             <select id="initialStatus">
-              <option value="Registered">Registered</option>
-              <option value="Pending">Pending</option>
-              <option value="In Transit">In Transit</option>
+              <option>Registered</option>
+              <option>Pending</option>
+              <option>In Transit</option>
             </select>
           </div>
 
-          <div class="field full">
+          <div class="full">
             <label for="adminNote">Private Admin Note</label>
-            <textarea
-              id="adminNote"
-              maxlength="2000"
-              placeholder="Internal note for authorized staff"></textarea>
+            <textarea id="adminNote" maxlength="2000"></textarea>
           </div>
 
         </div>
@@ -559,40 +519,31 @@ footer {
     </section>
 
 
-    <!-- PARCEL LIST -->
     <section class="card">
       <h2>Registered Parcels</h2>
 
-      <p class="muted">
-        Search by tracking number, sender name, or receiver name.
-      </p>
-
-      <div class="field" style="margin-bottom:18px">
-        <label for="searchParcel">Search Parcels</label>
-        <input
-          id="searchParcel"
-          type="search"
-          placeholder="Enter tracking number or name">
-      </div>
+      <label for="searchParcel">Search by tracking number or name</label>
+      <input id="searchParcel" type="search"
+             placeholder="Enter tracking number or name">
 
       <div id="listNotice" class="notice" role="status"></div>
 
-      <div class="table-wrap">
+      <div class="table-wrap" style="margin-top:18px">
         <table>
           <thead>
             <tr>
               <th>Tracking Number</th>
               <th>Sender</th>
               <th>Receiver</th>
-              <th>Parcel</th>
+              <th>Parcel Description</th>
               <th>Status</th>
-              <th>Action</th>
+              <th>Update</th>
             </tr>
           </thead>
 
           <tbody id="parcelTableBody">
             <tr>
-              <td colspan="6">Sign in and load parcels to begin.</td>
+              <td colspan="6">Sign in to load parcel records.</td>
             </tr>
           </tbody>
         </table>
@@ -612,15 +563,11 @@ footer {
 "use strict";
 
 /*
-  TRUSTNOVA EXPRESS ADMIN DASHBOARD
+  Use the existing TrustNova Express Supabase project.
+  Never put a service-role key in browser code.
 
-  This page uses the Supabase project configured below.
-
-  IMPORTANT:
-  The publishable key is intended for browser use.
-  NEVER put a Supabase service-role key in this file.
-
-  Database access must also be protected by Supabase RLS policies.
+  The existing database table is named "Parcels".
+  This code uses its exact, case-sensitive name.
 */
 
 const SUPABASE_URL =
@@ -631,7 +578,11 @@ const SUPABASE_PUBLISHABLE_KEY =
 
 const ADMIN_EMAIL = "trustnovaexpress@gmail.com";
 
-const TABLE_NAME = "parcels";
+/*
+  Quoted uppercase P matters if the table was created with
+  the exact case-sensitive name "Parcels".
+*/
+const TABLE_NAME = '"Parcels"';
 
 const STATUS_OPTIONS = [
   "Registered",
@@ -644,38 +595,34 @@ const STATUS_OPTIONS = [
   "Cancelled"
 ];
 
-const supabaseClient = window.supabase.createClient(
+const db = window.supabase.createClient(
   SUPABASE_URL,
   SUPABASE_PUBLISHABLE_KEY
 );
 
 let currentUser = null;
 let parcels = [];
-let busy = false;
 
 const $ = (id) => document.getElementById(id);
 
-function showNotice(elementId, message, type = "info") {
-  const element = $(elementId);
-
-  element.textContent = message;
-  element.className = "notice show " + type;
+function notice(id, message, type = "info") {
+  const el = $(id);
+  el.textContent = message;
+  el.className = "notice show " + type;
 }
 
-function clearNotice(elementId) {
-  const element = $(elementId);
-
-  element.textContent = "";
-  element.className = "notice";
+function clearNotice(id) {
+  $(id).textContent = "";
+  $(id).className = "notice";
 }
 
-function setBusy(button, state, busyText) {
-  button.disabled = state;
-
-  if (state) {
+function setBusy(button, busy, text) {
+  if (busy) {
     button.dataset.originalText = button.textContent;
-    button.textContent = busyText;
+    button.disabled = true;
+    button.textContent = text;
   } else {
+    button.disabled = false;
     button.textContent =
       button.dataset.originalText || button.textContent;
   }
@@ -689,147 +636,111 @@ function showLogin() {
 function showDashboard(user) {
   $("loginPanel").classList.add("hidden");
   $("dashboard").classList.remove("hidden");
-
   $("signedInEmail").textContent = user.email || "";
 }
 
-function clean(value) {
-  return String(value || "").trim();
-}
-
-function generateTrackingNumber() {
-  const randomPart = Math.random()
-    .toString(36)
-    .substring(2, 8)
-    .toUpperCase();
-
-  const timePart = Date.now().toString(36).toUpperCase();
-
-  return "TNX-" + timePart + "-" + randomPart;
-}
-
-function formatDate(value) {
-  if (!value) return "Not specified";
-
-  const date = new Date(value + (value.length === 10 ? "T00:00:00" : ""));
-
-  if (Number.isNaN(date.getTime())) return value;
-
-  return date.toLocaleDateString();
-}
-
-function addCell(row, value) {
+function makeCell(row, value) {
   const cell = document.createElement("td");
   cell.textContent = value || "—";
   row.appendChild(cell);
-
   return cell;
 }
 
-function makeStatusBadge(status) {
-  const badge = document.createElement("span");
+function generateTrackingNumber() {
+  const random = crypto.getRandomValues(new Uint32Array(2));
 
-  badge.className = "status";
-  badge.dataset.status = status;
-  badge.textContent = status;
-
-  return badge;
+  return "TNX-" +
+    Date.now().toString(36).toUpperCase() + "-" +
+    random[0].toString(36).toUpperCase();
 }
 
 function updateStatistics() {
   $("totalCount").textContent = parcels.length;
 
-  $("transitCount").textContent = parcels.filter((parcel) =>
-    ["In Transit", "Out for Delivery"].includes(parcel.status)
+  $("transitCount").textContent = parcels.filter((p) =>
+    ["In Transit", "Out for Delivery"].includes(p.status)
   ).length;
 
-  $("deliveredCount").textContent = parcels.filter(
-    (parcel) => parcel.status === "Delivered"
-  ).length;
+  $("deliveredCount").textContent =
+    parcels.filter((p) => p.status === "Delivered").length;
 }
 
 function renderParcels() {
   const body = $("parcelTableBody");
-  const search = clean($("searchParcel").value).toLowerCase();
+  const query = $("searchParcel").value.trim().toLowerCase();
 
   body.replaceChildren();
 
-  const filtered = parcels.filter((parcel) => {
-    const searchable = [
-      parcel.tracking_number,
-      parcel.sender_name,
-      parcel.receiver_name,
-      parcel.parcel_description
-    ].join(" ").toLowerCase();
-
-    return searchable.includes(search);
-  });
+  const filtered = parcels.filter((p) =>
+    [
+      p.tracking_number,
+      p.sender_name,
+      p.receiver_name,
+      p.parcel_description
+    ].join(" ").toLowerCase().includes(query)
+  );
 
   if (!filtered.length) {
     const row = document.createElement("tr");
     const cell = document.createElement("td");
 
     cell.colSpan = 6;
-    cell.textContent = search
-      ? "No matching parcels were found."
-      : "No parcels have been registered yet.";
+    cell.textContent = query
+      ? "No matching parcels found."
+      : "No parcels registered yet.";
 
     row.appendChild(cell);
     body.appendChild(row);
-
     updateStatistics();
     return;
   }
 
-  filtered.forEach((parcel) => {
+  filtered.forEach((p) => {
     const row = document.createElement("tr");
 
-    const trackingCell = addCell(row, parcel.tracking_number);
-    trackingCell.className = "tracking";
-
-    addCell(row, parcel.sender_name);
-    addCell(row, parcel.receiver_name);
-    addCell(row, parcel.parcel_description);
+    makeCell(row, p.tracking_number).className = "tracking";
+    makeCell(row, p.sender_name);
+    makeCell(row, p.receiver_name);
+    makeCell(row, p.parcel_description);
 
     const statusCell = document.createElement("td");
-    statusCell.appendChild(makeStatusBadge(parcel.status || "Pending"));
+    const badge = document.createElement("span");
+
+    badge.className = "status";
+    badge.dataset.status = p.status || "Pending";
+    badge.textContent = p.status || "Pending";
+
+    statusCell.appendChild(badge);
     row.appendChild(statusCell);
 
     const actionCell = document.createElement("td");
+    const select = document.createElement("select");
 
-    const statusSelect = document.createElement("select");
-    statusSelect.setAttribute("aria-label", "Change parcel status");
+    select.setAttribute("aria-label", "New parcel status");
 
     STATUS_OPTIONS.forEach((status) => {
       const option = document.createElement("option");
-
       option.value = status;
       option.textContent = status;
-      option.selected = status === parcel.status;
-
-      statusSelect.appendChild(option);
+      option.selected = status === p.status;
+      select.appendChild(option);
     });
 
-    const updateButton = document.createElement("button");
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "btn-primary";
+    button.textContent = "Update";
+    button.style.marginTop = "8px";
 
-    updateButton.type = "button";
-    updateButton.className = "btn-primary";
-    updateButton.textContent = "Update";
-    updateButton.style.marginTop = "8px";
+    button.addEventListener("click", () =>
+      updateStatus(p.id, select.value, button)
+    );
 
-    updateButton.addEventListener("click", async () => {
-      await updateParcelStatus(
-        parcel.id,
-        statusSelect.value,
-        updateButton
-      );
-    });
-
-    actionCell.appendChild(statusSelect);
+    actionCell.appendChild(select);
     actionCell.appendChild(document.createElement("br"));
-    actionCell.appendChild(updateButton);
-
+    actionCell.appendChild(button);
     row.appendChild(actionCell);
+
     body.appendChild(row);
   });
 
@@ -841,35 +752,23 @@ async function loadParcels() {
 
   clearNotice("listNotice");
 
-  $("parcelTableBody").replaceChildren();
-
-  const loadingRow = document.createElement("tr");
-  const loadingCell = document.createElement("td");
-
-  loadingCell.colSpan = 6;
-  loadingCell.textContent = "Loading parcel records...";
-
-  loadingRow.appendChild(loadingCell);
-  $("parcelTableBody").appendChild(loadingRow);
-
-  const { data, error } = await supabaseClient
+  const { data, error } = await db
     .from(TABLE_NAME)
     .select(
-      "id, tracking_number, sender_name, receiver_name, parcel_description, status, created_at, estimated_delivery"
+      "id, tracking_number, sender_name, receiver_name, parcel_description, status, created_at"
     )
     .order("created_at", { ascending: false });
 
   if (error) {
-    parcels = [];
-    renderParcels();
-
-    showNotice(
+    notice(
       "listNotice",
-      "Could not load parcels. Check that the parcels table, its columns, and its Row Level Security policies are configured correctly. Database message: " +
-        error.message,
+      "Unable to load parcels. Supabase message: " + error.message +
+      ". Check the table name, columns, and database permissions.",
       "error"
     );
 
+    parcels = [];
+    renderParcels();
     return;
   }
 
@@ -877,40 +776,33 @@ async function loadParcels() {
   renderParcels();
 }
 
-async function updateParcelStatus(id, newStatus, button) {
+async function updateStatus(id, status, button) {
   if (!currentUser) return;
 
-  if (!STATUS_OPTIONS.includes(newStatus)) {
-    showNotice("dashboardNotice", "Invalid parcel status.", "error");
+  if (!STATUS_OPTIONS.includes(status)) {
+    notice("dashboardNotice", "Invalid parcel status.", "error");
     return;
   }
 
   setBusy(button, true, "Updating...");
 
-  const { error } = await supabaseClient
+  const { error } = await db
     .from(TABLE_NAME)
-    .update({ status: newStatus })
+    .update({ status })
     .eq("id", id);
 
   setBusy(button, false);
 
   if (error) {
-    showNotice(
+    notice(
       "dashboardNotice",
-      "The status could not be updated. Check your database permissions. " +
-        error.message,
+      "Status update failed: " + error.message,
       "error"
     );
-
     return;
   }
 
-  showNotice(
-    "dashboardNotice",
-    "Parcel status updated successfully.",
-    "success"
-  );
-
+  notice("dashboardNotice", "Parcel status updated.", "success");
   await loadParcels();
 }
 
@@ -918,114 +810,88 @@ $("loginForm").addEventListener("submit", async (event) => {
   event.preventDefault();
 
   const button = $("loginButton");
-  const email = clean($("adminEmail").value).toLowerCase();
+  const email = $("adminEmail").value.trim().toLowerCase();
   const password = $("adminPassword").value;
 
   clearNotice("loginNotice");
 
   if (email !== ADMIN_EMAIL.toLowerCase()) {
-    showNotice(
+    notice(
       "loginNotice",
-      "This email is not the configured administrator account.",
+      "This is not the configured administrator email.",
       "error"
     );
-
     return;
   }
 
   setBusy(button, true, "Signing in...");
 
   try {
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
+    const { data, error } = await db.auth.signInWithPassword({
       email,
       password
     });
 
     if (error) {
-      showNotice(
-        "loginNotice",
-        "Login failed. Check your email, password, and Supabase Auth settings. " +
-          error.message,
-        "error"
-      );
-
+      notice("loginNotice", "Login failed: " + error.message, "error");
       return;
     }
 
-    if (
-      !data.user ||
-      data.user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()
-    ) {
-      await supabaseClient.auth.signOut();
+    if (!data.user || data.user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+      await db.auth.signOut();
 
-      showNotice(
+      notice(
         "loginNotice",
         "This account is not authorized for this dashboard.",
         "error"
       );
-
       return;
     }
 
     currentUser = data.user;
-
     $("adminPassword").value = "";
 
     showDashboard(currentUser);
 
-    showNotice(
+    notice(
       "dashboardNotice",
-      "Login successful. Loading parcel records.",
+      "Signed in. Checking parcel records...",
       "success"
     );
 
     await loadParcels();
 
   } catch (error) {
-    showNotice(
-      "loginNotice",
-      "An unexpected login error occurred: " + error.message,
-      "error"
-    );
+    notice("loginNotice", "Unexpected error: " + error.message, "error");
 
   } finally {
     setBusy(button, false);
   }
 });
 
-
 $("parcelForm").addEventListener("submit", async (event) => {
   event.preventDefault();
 
   if (!currentUser) {
-    showNotice(
-      "dashboardNotice",
-      "Please sign in before registering a parcel.",
-      "error"
-    );
-
+    notice("dashboardNotice", "Please sign in first.", "error");
     return;
   }
 
   const button = $("saveParcelButton");
 
-  clearNotice("dashboardNotice");
-
-  const trackingNumber = generateTrackingNumber();
-
   const parcel = {
-    tracking_number: trackingNumber,
-    sender_name: clean($("senderName").value),
-    sender_phone: clean($("senderPhone").value) || null,
-    sender_email: clean($("senderEmail").value).toLowerCase() || null,
-    pickup_address: clean($("pickupAddress").value),
-    receiver_name: clean($("receiverName").value),
-    receiver_phone: clean($("receiverPhone").value) || null,
-    receiver_email: clean($("receiverEmail").value).toLowerCase() || null,
-    delivery_address: clean($("deliveryAddress").value),
-    parcel_description: clean($("parcelDescription").value),
+    tracking_number: generateTrackingNumber(),
+    sender_name: $("senderName").value.trim(),
+    sender_phone: $("senderPhone").value.trim() || null,
+    sender_email: $("senderEmail").value.trim().toLowerCase() || null,
+    pickup_address: $("pickupAddress").value.trim(),
+    receiver_name: $("receiverName").value.trim(),
+    receiver_phone: $("receiverPhone").value.trim() || null,
+    receiver_email: $("receiverEmail").value.trim().toLowerCase() || null,
+    delivery_address: $("deliveryAddress").value.trim(),
+    parcel_description: $("parcelDescription").value.trim(),
     estimated_delivery: $("estimatedDelivery").value || null,
-    admin_note: clean($("adminNote").value) || null,
+    admin_note: $("adminNote").value.trim() || null,
     status: $("initialStatus").value
   };
 
@@ -1036,39 +902,35 @@ $("parcelForm").addEventListener("submit", async (event) => {
     !parcel.delivery_address ||
     !parcel.parcel_description
   ) {
-    showNotice(
+    notice(
       "dashboardNotice",
-      "Please complete all required parcel fields.",
+      "Please fill in all required fields.",
       "error"
     );
-
     return;
   }
 
-  setBusy(button, true, "Registering Parcel...");
+  setBusy(button, true, "Registering...");
 
   try {
-    const { data, error } = await supabaseClient
+    const { data, error } = await db
       .from(TABLE_NAME)
       .insert(parcel)
       .select("tracking_number")
       .single();
 
     if (error) {
-      showNotice(
+      notice(
         "dashboardNotice",
-        "The parcel was not saved. Check the parcels table columns and database permissions. " +
-          error.message,
+        "Parcel was not saved: " + error.message,
         "error"
       );
-
       return;
     }
 
-    showNotice(
+    notice(
       "dashboardNotice",
-      "Parcel registered successfully. Tracking number: " +
-        data.tracking_number,
+      "Parcel registered. Tracking number: " + data.tracking_number,
       "success"
     );
 
@@ -1077,9 +939,9 @@ $("parcelForm").addEventListener("submit", async (event) => {
     await loadParcels();
 
   } catch (error) {
-    showNotice(
+    notice(
       "dashboardNotice",
-      "An unexpected error occurred: " + error.message,
+      "Unexpected error: " + error.message,
       "error"
     );
 
@@ -1088,22 +950,15 @@ $("parcelForm").addEventListener("submit", async (event) => {
   }
 });
 
-
 $("refreshButton").addEventListener("click", loadParcels);
 
 $("searchParcel").addEventListener("input", renderParcels);
 
-
 $("logoutButton").addEventListener("click", async () => {
-  const { error } = await supabaseClient.auth.signOut();
+  const { error } = await db.auth.signOut();
 
   if (error) {
-    showNotice(
-      "dashboardNotice",
-      "Could not sign out: " + error.message,
-      "error"
-    );
-
+    notice("dashboardNotice", "Sign out failed: " + error.message, "error");
     return;
   }
 
@@ -1113,26 +968,17 @@ $("logoutButton").addEventListener("click", async () => {
   $("loginForm").reset();
   $("parcelForm").reset();
 
-  clearNotice("dashboardNotice");
   clearNotice("loginNotice");
+  clearNotice("dashboardNotice");
 
   showLogin();
 });
 
-
-/*
-  Restore an existing login session if one is available.
-*/
 async function restoreSession() {
-  const { data, error } = await supabaseClient.auth.getSession();
+  const { data, error } = await db.auth.getSession();
 
   if (error) {
-    showNotice(
-      "loginNotice",
-      "Could not check your login session. Please sign in again.",
-      "error"
-    );
-
+    notice("loginNotice", "Could not check login session.", "error");
     return;
   }
 
@@ -1147,10 +993,10 @@ async function restoreSession() {
     !user.email ||
     user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()
   ) {
-    await supabaseClient.auth.signOut();
+    await db.auth.signOut();
     showLogin();
 
-    showNotice(
+    notice(
       "loginNotice",
       "This account is not authorized for the admin dashboard.",
       "error"
@@ -1160,14 +1006,11 @@ async function restoreSession() {
   }
 
   currentUser = user;
-
   showDashboard(user);
-
   await loadParcels();
 }
 
 restoreSession();
-
 </script>
 
 </body>
