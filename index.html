@@ -2,1063 +2,377 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>TrustNova Express | Delivering Trust, Worldwide</title>
-
-  <meta name="description"
-        content="TrustNova Express provides parcel tracking and delivery information. Track your parcel online.">
-
+  <meta name="description" content="Register parcels and track shipment updates with TrustNova Express.">
+  <meta name="theme-color" content="#f5c400">
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
   <style>
-    :root {
-      --red: #c90018;
-      --dark-red: #990013;
-      --green: #16a34a;
-      --white: #ffffff;
-      --pink: #ffe0eb;
-      --dark-pink: #8f1747;
-      --dark: #222222;
-      --light: #f7f7f7;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--red);
-      color: var(--white);
-      line-height: 1.6;
-    }
-
-    header {
-      background: var(--dark-red);
-      padding: 20px 15px;
-      text-align: center;
-      border-bottom: 4px solid var(--white);
-    }
-
-    .brand {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .logo {
-      width: 115px;
-      height: 115px;
-      object-fit: contain;
-      display: block;
-      margin: 0 auto;
-    }
-
-    .company-name {
-      margin: 0;
-      font-size: clamp(27px, 6vw, 43px);
-      font-weight: 1000;
-      line-height: 1.15;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.3);
-    }
-
-    .trustnova {
-      color: #39e75f;
-      font-weight: 1000;
-    }
-
-    .express {
-      color: #ffffff;
-      font-weight: 1000;
-    }
-
-    .tagline {
-      margin: 8px 0 0;
-      font-weight: 800;
-      font-size: 15px;
-      color: #ffffff;
-    }
-
-    .language-box {
-      margin-top: 18px;
-    }
-
-    .language-box label {
-      font-weight: 800;
-      margin-right: 8px;
-    }
-
-    select,
-    input,
-    button {
-      font: inherit;
-    }
-
-    .language-box select {
-      padding: 9px;
-      border-radius: 6px;
-      border: 2px solid #ffffff;
-      max-width: 100%;
-    }
-
-    main {
-      width: 100%;
-      max-width: 950px;
-      margin: 0 auto;
-      padding: 20px 14px 35px;
-    }
-
-    .hero {
-      text-align: center;
-      padding: 15px 5px 25px;
-    }
-
-    .hero h2 {
-      font-size: clamp(25px, 5vw, 38px);
-      font-weight: 1000;
-      margin: 10px 0;
-      line-height: 1.2;
-    }
-
-    .hero p {
-      font-size: 17px;
-      font-weight: 700;
-      max-width: 650px;
-      margin: 12px auto;
-    }
-
-    .delivery-image {
-      display: block;
-      width: 100%;
-      max-width: 430px;
-      max-height: 400px;
-      object-fit: contain;
-      margin: 20px auto;
-      border-radius: 12px;
-    }
-
-    .delivery-caption {
-      font-size: 23px;
-      font-weight: 1000;
-      color: #ffffff;
-      text-transform: uppercase;
-      margin: 12px 0 25px;
-      text-shadow: 2px 2px 3px rgba(0, 0, 0, 0.35);
-    }
-
-    .card {
-      background: #ffffff;
-      color: var(--dark);
-      border-radius: 12px;
-      padding: 22px;
-      margin: 22px 0;
-      box-shadow: 0 5px 18px rgba(0, 0, 0, 0.2);
-    }
-
-    .card h2 {
-      margin-top: 0;
-      text-align: center;
-      font-size: 26px;
-      font-weight: 1000;
-    }
-
-    .tracking-form {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .tracking-form label {
-      font-weight: 900;
-      font-size: 16px;
-    }
-
-    .tracking-form input {
-      width: 100%;
-      padding: 14px;
-      border: 2px solid #cccccc;
-      border-radius: 7px;
-      outline: none;
-      color: #222222;
-      background: #ffffff;
-      font-size: 16px;
-    }
-
-    .tracking-form input:focus {
-      border-color: var(--green);
-    }
-
-    .primary-button {
-      border: none;
-      border-radius: 7px;
-      padding: 14px 18px;
-      background: var(--green);
-      color: #ffffff;
-      font-weight: 1000;
-      font-size: 17px;
-      cursor: pointer;
-    }
-
-    .primary-button:hover {
-      background: #08752d;
-    }
-
-    .primary-button:disabled {
-      opacity: 0.65;
-      cursor: wait;
-    }
-
-    .message {
-      display: none;
-      margin-top: 18px;
-      padding: 14px;
-      border-radius: 7px;
-      overflow-wrap: anywhere;
-      font-weight: 700;
-    }
-
-    .message.error {
-      display: block;
-      background: #ffe1e1;
-      color: #900000;
-      border: 1px solid #d00000;
-    }
-
-    .message.success {
-      display: block;
-      background: var(--pink);
-      color: #3a1023;
-      border: 2px solid #c65a82;
-      padding: 20px;
-      border-radius: 10px;
-    }
-
-    /* PINK PARCEL INFORMATION SECTION */
-
-    .parcel-information {
-      background: var(--pink);
-      color: #3a1023;
-      border: 3px solid #ffffff;
-      border-radius: 12px;
-      padding: 20px;
-      margin-top: 20px;
-    }
-
-    .parcel-information h3 {
-      margin: 0 0 18px;
-      text-align: center;
-      font-size: 25px;
-      font-weight: 1000;
-      text-transform: uppercase;
-      color: var(--dark-pink);
-    }
-
-    .tracking-detail {
-      padding: 13px;
-      margin: 11px 0;
-      background: #ffffff;
-      color: #3a1023;
-      border: 1px solid #c65a82;
-      border-radius: 7px;
-      overflow-wrap: anywhere;
-    }
-
-    .detail-label {
-      display: block;
-      font-weight: 1000;
-      margin-bottom: 4px;
-      color: #7a123b;
-      text-transform: uppercase;
-      font-size: 13px;
-    }
-
-    .detail-value {
-      display: block;
-      font-size: 16px;
-      font-weight: 800;
-      white-space: pre-wrap;
-      overflow-wrap: anywhere;
-    }
-
-    .status-value {
-      display: inline-block;
-      background: #c90058;
-      color: #ffffff;
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-weight: 1000;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    .contact-button {
-      display: inline-block;
-      margin-top: 10px;
-      padding: 12px 20px;
-      border-radius: 7px;
-      background: var(--red);
-      color: #ffffff;
-      text-decoration: none;
-      font-weight: 1000;
-    }
-
-    .contact-button:hover {
-      background: var(--dark-red);
-    }
-
-    .contact-email {
-      color: #990013;
-      font-weight: 900;
-      overflow-wrap: anywhere;
-    }
-
-    .contact-email:hover {
-      color: #08752d;
-    }
-
-    footer {
-      text-align: center;
-      padding: 22px 12px;
-      background: var(--dark-red);
-      color: #ffffff;
-      font-weight: 700;
-      border-top: 3px solid #ffffff;
-    }
-
-    footer p {
-      margin: 5px 0;
-    }
-
-    @media (max-width: 480px) {
-      header {
-        padding: 17px 10px;
-      }
-
-      .logo {
-        width: 100px;
-        height: 100px;
-      }
-
-      main {
-        padding: 14px 10px 25px;
-      }
-
-      .card {
-        padding: 16px;
-      }
-
-      .parcel-information {
-        padding: 13px;
-      }
-
-      .delivery-image {
-        max-height: 330px;
-      }
-    }
+    :root{--red:#c8102e;--red-dark:#9e0b22;--green:#16834a;--white:#fff;--ink:#17202b;--muted:#667085;--pale:#fff1f3;--pink:#fff0f5;--line:#e7e9ee;--soft:#f7f8fa}
+    *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fff;color:var(--ink);line-height:1.65}button,input,select,textarea{font:inherit}button{cursor:pointer}a{color:inherit}
+    .top-strip{background:#111827;color:#fff;text-align:center;padding:8px 12px;font-size:12px;letter-spacing:1.3px;font-weight:800}
+    header{background:var(--red);color:#fff;padding:18px 16px;border-bottom:5px solid var(--red-dark)}.header-inner{max-width:1180px;margin:auto;display:flex;align-items:center;gap:18px;flex-wrap:wrap}.logo{width:100px;height:90px;object-fit:contain;flex-shrink:0;background:#fff;border-radius:14px;padding:5px;box-shadow:0 7px 20px #0002}.brand{flex:1;min-width:220px}.brand h1{margin:0;font-size:clamp(25px,4.5vw,40px);font-weight:950;line-height:1.1;letter-spacing:.5px}.brand .trustnova{color:#63e69b}.brand .express{color:#fff}.brand p{margin:7px 0 0;font-weight:700;color:#fff;text-transform:uppercase;letter-spacing:1.6px;font-size:12px}.header-tag{font-size:13px;font-weight:700;border:1px solid #ffffff66;padding:9px 13px;border-radius:30px}
+    nav{background:#fff;display:flex;justify-content:center;gap:8px;flex-wrap:wrap;padding:10px 12px;border-bottom:1px solid var(--line);box-shadow:0 3px 12px #00000008;position:sticky;top:0;z-index:10}nav a{color:#222;text-decoration:none;padding:9px 13px;border-radius:7px;font-size:13px;font-weight:800}nav a:hover,nav a:focus{background:var(--red);color:#fff}
+    .hero{background:linear-gradient(120deg,#fff4f5,#fff 62%,#f1fff6);padding:55px 18px 48px}.hero-inner{max-width:1120px;margin:auto;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:35px}.hero-copy{text-align:left}.eyebrow{display:inline-block;color:var(--green);font-size:12px;letter-spacing:1.8px;font-weight:900;text-transform:uppercase;margin-bottom:12px}.hero h2{font-size:clamp(32px,5vw,54px);line-height:1.08;margin:0 0 18px;font-weight:950;letter-spacing:-1.3px}.hero h2 span{color:var(--red)}.hero p{max-width:590px;margin:0 0 24px;color:#4c5563;font-size:17px}.hero-image-wrap{display:flex;align-items:center;justify-content:center;min-height:240px}.delivery-image{width:min(100%,420px);max-height:330px;object-fit:contain;filter:drop-shadow(0 15px 20px #18223018)}
+    .button{display:inline-block;border:0;border-radius:8px;padding:13px 19px;font-weight:900;text-decoration:none;text-align:center;transition:transform .15s,background .15s}.button:hover{transform:translateY(-1px)}.button-red{background:var(--red);color:#fff}.button-red:hover{background:var(--red-dark)}.button-black{background:#18202b;color:#fff}.button-green{background:var(--green);color:#fff}
+    .container{width:min(1100px,92%);margin:auto}section{padding:45px 0}.section-heading{text-align:center;margin:0 0 10px;font-size:clamp(25px,3vw,34px);font-weight:950;letter-spacing:-.5px}.section-subtitle{text-align:center;max-width:650px;margin:0 auto 25px;color:var(--muted)}
+    .tracking-section{background:#fafbfc}.tracking-box{max-width:760px;margin:26px auto 0;background:#fff;border:1px solid var(--line);box-shadow:0 18px 50px #10182812;padding:27px;border-radius:16px}.tracking-box>p:first-child{margin-top:0;text-align:center;color:#596273}.tracking-box label,.form-card label{display:block;margin:12px 0 5px;font-weight:800;font-size:14px}input,select,textarea{display:block;width:100%;padding:13px;border:1px solid #cfd4dc;border-radius:8px;background:#fff;color:var(--ink)}input:focus,select:focus,textarea:focus{outline:3px solid #16834a20;border-color:var(--green)}textarea{min-height:85px;resize:vertical}.tracking-box button[type=submit]{width:100%;margin-top:15px;min-height:50px;font-size:15px}
+    .message{margin-top:15px;padding:13px;border-radius:9px;overflow-wrap:anywhere}.message:empty{display:none}.success{background:#e8f8ee;color:#145c35}.error{background:#fff0f0;color:#9a0013}.info{background:#f0f3f8;color:#252525}.tracking-result-card{background:var(--pink);border:1px solid #f4bfd0;border-radius:14px;padding:18px;color:var(--ink)}.tracking-result-card h3{margin:0 0 14px;font-size:22px}.tracking-result-card h4{margin:20px 0 8px;color:var(--red);font-size:14px;text-transform:uppercase;letter-spacing:.7px}.current-status-banner{padding:14px 16px;background:#fff;border-left:5px solid var(--green);border-radius:8px;margin:10px 0 16px;box-shadow:0 4px 14px #00000008}.current-status-banner small{display:block;font-size:11px;font-weight:900;letter-spacing:1px;color:var(--muted)}.current-status-banner strong{display:block;font-size:18px;color:#176b3d;margin-top:3px}.tracking-detail{padding:12px;margin:8px 0;background:#fff;border:1px solid #f1ccd7;border-radius:8px;overflow-wrap:anywhere}.tracking-detail strong{display:block;margin-bottom:3px;font-size:12px;color:#5c6573;text-transform:uppercase;letter-spacing:.35px}.tracking-detail span{font-weight:700}
+    .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:18px}.feature{padding:24px;border:1px solid var(--line);border-radius:13px;background:#fff;box-shadow:0 8px 25px #00000005}.feature h3{margin:8px 0}.feature-icon{font-size:30px}.grey-section{background:var(--soft)}
+    .form-card{background:#fff;border:1px solid var(--line);padding:22px;border-radius:12px;margin-bottom:20px}.form-card h3{border-bottom:2px solid var(--red);padding-bottom:8px}.form-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.admin-area{display:none}.parcel-card{background:#fff;border:1px solid var(--line);border-left:5px solid var(--red);border-radius:10px;padding:18px;margin-bottom:15px;overflow-wrap:anywhere}.parcel-card h4{margin:0 0 10px;font-size:18px}.parcel-card p{margin:6px 0}.status{display:inline-block;background:#e8f8ee;color:#176b3d;padding:4px 9px;border-radius:20px;font-size:12px;font-weight:bold}.status-form{margin-top:15px;padding-top:12px;border-top:1px solid var(--line)}.status-form button{margin-top:10px}.small-note{font-size:12px;color:var(--muted)}
+    .contact-card{max-width:700px;margin:auto;text-align:center;padding:30px 20px;background:#fff;border:1px solid var(--line);border-radius:16px;box-shadow:0 12px 35px #0000000a}.contact-email{display:none;margin:18px auto 0;padding:14px;background:#f0fff5;border:1px solid #bde8cc;border-radius:9px;max-width:360px;font-weight:800;overflow-wrap:anywhere}.contact-email a{color:var(--green);text-decoration:none}.contact-email.visible{display:block}
+    footer{background:#111827;color:#fff;padding:30px 15px;text-align:center}footer p{margin:5px 0;color:#d4d9e1}footer a{color:#a8f0c5}
+    @media(max-width:700px){.hero-inner{grid-template-columns:1fr;gap:12px}.hero-copy{text-align:center}.hero p{margin-left:auto;margin-right:auto}.hero-image-wrap{min-height:150px}.delivery-image{max-height:230px;max-width:310px}.header-tag{display:none}.logo{width:78px;height:75px}.hero{padding:38px 15px}.tracking-box,.form-card{padding:17px}.form-row{grid-template-columns:1fr;gap:0}nav a{padding:8px 10px;font-size:12px}.tracking-result-card{padding:13px}}
   </style>
 </head>
-
 <body>
-
-  <header>
-    <div class="brand">
-
-      <img
-        class="logo"
-        src="logo.png.png"
-        alt="TrustNova Express Logo"
-      >
-
-      <h1 class="company-name">
-        <span class="trustnova">TRUSTNOVA</span>
-        <span class="express">EXPRESS</span>
-      </h1>
-
-      <p class="tagline" data-i18n="tagline">
-        Delivering Trust, Worldwide.
-      </p>
-
-    </div>
-
-    <div class="language-box">
-      <label for="language" data-i18n="languageLabel">
-        Language:
-      </label>
-
-      <select id="language" aria-label="Choose language">
-        <option value="en">English</option>
-        <option value="pt">Português</option>
-        <option value="es">Español</option>
-        <option value="fr">Français</option>
-        <option value="de">Deutsch</option>
-        <option value="it">Italiano</option>
-        <option value="ar">العربية</option>
-        <option value="zh">中文</option>
-        <option value="ha">Hausa</option>
-        <option value="yo">Yorùbá</option>
-        <option value="ig">Igbo</option>
-      </select>
-    </div>
-  </header>
-
+  <div class="top-strip">TRUSTNOVA EXPRESS · DELIVERING TRUST, WORLDWIDE</div>
+  <header><div class="header-inner">
+    <img class="logo" src="logo.png.png" alt="TrustNova Express company logo">
+    <div class="brand"><h1><span class="trustnova">TRUSTNOVA</span> <span class="express">EXPRESS</span></h1><p>Delivering Trust, Worldwide</p></div>
+    <div class="header-tag">Reliable • Secure • Worldwide</div>
+  </div></header>
+  <nav><a href="#home">Home</a><a href="#track">Track Your Parcel</a><a href="#services">Our Services</a><a href="#contact">Contact Us</a><a href="#admin-login">Staff Login</a></nav>
   <main>
-
-    <section class="hero">
-      <h2 data-i18n="heroTitle">
-        Your Parcel, Our Priority
-      </h2>
-
-      <p data-i18n="heroText">
-        TrustNova Express is committed to providing reliable parcel
-        delivery information and convenient online tracking.
-      </p>
-
-      <img
-        class="delivery-image"
-        src="delivery-man.png"
-        alt="TrustNova Express delivery man"
-      >
-
-      <p class="delivery-caption" data-i18n="deliveryCaption">
-        FAST. SAFE. RELIABLE.
-      </p>
-    </section>
-
-    <section class="card" id="tracking">
-      <h2 data-i18n="trackingTitle">
-        Track Your Parcel
-      </h2>
-
-      <p data-i18n="trackingInstructions">
-        Enter your tracking number below to check your parcel's
-        latest available delivery information.
-      </p>
-
-      <form id="trackingForm" class="tracking-form">
-
-        <label for="trackingNumber" data-i18n="trackingLabel">
-          Tracking Number
-        </label>
-
-        <input
-          type="text"
-          id="trackingNumber"
-          name="trackingNumber"
-          placeholder="Enter your tracking number"
-          data-i18n-placeholder="trackingPlaceholder"
-          autocomplete="off"
-          required
-        >
-
-        <button
-          type="submit"
-          class="primary-button"
-          id="trackButton"
-          data-i18n="trackButton"
-        >
-          TRACK PARCEL
-        </button>
-
+    <section class="hero" id="home"><div class="hero-inner">
+      <div class="hero-copy"><span class="eyebrow">PARCEL DELIVERY & TRACKING</span>
+        <h2>Your Parcel.<br><span>Our Responsibility.</span></h2>
+        <p>Stay informed about your shipment with a clear tracking experience from TrustNova Express. Enter your tracking number to view the latest recorded parcel update.</p>
+        <a class="button button-red" href="#track">TRACK YOUR PARCEL&nbsp; →</a>
+        <a class="button button-black" href="#services">Explore Our Services</a>
+      </div>
+      <div class="hero-image-wrap"><img class="delivery-image" src="delivery-man.png" alt="TrustNova Express delivery professional" loading="eager"></div>
+    </div></section>
+    <section class="tracking-section" id="track"><div class="container">
+      <h2 class="section-heading">TRACK YOUR PARCEL</h2>
+      <p class="section-subtitle">Your shipment information, clearly presented. Enter your unique tracking number below to check the latest recorded update.</p>
+      <div class="tracking-box">
+        <p>Use the tracking number provided by TrustNova Express.</p>
+        <form id="tracking-form">
+          <label for="tracking-number">Tracking Number</label>
+          <input id="tracking-number" type="text" placeholder="e.g. TNX-XXXXXXXX" autocomplete="off" autocapitalize="characters" required>
+          <button class="button button-red" type="submit">TRACK PARCEL&nbsp; →</button>
+        </form>
+        <div id="tracking-result" class="message" aria-live="polite"></div>
+        <p class="small-note">For your privacy, keep your tracking number secure. Shipment details shown here are based on information recorded in our tracking system.</p>
+      </div>
+    </div></section>
+    <section class="grey-section" id="services"><div class="container">
+      <h2 class="section-heading">Our Services</h2><div class="grid">
+        <article class="feature"><div class="feature-icon">📦</div><h3>Parcel Registration</h3><p>Register shipment details and issue a unique tracking number.</p></article>
+        <article class="feature"><div class="feature-icon">🌍</div><h3>Shipment Tracking</h3><p>Check the latest recorded status of a registered parcel.</p></article>
+        <article class="feature"><div class="feature-icon">📧</div><h3>Email Updates</h3><p>Shipment confirmations and delivery notifications can be added through a secure email service.</p></article>
+      </div>
+    </div></section>
+    <section id="admin-login"><div class="container">
+      <h2 class="section-heading">Admin Login</h2><div class="tracking-box">
+        <p class="small-note">This area is for authorised TrustNova Express staff.</p>
+        <form id="login-form">
+          <label for="admin-email">Admin Email</label><input id="admin-email" type="email" autocomplete="username" required>
+          <label for="admin-password">Password</label><input id="admin-password" type="password" autocomplete="current-password" required>
+          <button class="button button-black" type="submit">Sign In</button>
+        </form>
+        <button id="logout-button" class="button button-red" type="button" hidden>Sign Out</button>
+        <div id="login-message" class="message" aria-live="polite"></div>
+      </div>
+    </div></section>
+    <section id="admin-dashboard" class="grey-section admin-area"><div class="container">
+      <h2 class="section-heading">Admin Dashboard</h2>
+      <div class="message info">You are signed in. Register parcels and manage their status below.</div>
+      <form id="parcel-form">
+        <div class="form-card"><h3>Sender Information</h3><div class="form-row">
+          <div><label for="sender-name">Sender's Full Name</label><input id="sender-name" required></div>
+          <div><label for="sender-phone">Sender's Phone</label><input id="sender-phone" type="tel" required></div>
+        </div>
+          <label for="sender-email">Sender's Email Address</label><input id="sender-email" type="email">
+          <label for="pickup-address">Pickup Address</label><textarea id="pickup-address" required></textarea>
+        </div>
+        <div class="form-card"><h3>Receiver Information</h3><div class="form-row">
+          <div><label for="receiver-name">Receiver's Full Name</label><input id="receiver-name" required></div>
+          <div><label for="receiver-phone">Receiver's Phone</label><input id="receiver-phone" type="tel" required></div>
+        </div>
+          <label for="receiver-email">Receiver's Email Address</label><input id="receiver-email" type="email">
+          <label for="delivery-address">Delivery Address</label><textarea id="delivery-address" required></textarea>
+        </div>
+        <div class="form-card"><h3>Parcel Information</h3>
+          <label for="parcel-description">Parcel Description</label><textarea id="parcel-description" required></textarea>
+          <label for="estimated-delivery">Estimated Delivery Date</label><input id="estimated-delivery" type="date">
+          <label for="admin-note">Private Admin Note</label><textarea id="admin-note" placeholder="Visible to authorised staff only"></textarea>
+          <p class="small-note">Private admin notes are not shown in public tracking results.</p>
+          <button class="button button-red" type="submit">Register Parcel</button>
+        </div>
       </form>
-
-      <div
-        id="trackingMessage"
-        class="message"
-        role="status"
-        aria-live="polite"
-      ></div>
-
-      <section
-        id="parcelInformation"
-        class="parcel-information hidden"
-      >
-        <h3 data-i18n="parcelInfoTitle">
-          Parcel Information
-        </h3>
-
-        <div id="parcelDetails"></div>
-      </section>
-    </section>
-
-    <section class="card" id="contact">
-      <h2 data-i18n="contactTitle">
-        Contact Us
-      </h2>
-
-      <p data-i18n="contactText">
-        Need assistance with your parcel? Contact our support team
-        by email.
-      </p>
-
-      <p>
-        <strong>Email:</strong>
-        <a
-          class="contact-email"
-          href="mailto:trustnovaexpress@gmail.com"
-        >trustnovaexpress@gmail.com</a>
-      </p>
-    </section>
-
+      <div id="parcel-message" class="message" aria-live="polite"></div>
+      <h3>Registered Parcels</h3><button id="refresh-parcels" class="button button-black" type="button">Refresh Parcels</button>
+      <div id="parcel-list"></div>
+    </div></section>
+    <section id="contact"><div class="container"><div class="contact-card">
+      <h2 class="section-heading">CONTACT US</h2><p>Need help with your shipment? Our team is ready to hear from you.</p>
+      <button id="contact-toggle" class="button button-red" type="button" aria-expanded="false">CONTACT US</button>
+      <div id="contact-email" class="contact-email" aria-hidden="true">Email our team<br><a href="mailto:trustnovaexpress@gmail.com">trustnovaexpress@gmail.com</a></div>
+    </div></div></section>
   </main>
+  <footer><strong>TRUSTNOVA EXPRESS</strong><p>Delivering Trust, Worldwide.</p><p>&copy; <span id="year"></span> TrustNova Express.</p></footer>
+<script>
+  /*
+    TrustNova Express configuration.
+    Use only the Supabase publishable key in browser code.
+    Never put a service-role key here.
+  */
+  const SUPABASE_URL = "https://trydftaqqypqcxsgixto.supabase.co";
+  const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_2h0EyOMhtBx3eWEiuoAOyg_qjw2QzED";
+  const ADMIN_EMAIL = "trustnovaexpress@gmail.com";
+  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+  const $ = (id) => document.getElementById(id);
+  let currentUser = null;
+  $("year").textContent = new Date().getFullYear();
+  $("contact-toggle").addEventListener("click", () => {
+    const panel = $("contact-email");
+    const isOpen = panel.classList.toggle("visible");
+    panel.setAttribute("aria-hidden", String(!isOpen));
+    $("contact-toggle").setAttribute("aria-expanded", String(isOpen));
+    $("contact-toggle").textContent = isOpen ? "HIDE EMAIL" : "CONTACT US";
+  });
 
-  <footer>
-    <p>
-      &copy; <span id="currentYear"></span>
-      TRUSTNOVA EXPRESS
-    </p>
+  function showMessage(id, text, type = "info") {
+    const element = $(id);
+    element.textContent = text;
+    element.className = "message " + type;
+  }
+  function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+      "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+    })[character]);
+  }
+  function displayDate(value) {
+    if (!value) return "Not provided";
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleDateString();
+  }
+  function setAdminVisibility(user) {
+    currentUser = user || null;
+    const authorised = !!user && !!user.email && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+    $("admin-dashboard").style.display = authorised ? "block" : "none";
+    $("logout-button").hidden = !user;
+    if (user && !authorised) showMessage("login-message", "This account is not authorised for the admin dashboard.", "error");
+    if (authorised) {
+      $("login-message").textContent = "";
+      loadParcels();
+    }
+  }
 
-    <p data-i18n="footerText">
-      Delivering Trust, Worldwide.
-    </p>
-  </footer>
+  $("login-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    showMessage("login-message", "Signing in…");
+    const email = $("admin-email").value.trim();
+    const password = $("admin-password").value;
+    if (email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+      showMessage("login-message", "Please use the authorised admin email address.", "error");
+      return;
+    }
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if (error) {
+      showMessage("login-message", "Login failed: " + error.message, "error");
+      return;
+    }
+    setAdminVisibility(data.user);
+    showMessage("login-message", "Signed in successfully.", "success");
+  });
 
-  <script>
-    // TrustNova Express Supabase connection
-    const SUPABASE_URL =
-      "https://trydftaqqypqcxsgixto.supabase.co";
+  $("logout-button").addEventListener("click", async () => {
+    await supabaseClient.auth.signOut();
+    setAdminVisibility(null);
+    $("parcel-list").replaceChildren();
+    showMessage("login-message", "You have signed out.", "success");
+  });
 
-    const SUPABASE_PUBLISHABLE_KEY =
-      "sb_publishable_2h0EyOMhtBx3eWEiuoAOyg_qjw2QzED";
+  async function restoreSession() {
+    const { data, error } = await supabaseClient.auth.getSession();
+    if (error) {
+      showMessage("login-message", "Could not check your session. Please sign in again.", "error");
+      return;
+    }
+    setAdminVisibility(data.session?.user || null);
+  }
 
-    const client = window.supabase.createClient(
-      SUPABASE_URL,
-      SUPABASE_PUBLISHABLE_KEY
-    );
+  /*
+    Public tracking function currently returns:
+    tracking_number, sender_name, sender_address, receiver_name,
+    receiver_address, parcel_description, status, estimated_delivery.
+    It does not return phone numbers or email addresses.
+  */
+  $("tracking-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const trackingNumber = $("tracking-number").value.trim();
+    if (!trackingNumber) {
+      showMessage("tracking-result", "Please enter your tracking number.", "error");
+      return;
+    }
+    const submitButton = $("tracking-form").querySelector('button[type="submit"]');
+    submitButton.disabled = true;
+    submitButton.textContent = "Checking…";
+    showMessage("tracking-result", "Checking your tracking number…");
 
-    const trackingForm =
-      document.getElementById("trackingForm");
-
-    const trackingInput =
-      document.getElementById("trackingNumber");
-
-    const trackButton =
-      document.getElementById("trackButton");
-
-    const trackingMessage =
-      document.getElementById("trackingMessage");
-
-    const parcelInformation =
-      document.getElementById("parcelInformation");
-
-    const parcelDetails =
-      document.getElementById("parcelDetails");
-
-    document.getElementById("currentYear").textContent =
-      new Date().getFullYear();
-
-
-    // Website language text
-    const translations = {
-      en: {
-        tagline: "Delivering Trust, Worldwide.",
-        languageLabel: "Language:",
-        heroTitle: "Your Parcel, Our Priority",
-        heroText: "TrustNova Express is committed to providing reliable parcel delivery information and convenient online tracking.",
-        deliveryCaption: "FAST. SAFE. RELIABLE.",
-        trackingTitle: "Track Your Parcel",
-        trackingInstructions: "Enter your tracking number below to check your parcel's latest available delivery information.",
-        trackingLabel: "Tracking Number",
-        trackingPlaceholder: "Enter your tracking number",
-        trackButton: "TRACK PARCEL",
-        parcelInfoTitle: "Parcel Information",
-        contactTitle: "Contact Us",
-        contactText: "Need assistance with your parcel? Contact our support team by email.",
-        footerText: "Delivering Trust, Worldwide.",
-        loading: "Checking your tracking number...",
-        notFound: "No parcel information was found for this tracking number. Please check the number and try again.",
-        error: "We could not retrieve your parcel information right now. Please try again later.",
-        customerName: "Customer Name",
-        trackingNumber: "Tracking Number",
-        currentStatus: "Current Status",
-        origin: "Origin",
-        destination: "Destination",
-        description: "Parcel Description",
-        estimatedDelivery: "Estimated Delivery"
-      },
-
-      pt: {
-        tagline: "Entregando confiança em todo o mundo.",
-        languageLabel: "Idioma:",
-        heroTitle: "A Sua Encomenda, A Nossa Prioridade",
-        heroText: "A TrustNova Express oferece informações de entrega e rastreamento online.",
-        deliveryCaption: "RÁPIDO. SEGURO. CONFIÁVEL.",
-        trackingTitle: "Rastrear Encomenda",
-        trackingInstructions: "Introduza o número de rastreamento abaixo.",
-        trackingLabel: "Número de Rastreamento",
-        trackingPlaceholder: "Introduza o número de rastreamento",
-        trackButton: "RASTREAR ENCOMENDA",
-        parcelInfoTitle: "Informações da Encomenda",
-        contactTitle: "Contacte-nos",
-        contactText: "Precisa de ajuda? Contacte o nosso suporte por email.",
-        footerText: "Entregando confiança em todo o mundo.",
-        loading: "A verificar o número...",
-        notFound: "Não foram encontradas informações. Verifique o número.",
-        error: "Não foi possível obter as informações. Tente novamente.",
-        customerName: "Nome do Cliente",
-        trackingNumber: "Número de Rastreamento",
-        currentStatus: "Estado Atual",
-        origin: "Origem",
-        destination: "Destino",
-        description: "Descrição da Encomenda",
-        estimatedDelivery: "Entrega Estimada"
-      },
-
-      es: {
-        tagline: "Entregando confianza en todo el mundo.",
-        languageLabel: "Idioma:",
-        heroTitle: "Tu Paquete, Nuestra Prioridad",
-        heroText: "TrustNova Express ofrece información de entrega y seguimiento en línea.",
-        deliveryCaption: "RÁPIDO. SEGURO. FIABLE.",
-        trackingTitle: "Rastrear Paquete",
-        trackingInstructions: "Introduce tu número de seguimiento.",
-        trackingLabel: "Número de Seguimiento",
-        trackingPlaceholder: "Introduce tu número de seguimiento",
-        trackButton: "RASTREAR PAQUETE",
-        parcelInfoTitle: "Información del Paquete",
-        contactTitle: "Contáctanos",
-        contactText: "¿Necesitas ayuda? Contacta con nuestro equipo por correo electrónico.",
-        footerText: "Entregando confianza en todo el mundo.",
-        loading: "Comprobando el número...",
-        notFound: "No se encontró información. Comprueba el número.",
-        error: "No se pudo obtener la información. Inténtalo de nuevo.",
-        customerName: "Nombre del Cliente",
-        trackingNumber: "Número de Seguimiento",
-        currentStatus: "Estado Actual",
-        origin: "Origen",
-        destination: "Destino",
-        description: "Descripción del Paquete",
-        estimatedDelivery: "Entrega Estimada"
-      },
-
-      fr: {
-        tagline: "La confiance livrée dans le monde entier.",
-        languageLabel: "Langue :",
-        heroTitle: "Votre Colis, Notre Priorité",
-        heroText: "TrustNova Express fournit des informations de livraison et un suivi en ligne.",
-        deliveryCaption: "RAPIDE. SÛR. FIABLE.",
-        trackingTitle: "Suivre Votre Colis",
-        trackingInstructions: "Entrez votre numéro de suivi ci-dessous.",
-        trackingLabel: "Numéro de Suivi",
-        trackingPlaceholder: "Entrez votre numéro de suivi",
-        trackButton: "SUIVRE LE COLIS",
-        parcelInfoTitle: "Informations du Colis",
-        contactTitle: "Contactez-nous",
-        contactText: "Besoin d'aide ? Contactez notre équipe par email.",
-        footerText: "La confiance livrée dans le monde entier.",
-        loading: "Vérification du numéro...",
-        notFound: "Aucune information trouvée. Vérifiez le numéro.",
-        error: "Impossible de récupérer les informations. Réessayez.",
-        customerName: "Nom du Client",
-        trackingNumber: "Numéro de Suivi",
-        currentStatus: "Statut Actuel",
-        origin: "Origine",
-        destination: "Destination",
-        description: "Description du Colis",
-        estimatedDelivery: "Livraison Estimée"
-      },
-
-      de: {
-        tagline: "Vertrauen weltweit liefern.",
-        languageLabel: "Sprache:",
-        heroTitle: "Ihr Paket, Unsere Priorität",
-        heroText: "TrustNova Express bietet Lieferinformationen und Online-Sendungsverfolgung.",
-        deliveryCaption: "SCHNELL. SICHER. ZUVERLÄSSIG.",
-        trackingTitle: "Paket Verfolgen",
-        trackingInstructions: "Geben Sie unten Ihre Sendungsnummer ein.",
-        trackingLabel: "Sendungsnummer",
-        trackingPlaceholder: "Sendungsnummer eingeben",
-        trackButton: "PAKET VERFOLGEN",
-        parcelInfoTitle: "Paketinformationen",
-        contactTitle: "Kontakt",
-        contactText: "Benötigen Sie Hilfe? Kontaktieren Sie unser Team per E-Mail.",
-        footerText: "Vertrauen weltweit liefern.",
-        loading: "Sendungsnummer wird geprüft...",
-        notFound: "Keine Paketinformationen gefunden. Bitte prüfen Sie die Nummer.",
-        error: "Paketinformationen konnten nicht abgerufen werden. Bitte versuchen Sie es erneut.",
-        customerName: "Kundenname",
-        trackingNumber: "Sendungsnummer",
-        currentStatus: "Aktueller Status",
-        origin: "Absenderort",
-        destination: "Zielort",
-        description: "Paketbeschreibung",
-        estimatedDelivery: "Voraussichtliche Zustellung"
-      },
-
-      it: {
-        tagline: "Consegniamo fiducia in tutto il mondo.",
-        languageLabel: "Lingua:",
-        heroTitle: "Il Tuo Pacco, La Nostra Priorità",
-        heroText: "TrustNova Express offre informazioni sulla consegna e tracciamento online.",
-        deliveryCaption: "VELOCE. SICURO. AFFIDABILE.",
-        trackingTitle: "Traccia il Tuo Pacco",
-        trackingInstructions: "Inserisci il numero di tracciamento.",
-        trackingLabel: "Numero di Tracciamento",
-        trackingPlaceholder: "Inserisci il numero di tracciamento",
-        trackButton: "TRACCIA PACCO",
-        parcelInfoTitle: "Informazioni sul Pacco",
-        contactTitle: "Contattaci",
-        contactText: "Hai bisogno di assistenza? Contatta il nostro team via email.",
-        footerText: "Consegniamo fiducia in tutto il mondo.",
-        loading: "Controllo del numero in corso...",
-        notFound: "Nessuna informazione trovata. Controlla il numero.",
-        error: "Impossibile recuperare le informazioni. Riprova.",
-        customerName: "Nome del Cliente",
-        trackingNumber: "Numero di Tracciamento",
-        currentStatus: "Stato Attuale",
-        origin: "Origine",
-        destination: "Destinazione",
-        description: "Descrizione del Pacco",
-        estimatedDelivery: "Consegna Stimata"
-      },
-
-      ar: {
-        tagline: "نقدم الثقة في جميع أنحاء العالم.",
-        languageLabel: "اللغة:",
-        heroTitle: "طردك أولويتنا",
-        heroText: "توفر TrustNova Express معلومات التوصيل وتتبع الطرود عبر الإنترنت.",
-        deliveryCaption: "سريع. آمن. موثوق.",
-        trackingTitle: "تتبع طردك",
-        trackingInstructions: "أدخل رقم التتبع أدناه.",
-        trackingLabel: "رقم التتبع",
-        trackingPlaceholder: "أدخل رقم التتبع",
-        trackButton: "تتبع الطرد",
-        parcelInfoTitle: "معلومات الطرد",
-        contactTitle: "اتصل بنا",
-        contactText: "هل تحتاج إلى مساعدة؟ تواصل مع فريق الدعم عبر البريد الإلكتروني.",
-        footerText: "نقدم الثقة في جميع أنحاء العالم.",
-        loading: "جارٍ التحقق من رقم التتبع...",
-        notFound: "لم يتم العثور على معلومات. يرجى التحقق من الرقم.",
-        error: "تعذر استرداد المعلومات. يرجى المحاولة مرة أخرى.",
-        customerName: "اسم العميل",
-        trackingNumber: "رقم التتبع",
-        currentStatus: "الحالة الحالية",
-        origin: "مكان الإرسال",
-        destination: "الوجهة",
-        description: "وصف الطرد",
-        estimatedDelivery: "موعد التسليم المتوقع"
-      },
-
-      zh: {
-        tagline: "值得信赖，送达全球。",
-        languageLabel: "语言：",
-        heroTitle: "您的包裹，我们的优先事项",
-        heroText: "TrustNova Express 提供包裹配送信息和在线追踪服务。",
-        deliveryCaption: "快速、安全、可靠。",
-        trackingTitle: "追踪您的包裹",
-        trackingInstructions: "请在下方输入您的追踪号码。",
-        trackingLabel: "追踪号码",
-        trackingPlaceholder: "输入追踪号码",
-        trackButton: "追踪包裹",
-        parcelInfoTitle: "包裹信息",
-        contactTitle: "联系我们",
-        contactText: "需要帮助吗？请通过电子邮件联系我们的支持团队。",
-        footerText: "值得信赖，送达全球。",
-        loading: "正在查询追踪号码...",
-        notFound: "未找到包裹信息，请检查号码。",
-        error: "暂时无法获取包裹信息，请稍后重试。",
-        customerName: "客户姓名",
-        trackingNumber: "追踪号码",
-        currentStatus: "当前状态",
-        origin: "始发地",
-        destination: "目的地",
-        description: "包裹描述",
-        estimatedDelivery: "预计送达时间"
-      },
-
-      ha: {
-        tagline: "Muna isar da amana a duniya.",
-        languageLabel: "Harshe:",
-        heroTitle: "Kunshin Ka, Muhimmancinmu",
-        heroText: "TrustNova Express tana samar da bayanan isar da kaya da bin diddigin kaya ta yanar gizo.",
-        deliveryCaption: "DA SAURI. AMINTACCE. ABIN DOGARO.",
-        trackingTitle: "Bibiyar Kayanka",
-        trackingInstructions: "Shigar da lambar bin diddigi a ƙasa.",
-        trackingLabel: "Lambar Bin Did d igi",
-        trackingPlaceholder: "Shigar da lambar bin diddigi",
-        trackButton: "BIYAR DA KAYA",
-        parcelInfoTitle: "Bayanan Kaya",
-        contactTitle: "Tuntuɓe Mu",
-        contactText: "Kana buƙatar taimako? Tuntuɓi ƙungiyarmu ta imel.",
-        footerText: "Muna isar da amana a duniya.",
-        loading: "Ana duba lambar...",
-        notFound: "Ba a sami bayanan kaya ba. Duba lambar.",
-        error: "Ba a iya samun bayanan ba. Sake gwadawa.",
-        customerName: "Sunan Abokin Ciniki",
-        trackingNumber: "Lambar Bin Did d igi",
-        currentStatus: "Matsayi na Yanzu",
-        origin: "Inda Aka Fara",
-        destination: "Inda Za a Kai",
-        description: "Bayanin Kaya",
-        estimatedDelivery: "Lokacin Isarwa da Aka Ƙiyasta"
-      },
-
-      yo: {
-        tagline: "A ń fi ìgbẹ́kẹ̀lé dé gbogbo ayé.",
-        languageLabel: "Èdè:",
-        heroTitle: "Ẹrù Rẹ Ni Àkọ́kọ́ Wa",
-        heroText: "TrustNova Express ń pèsè ìwífún nípa ìfijiṣẹ́ àti títọ́pa ẹrù lórí ayélujára.",
-        deliveryCaption: "YÁRÁ. ÀÌLÉWU. ÌGBÉKẸ̀LÉ.",
-        trackingTitle: "Tọ́pa Ẹrù Rẹ",
-        trackingInstructions: "Tẹ nọ́mbà ìtọ́pa rẹ sí ìsàlẹ̀.",
-        trackingLabel: "Nọ́mbà Ìtọ́pa",
-        trackingPlaceholder: "Tẹ nọ́mbà ìtọ́pa rẹ",
-        trackButton: "TỌ́PA ẸRÙ",
-        parcelInfoTitle: "Àlàyé Ẹrù",
-        contactTitle: "Kàn Sí Wa",
-        contactText: "Ṣé o nílò ìrànlọ́wọ́? Fi ímeèlì ránṣẹ́ sí ẹgbẹ́ ìrànlọ́wọ́ wa.",
-        footerText: "A ń fi ìgbẹ́kẹ̀lé dé gbogbo ayé.",
-        loading: "A ń ṣàyẹ̀wò nọ́mbà ìtọ́pa...",
-        notFound: "A kò rí àlàyé ẹrù. Jọ̀wọ́ ṣàyẹ̀wò nọ́mbà náà.",
-        error: "A kò lè gba àlàyé náà báyìí. Gbìyànjú lẹ́ẹ̀kan sí i.",
-        customerName: "Orúkọ Oníbàárà",
-        trackingNumber: "Nọ́mbà Ìtọ́pa",
-        currentStatus: "Ipò Lọ́wọ́lọ́wọ́",
-        origin: "Ibi Ìbẹ̀rẹ̀",
-        destination: "Ibi Ìlọ",
-        description: "Àpèjúwe Ẹrù",
-        estimatedDelivery: "Àkókò Ìfijiṣẹ́ Tí A Ṣírò"
-      },
-
-      ig: {
-        tagline: "Anyị na-ebuga ntụkwasị obi n'ụwa niile.",
-        languageLabel: "Asụsụ:",
-        heroTitle: "Ngwugwu Gị, Ihe Dị Mkpa Anyị",
-        heroText: "TrustNova Express na-enye ozi nnyefe na nsonye ngwugwu n'ịntanetị.",
-        deliveryCaption: "NGWA NGWA. N'ENWEGHỊ NSOGBU. A PỤRỊ ỊTỤKWASỊ OBI.",
-        trackingTitle: "Soro Ngwugwu Gị",
-        trackingInstructions: "Tinye nọmba nsonye gị n'okpuru.",
-        trackingLabel: "Nọmba Nsonye",
-        trackingPlaceholder: "Tinye nọmba nsonye gị",
-        trackButton: "SORO NGWUGWU",
-        parcelInfoTitle: "Ozi Ngwugwu",
-        contactTitle: "Kpọtụrụ Anyị",
-        contactText: "Ị chọrọ enyemaka? Kpọtụrụ ndị ọrụ nkwado anyị site na email.",
-        footerText: "Anyị na-ebuga ntụkwasị obi n'ụwa niile.",
-        loading: "A na-enyocha nọmba nsonye...",
-        notFound: "Achọtaghị ozi ngwugwu. Biko lelee nọmba ahụ.",
-        error: "Anyị enweghị ike inweta ozi ahụ ugbu a. Biko nwaa ọzọ.",
-        customerName: "Aha Onye Ahịa",
-        trackingNumber: "Nọmba Nsonye",
-        currentStatus: "Ọnọdụ Ugbu A",
-        origin: "Ebe O Si Bịa",
-        destination: "Ebe Ọ Na-aga",
-        description: "Nkọwa Ngwugwu",
-        estimatedDelivery: "Oge Nnyefe E Mere Atụmatụ"
+    try {
+      const { data, error } = await supabaseClient.rpc("track_parcel", {
+        p_tracking_number: trackingNumber
+      });
+      if (error) {
+        console.error("Tracking error:", error);
+        showMessage("tracking-result", "Tracking is temporarily unavailable. Please try again later.", "error");
+        return;
       }
+      const parcel = Array.isArray(data) ? data[0] : data;
+      if (!parcel) {
+        showMessage("tracking-result", "No parcel was found. Please check your tracking number.", "error");
+        return;
+      }
+      const result = $("tracking-result");
+      result.className = "message success";
+      result.innerHTML = `
+        <div class="tracking-result-card">
+          <h3>📦 Your Parcel Details</h3>
+          <div class="current-status-banner"><small>CURRENT STATUS</small><strong>${escapeHTML(parcel.status || "Registered")}</strong></div>
+          <div class="tracking-detail"><strong>Tracking Number</strong><span>${escapeHTML(parcel.tracking_number || trackingNumber)}</span></div>
+          <div class="tracking-detail"><strong>Estimated Delivery</strong><span>${escapeHTML(displayDate(parcel.estimated_delivery))}</span></div>
+          <h4>Sender Information</h4>
+          <div class="tracking-detail"><strong>Sender's Full Name</strong><span>${escapeHTML(parcel.sender_name || "Not provided")}</span></div>
+          <div class="tracking-detail"><strong>Sender's Full Address</strong><span>${escapeHTML(parcel.sender_address || "Not provided")}</span></div>
+          <h4>Receiver Information</h4>
+          <div class="tracking-detail"><strong>Receiver's Full Name</strong><span>${escapeHTML(parcel.receiver_name || "Not provided")}</span></div>
+          <div class="tracking-detail"><strong>Receiver's Full Delivery Address</strong><span>${escapeHTML(parcel.receiver_address || "Not provided")}</span></div>
+          <h4>Parcel Information</h4>
+          <div class="tracking-detail"><strong>Parcel Description</strong><span>${escapeHTML(parcel.parcel_description || "Not provided")}</span></div>
+          <p class="small-note">These details reflect the latest shipment information recorded by TrustNova Express. Estimated delivery dates may change.</p>
+        </div>
+      `;
+    } catch (error) {
+      console.error("Unexpected tracking error:", error);
+      showMessage("tracking-result", "Something went wrong. Please try again.", "error");
+    } finally {
+      submitButton.disabled = false;
+      submitButton.textContent = "TRACK PARCEL →";
+    }
+  });
+
+  $("parcel-form").addEventListener("submit", async (event) => {
+    event.preventDefault();
+    if (!currentUser || currentUser.email?.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+      showMessage("parcel-message", "Please sign in with the authorised admin account first.", "error");
+      return;
+    }
+    showMessage("parcel-message", "Registering parcel…");
+    const trackingNumber = "TNX-" + Date.now().toString(36).toUpperCase() + "-" + crypto.randomUUID().slice(0, 6).toUpperCase();
+    const parcel = {
+      tracking_number: trackingNumber,
+      sender_name: $("sender-name").value.trim(),
+      sender_phone: $("sender-phone").value.trim(),
+      sender_email: $("sender-email").value.trim() || null,
+      pickup_address: $("pickup-address").value.trim(),
+      receiver_name: $("receiver-name").value.trim(),
+      receiver_phone: $("receiver-phone").value.trim(),
+      receiver_email: $("receiver-email").value.trim() || null,
+      delivery_address: $("delivery-address").value.trim(),
+      parcel_description: $("parcel-description").value.trim(),
+      estimated_delivery: $("estimated-delivery").value || null,
+      admin_note: $("admin-note").value.trim() || null,
+      status: "Registered"
     };
+    const { data, error } = await supabaseClient.from("Parcels").insert(parcel).select().single();
+    if (error) {
+      console.error("Parcel registration error:", error);
+      showMessage("parcel-message", "Parcel registration failed: " + error.message, "error");
+      return;
+    }
+    showMessage("parcel-message", "Parcel registered successfully. Tracking number: " + data.tracking_number + ". Email notifications still need to be configured.", "success");
+    $("parcel-form").reset();
+    await loadParcels();
+  });
 
-
-    // Change website language
-    function changeLanguage(language) {
-      const words = translations[language] || translations.en;
-
-      document.documentElement.lang = language;
-
-      if (language === "ar") {
-        document.documentElement.dir = "rtl";
+  async function loadParcels() {
+    if (!currentUser || currentUser.email?.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) return;
+    $("parcel-list").textContent = "Loading parcels…";
+    const { data, error } = await supabaseClient.from("Parcels").select("*").order("created_at", { ascending: false });
+    if (error) {
+      console.error("Parcel list error:", error);
+      $("parcel-list").textContent = "Could not load parcels. Check the Supabase table and admin database policies.";
+      return;
+    }
+    const list = $("parcel-list");
+    list.replaceChildren();
+    if (!data || data.length === 0) {
+      list.textContent = "No parcels have been registered yet.";
+      return;
+    }
+    data.forEach((parcel) => {
+      const card = document.createElement("article");
+      card.className = "parcel-card";
+      card.innerHTML = `
+        <h4>Tracking: ${escapeHTML(parcel.tracking_number)}</h4>
+        <p><strong>Status:</strong> <span class="status">${escapeHTML(parcel.status)}</span></p>
+        <p><strong>Sender:</strong> ${escapeHTML(parcel.sender_name)}</p>
+        <p><strong>Sender phone:</strong> ${escapeHTML(parcel.sender_phone)}</p>
+        <p><strong>Sender email:</strong> ${escapeHTML(parcel.sender_email || "Not provided")}</p>
+        <p><strong>Pickup address:</strong> ${escapeHTML(parcel.pickup_address)}</p><hr>
+        <p><strong>Receiver:</strong> ${escapeHTML(parcel.receiver_name)}</p>
+        <p><strong>Receiver phone:</strong> ${escapeHTML(parcel.receiver_phone)}</p>
+        <p><strong>Receiver email:</strong> ${escapeHTML(parcel.receiver_email || "Not provided")}</p>
+        <p><strong>Delivery address:</strong> ${escapeHTML(parcel.delivery_address)}</p><hr>
+        <p><strong>Parcel description:</strong> ${escapeHTML(parcel.parcel_description)}</p>
+        <p><strong>Estimated delivery:</strong> ${escapeHTML(displayDate(parcel.estimated_delivery))}</p>
+        <p><strong>Private admin note:</strong> ${escapeHTML(parcel.admin_note || "None")}</p>
+        <p><strong>Created:</strong> ${escapeHTML(displayDate(parcel.created_at))}</p>
+        <div class="status-form">
+          <label for="status-${escapeHTML(parcel.id)}">Update Delivery Status</label>
+          <select id="status-${escapeHTML(parcel.id)}">
+            <option>Registered</option><option>Picked Up</option><option>In Transit</option>
+            <option>Arrived at Facility</option><option>Out for Delivery</option>
+            <option>Delivered</option><option>Delivery Exception</option><option>On Hold</option>
+          </select>
+          <button class="button button-red" type="button" data-update-id="${escapeHTML(parcel.id)}">Save Status</button>
+        </div>`;
+      const select = card.querySelector("select");
+      const options = Array.from(select.options);
+      if (options.some((option) => option.value === parcel.status)) {
+        select.value = parcel.status;
       } else {
-        document.documentElement.dir = "ltr";
+        const customOption = document.createElement("option");
+        customOption.value = parcel.status || "Registered";
+        customOption.textContent = parcel.status || "Registered";
+        select.appendChild(customOption);
+        select.value = parcel.status || "Registered";
       }
-
-      document.querySelectorAll("[data-i18n]").forEach(function(element) {
-        const key = element.getAttribute("data-i18n");
-
-        if (words[key]) {
-          element.textContent = words[key];
-        }
-      });
-
-      document.querySelectorAll("[data-i18n-placeholder]").forEach(function(element) {
-        const key = element.getAttribute("data-i18n-placeholder");
-
-        if (words[key]) {
-          element.placeholder = words[key];
-        }
-      });
-    }
-
-    document.getElementById("language").addEventListener("change", function(event) {
-      changeLanguage(event.target.value);
+      list.appendChild(card);
     });
-
-
-    // Show a message to the customer
-    function showMessage(message, type) {
-      trackingMessage.className = "message " + type;
-      trackingMessage.textContent = message;
-      trackingMessage.style.display = "block";
-    }
-
-
-    // Add parcel details safely to the page
-    function addDetail(label, value, isStatus) {
-      if (
-        value === null ||
-        value === undefined ||
-        String(value).trim() === ""
-      ) {
-        return;
-      }
-
-      const row = document.createElement("div");
-      row.className = "tracking-detail";
-
-      const labelElement = document.createElement("span");
-      labelElement.className = "detail-label";
-      labelElement.textContent = label;
-
-      const valueElement = document.createElement("span");
-      valueElement.className = "detail-value";
-
-      if (isStatus) {
-        const badge = document.createElement("span");
-        badge.className = "status-value";
-        badge.textContent = String(value);
-        valueElement.appendChild(badge);
-      } else {
-        valueElement.textContent = String(value);
-      }
-
-      row.appendChild(labelElement);
-      row.appendChild(valueElement);
-      parcelDetails.appendChild(row);
-    }
-
-
-    // Retrieve the customer's parcel information
-    trackingForm.addEventListener("submit", async function(event) {
-      event.preventDefault();
-
-      const trackingNumber = trackingInput.value.trim();
-
-      if (!trackingNumber) {
-        showMessage(
-          "Please enter your tracking number.",
-          "error"
-        );
-        return;
-      }
-
-      const words =
-        translations[document.getElementById("language").value] ||
-        translations.en;
-
-      trackButton.disabled = true;
-      trackButton.textContent = words.loading;
-      trackingMessage.style.display = "none";
-      parcelInformation.classList.add("hidden");
-      parcelDetails.replaceChildren();
-
-      try {
-        const { data, error } = await client.rpc(
-          "track_parcel",
-          {
-            p_tracking_number: trackingNumber
-          }
-        );
-
-        if (error) {
-          console.error("Tracking request error:", error);
-          showMessage(words.error, "error");
-          return;
-        }
-
-        let parcel = data;
-
-        // Some database functions return an array of rows.
-        if (Array.isArray(parcel)) {
-          parcel = parcel.length > 0 ? parcel[0] : null;
-        }
-
-        if (
-          !parcel ||
-          typeof parcel !== "object" ||
-          Object.keys(parcel).length === 0
-        ) {
-          showMessage(words.notFound, "error");
-          return;
-        }
-
-        // Display only the fields returned by the public tracking function.
-        // Private admin notes are deliberately not displayed.
-        addDetail(
-          words.customerName,
-          parcel.customer_name ||
-          parcel.receiver_name ||
-          parcel.recipient_name ||
-          parcel.sender_name
-        );
-
-        addDetail(
-          words.trackingNumber,
-          parcel.tracking_number || trackingNumber
-        );
-
-        addDetail(
-          words.currentStatus,
-          parcel.current_status || parcel.status,
-          true
-        );
-
-        addDetail(
-          words.origin,
-          parcel.origin ||
-          parcel.sender_address ||
-          parcel.pickup_address
-        );
-
-        addDetail(
-          words.destination,
-          parcel.destination ||
-          parcel.receiver_address ||
-          parcel.delivery_address
-        );
-
-        addDetail(
-          words.description,
-          parcel.parcel_description ||
-          parcel.package_description
-        );
-
-        addDetail(
-          words.estimatedDelivery,
-          parcel.estimated_delivery
-        );
-
-        if (parcelDetails.children.length === 0) {
-          showMessage(words.notFound, "error");
-          return;
-        }
-
-        trackingMessage.style.display = "none";
-        parcelInformation.classList.remove("hidden");
-
-        parcelInformation.scrollIntoView({
-          behavior: "smooth",
-          block: "start"
-        });
-
-      } catch (error) {
-        console.error("Unexpected tracking error:", error);
-        showMessage(words.error, "error");
-
-      } finally {
-        trackButton.disabled = false;
-        trackButton.textContent =
-          (translations[
-            document.getElementById("language").value
-          ] || translations.en).trackButton;
-      }
+    list.querySelectorAll("[data-update-id]").forEach((button) => {
+      button.addEventListener("click", async () => updateParcelStatus(button.dataset.updateId, button));
     });
-  </script>
+  }
 
+  async function updateParcelStatus(parcelId, button) {
+    if (!currentUser || currentUser.email?.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+      alert("Please sign in with the authorised admin account.");
+      return;
+    }
+    const card = button.closest(".parcel-card");
+    const newStatus = card.querySelector("select").value;
+    button.disabled = true;
+    button.textContent = "Saving…";
+    const { error } = await supabaseClient.from("Parcels").update({ status: newStatus }).eq("id", parcelId);
+    button.disabled = false;
+    button.textContent = "Save Status";
+    if (error) {
+      console.error("Status update error:", error);
+      alert("Status update failed. Check database permissions. " + error.message);
+      return;
+    }
+    alert("Parcel status updated to: " + newStatus + ". Automatic email notification still needs to be configured.");
+    await loadParcels();
+  }
+
+  $("refresh-parcels").addEventListener("click", loadParcels);
+  supabaseClient.auth.onAuthStateChange((_event, session) => setAdminVisibility(session?.user || null));
+  restoreSession();
+</script>
 </body>
 </html>
