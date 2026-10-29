@@ -1,1302 +1,1762 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>TrustNova Express | Package Tracking</title>
+<title>TrustNova Express | Parcel Tracking</title>
 
-  <meta
-    name="description"
-    content="Track your package with TrustNova Express. Trust in Every Delivery."
-  >
+<meta name="description"
+content="Track your parcel with TrustNova Express. Enter your tracking number to view your delivery status and estimated delivery date.">
 
-  <style>
-    :root {
-      --red: #b5121b;
-      --dark-red: #850d15;
-      --green: #168447;
-      --white: #ffffff;
-      --purple: #6b3fc6;
-      --light: #f5f7fa;
-      --dark: #202735;
-      --muted: #657080;
-      --border: #e1e5eb;
-    }
+<style>
+:root {
+    --red: #c90024;
+    --dark-red: #99001b;
+    --green: #087b42;
+    --white: #ffffff;
+    --light: #f5f6f8;
+    --text: #252525;
+    --muted: #666666;
+    --border: #dddddd;
+}
 
-    * {
-      box-sizing: border-box;
-    }
+* {
+    box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: var(--light);
-      color: var(--dark);
-      line-height: 1.6;
-    }
+html {
+    scroll-behavior: smooth;
+}
 
-    header {
-      background: var(--red);
-      color: var(--white);
-      padding: 18px 16px;
-      border-bottom: 5px solid var(--green);
-    }
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: var(--light);
+    color: var(--text);
+    line-height: 1.6;
+}
 
+button,
+input,
+select {
+    font: inherit;
+}
+
+.site-header {
+    background: var(--red);
+    color: var(--white);
+    border-bottom: 7px solid var(--green);
+    padding: 20px 15px;
+}
+
+.header-inner {
+    max-width: 1150px;
+    margin: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.logo {
+    width: 78px;
+    height: 78px;
+    object-fit: contain;
+    display: block;
+    background: transparent;
+    filter: none;
+}
+
+.brand h1 {
+    margin: 0;
+    font-size: clamp(21px, 4vw, 32px);
+    font-weight: 900;
+    line-height: 1.2;
+    letter-spacing: 0.5px;
+    color: white;
+    text-transform: uppercase;
+}
+
+.brand h1 span {
+    color: #ffffff;
+}
+
+.brand p {
+    margin: 6px 0 0;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.language-area {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+}
+
+.language-area label {
+    font-weight: bold;
+    color: white;
+}
+
+.language-area select {
+    padding: 10px;
+    border-radius: 7px;
+    border: 2px solid white;
+    background: white;
+    color: #222;
+    max-width: 190px;
+}
+
+.hero {
+    background: linear-gradient(135deg, #c90024, #8d001b);
+    color: white;
+    padding: 45px 18px;
+}
+
+.hero-inner {
+    max-width: 1100px;
+    margin: auto;
+    display: grid;
+    grid-template-columns: 1.3fr 0.7fr;
+    align-items: center;
+    gap: 30px;
+}
+
+.hero h2 {
+    margin: 0 0 14px;
+    font-size: clamp(29px, 5vw, 46px);
+    line-height: 1.15;
+    font-weight: 900;
+}
+
+.hero p {
+    font-size: 17px;
+    max-width: 650px;
+    margin: 0 0 20px;
+}
+
+.hero-image {
+    width: 100%;
+    max-width: 340px;
+    max-height: 310px;
+    object-fit: contain;
+    justify-self: center;
+    display: block;
+    filter: none;
+}
+
+.hero-button {
+    display: inline-block;
+    background: var(--green);
+    color: white;
+    text-decoration: none;
+    padding: 13px 22px;
+    border-radius: 8px;
+    font-weight: bold;
+    border: 2px solid white;
+}
+
+.hero-button:hover {
+    background: #056332;
+}
+
+main {
+    max-width: 1050px;
+    margin: 35px auto;
+    padding: 0 16px;
+}
+
+.card {
+    background: white;
+    padding: 26px;
+    border-radius: 14px;
+    box-shadow: 0 5px 22px rgba(0,0,0,0.07);
+    margin-bottom: 25px;
+}
+
+.card h2 {
+    margin-top: 0;
+    color: var(--red);
+    font-size: 27px;
+}
+
+.card-intro {
+    color: var(--muted);
+    margin-top: -5px;
+}
+
+.tracking-form {
+    display: flex;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+.tracking-form input {
+    flex: 1;
+    min-width: 0;
+    padding: 15px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
+    outline: none;
+    background: white;
+    color: #222;
+}
+
+.tracking-form input:focus {
+    border-color: var(--green);
+}
+
+.tracking-form button {
+    padding: 14px 24px;
+    border: none;
+    border-radius: 8px;
+    background: var(--green);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.tracking-form button:hover {
+    background: #056332;
+}
+
+.tracking-form button:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+
+.message {
+    display: none;
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 8px;
+    overflow-wrap: anywhere;
+}
+
+.message.error {
+    display: block;
+    background: #fff0f0;
+    color: #a00020;
+    border: 1px solid #f0b8c0;
+}
+
+.message.success {
+    display: block;
+    background: #eaf8ef;
+    color: #075d31;
+    border: 1px solid #a8dfbb;
+}
+
+.message.info {
+    display: block;
+    background: #eef5ff;
+    color: #184b85;
+    border: 1px solid #b7d2f7;
+}
+
+.result-card {
+    display: none;
+}
+
+.result-card.visible {
+    display: block;
+}
+
+.result-heading {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+    border-bottom: 1px solid #eeeeee;
+    padding-bottom: 18px;
+    margin-bottom: 20px;
+}
+
+.result-heading h2 {
+    margin: 0;
+}
+
+.tracking-number-display {
+    color: var(--muted);
+    font-size: 14px;
+    overflow-wrap: anywhere;
+}
+
+.status-badge {
+    display: inline-block;
+    background: #e4f7eb;
+    color: #086b38;
+    border: 1px solid #a5dfb9;
+    border-radius: 30px;
+    padding: 9px 15px;
+    font-weight: 800;
+    font-size: 14px;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 15px;
+}
+
+.detail {
+    padding: 15px;
+    border: 1px solid #e7e7e7;
+    border-radius: 9px;
+    min-width: 0;
+    background: #ffffff;
+}
+
+.detail-label {
+    display: block;
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.detail-value {
+    display: block;
+    font-weight: bold;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+.delivery-date {
+    border-left: 5px solid var(--green);
+}
+
+.how-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.how-item {
+    border: 1px solid #eeeeee;
+    border-radius: 10px;
+    padding: 18px;
+    background: #fff;
+}
+
+.how-number {
+    display: inline-flex;
+    width: 38px;
+    height: 38px;
+    align-items: center;
+    justify-content: center;
+    background: var(--green);
+    color: white;
+    border-radius: 50%;
+    font-weight: 900;
+    margin-bottom: 8px;
+}
+
+.how-item h3 {
+    margin: 5px 0;
+    font-size: 18px;
+}
+
+.how-item p {
+    color: var(--muted);
+    margin-bottom: 0;
+}
+
+.contact-box {
+    background: #fff;
+    border-top: 5px solid var(--green);
+}
+
+.contact-box a {
+    color: var(--red);
+    font-weight: bold;
+    overflow-wrap: anywhere;
+}
+
+.site-footer {
+    margin-top: 40px;
+    background: #252525;
+    color: white;
+    text-align: center;
+    padding: 25px 15px;
+}
+
+.site-footer p {
+    margin: 5px 0;
+}
+
+.footer-brand {
+    font-weight: 900;
+    font-size: 18px;
+    color: white;
+}
+
+.small-note {
+    font-size: 13px;
+    color: var(--muted);
+    margin-top: 15px;
+}
+
+[dir="rtl"] {
+    text-align: right;
+}
+
+[dir="rtl"] .delivery-date {
+    border-left: 1px solid #e7e7e7;
+    border-right: 5px solid var(--green);
+}
+
+@media (max-width: 720px) {
     .header-inner {
-      max-width: 1100px;
-      margin: auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      flex-wrap: wrap;
+        align-items: flex-start;
     }
 
     .brand {
-      display: flex;
-      align-items: center;
-      gap: 12px;
+        align-items: center;
     }
 
     .logo {
-      width: 72px;
-      height: 72px;
-      object-fit: contain;
-      display: block;
-      filter: none;
+        width: 62px;
+        height: 62px;
     }
 
-    .brand-name {
-      margin: 0;
-      font-size: clamp(20px, 4vw, 30px);
-      font-weight: 900;
-      line-height: 1.2;
-      text-transform: uppercase;
-      color: var(--white);
+    .language-area {
+        width: 100%;
     }
 
-    .brand-name span {
-      color: #7dffad;
-    }
-
-    .tagline {
-      margin: 5px 0 0;
-      font-size: 13px;
-      font-weight: bold;
-      color: var(--white);
-    }
-
-    .language-box {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .language-box label {
-      font-size: 14px;
-      font-weight: bold;
-    }
-
-    select,
-    input,
-    button {
-      font: inherit;
-    }
-
-    .language-box select {
-      padding: 9px;
-      border: 0;
-      border-radius: 7px;
-      background: var(--white);
-      color: var(--dark);
-      max-width: 180px;
-    }
-
-    .hero {
-      background: linear-gradient(135deg, #fff 0%, #f0f7f2 100%);
-      padding: 38px 16px;
+    .language-area select {
+        flex: 1;
     }
 
     .hero-inner {
-      max-width: 1100px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 30px;
-      align-items: center;
-    }
-
-    .hero h2 {
-      margin: 0 0 12px;
-      font-size: clamp(28px, 5vw, 44px);
-      line-height: 1.2;
-      color: var(--dark);
-    }
-
-    .hero h2 span {
-      color: var(--green);
-    }
-
-    .hero p {
-      color: var(--muted);
-      font-size: 16px;
+        grid-template-columns: 1fr;
+        text-align: center;
     }
 
     .hero-image {
-      width: 100%;
-      max-width: 430px;
-      height: 300px;
-      object-fit: contain;
-      display: block;
-      margin: auto;
-    }
-
-    .tracking-section {
-      padding: 30px 16px 50px;
-    }
-
-    .tracking-card {
-      max-width: 760px;
-      margin: auto;
-      padding: 26px;
-      background: var(--white);
-      border-radius: 16px;
-      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.07);
-      border-top: 5px solid var(--green);
-    }
-
-    .tracking-card h2 {
-      margin: 0 0 8px;
-      font-size: 27px;
-    }
-
-    .section-intro {
-      margin: 0 0 20px;
-      color: var(--muted);
+        max-width: 230px;
+        max-height: 220px;
+        grid-row: 1;
     }
 
     .tracking-form {
-      display: flex;
-      gap: 10px;
+        flex-direction: column;
     }
 
-    .tracking-form input {
-      flex: 1;
-      min-width: 0;
-      padding: 14px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      outline: none;
-    }
-
-    .tracking-form input:focus {
-      border-color: var(--green);
-      box-shadow: 0 0 0 3px rgba(22, 132, 71, 0.12);
-    }
-
-    .primary-button {
-      padding: 13px 20px;
-      border: none;
-      border-radius: 8px;
-      background: var(--green);
-      color: var(--white);
-      font-weight: bold;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .primary-button:hover {
-      background: #106735;
-    }
-
-    .primary-button:disabled {
-      opacity: 0.65;
-      cursor: wait;
-    }
-
-    .message {
-      margin-top: 16px;
-      padding: 12px 14px;
-      border-radius: 8px;
-      display: none;
-      overflow-wrap: anywhere;
-    }
-
-    .message.error {
-      display: block;
-      background: #fff0f0;
-      color: #9a1018;
-      border: 1px solid #f4c6c8;
-    }
-
-    .message.info {
-      display: block;
-      background: #eef5ff;
-      color: #214d85;
-      border: 1px solid #cfe0fa;
-    }
-
-    .result {
-      display: none;
-      margin-top: 25px;
-      padding-top: 22px;
-      border-top: 1px solid var(--border);
-    }
-
-    .result-heading {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-      margin-bottom: 18px;
-    }
-
-    .result-heading h3 {
-      margin: 0;
-      font-size: 22px;
-    }
-
-    .status-badge {
-      display: inline-block;
-      padding: 8px 13px;
-      border-radius: 30px;
-      background: #fff0d5;
-      color: #805300;
-      font-size: 13px;
-      font-weight: bold;
-      overflow-wrap: anywhere;
-    }
-
-    .status-badge.delivered {
-      background: #dcfce7;
-      color: #166534;
-    }
-
-    .status-badge.transit {
-      background: #dbeafe;
-      color: #1d4ed8;
-    }
-
-    .status-badge.problem {
-      background: #fee2e2;
-      color: #991b1b;
+    .tracking-form button {
+        width: 100%;
     }
 
     .details-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-    }
-
-    .detail-item {
-      min-width: 0;
-      padding: 13px;
-      background: #f8fafc;
-      border: 1px solid var(--border);
-      border-radius: 9px;
-    }
-
-    .detail-label {
-      display: block;
-      margin-bottom: 5px;
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: bold;
-      text-transform: uppercase;
-      letter-spacing: 0.3px;
-    }
-
-    .detail-value {
-      display: block;
-      font-weight: bold;
-      overflow-wrap: anywhere;
-      white-space: pre-wrap;
-    }
-
-    .update-box {
-      margin-top: 14px;
-      padding: 16px;
-      background: #f1faf4;
-      border-left: 4px solid var(--green);
-      border-radius: 8px;
-    }
-
-    .update-box h4 {
-      margin: 0 0 6px;
-    }
-
-    .update-box p {
-      margin: 0;
-      overflow-wrap: anywhere;
-      white-space: pre-wrap;
-    }
-
-    .help-section {
-      padding: 0 16px 45px;
-    }
-
-    .help-card {
-      max-width: 760px;
-      margin: auto;
-      padding: 20px;
-      background: #fff;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      text-align: center;
-    }
-
-    .help-card h3 {
-      margin-top: 0;
-    }
-
-    .help-card a {
-      color: var(--green);
-      font-weight: bold;
-      overflow-wrap: anywhere;
-    }
-
-    footer {
-      padding: 22px 16px;
-      background: #202735;
-      color: #fff;
-      text-align: center;
-      font-size: 14px;
-    }
-
-    footer p {
-      margin: 4px 0;
-    }
-
-    .footer-motto {
-      color: #7dffad;
-      font-weight: bold;
-    }
-
-    @media (max-width: 700px) {
-      .header-inner {
-        align-items: flex-start;
-      }
-
-      .brand {
-        align-items: center;
-      }
-
-      .logo {
-        width: 60px;
-        height: 60px;
-      }
-
-      .language-box {
-        width: 100%;
-      }
-
-      .language-box select {
-        flex: 1;
-      }
-
-      .hero-inner {
         grid-template-columns: 1fr;
-      }
-
-      .hero-image {
-        height: 220px;
-      }
-
-      .tracking-card {
-        padding: 20px 16px;
-      }
-
-      .tracking-form {
-        flex-direction: column;
-      }
-
-      .tracking-form .primary-button {
-        width: 100%;
-      }
-
-      .details-grid {
-        grid-template-columns: 1fr;
-      }
     }
-  </style>
+
+    .how-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .card {
+        padding: 20px;
+    }
+}
+</style>
 </head>
 
 <body>
-  <header>
+
+<header class="site-header">
     <div class="header-inner">
-      <div class="brand">
-        <img
-          class="logo"
-          src="logo.png.png"
-          alt="TrustNova Express Logo"
-          onerror="if (!this.dataset.fallback) { this.dataset.fallback='1'; this.src='logo.png'; }"
-        >
 
-        <div>
-          <h1 class="brand-name">
-            TRUSTNOVA <span>EXPRESS</span>
-          </h1>
-          <p class="tagline">Trust in Every Delivery.</p>
+        <div class="brand">
+            <img
+                id="companyLogo"
+                class="logo"
+                src="logo.png.png"
+                alt="TrustNova Express Logo"
+            >
+
+            <div>
+                <h1>
+                    <span>TRUSTNOVA</span> EXPRESS
+                </h1>
+                <p data-i18n="motto">Trust in Every Delivery.</p>
+            </div>
         </div>
-      </div>
 
-      <div class="language-box">
-        <label for="languageSelect" data-i18n="languageLabel">
-          Language
-        </label>
+        <div class="language-area">
+            <label for="languageSelect" data-i18n="languageLabel">
+                Language:
+            </label>
 
-        <select id="languageSelect" aria-label="Choose language">
-          <option value="en">English</option>
-          <option value="fr">Français</option>
-          <option value="es">Español</option>
-          <option value="de">Deutsch</option>
-          <option value="pt">Português</option>
-          <option value="it">Italiano</option>
-          <option value="ar">العربية</option>
-          <option value="ha">Hausa</option>
-          <option value="yo">Yorùbá</option>
-          <option value="ig">Igbo</option>
-          <option value="zh">中文</option>
-        </select>
-      </div>
+            <select id="languageSelect" aria-label="Select language">
+                <option value="en">English</option>
+                <option value="fr">Français</option>
+                <option value="es">Español</option>
+                <option value="de">Deutsch</option>
+                <option value="pt">Português</option>
+                <option value="it">Italiano</option>
+                <option value="ar">العربية</option>
+                <option value="ha">Hausa</option>
+                <option value="yo">Yorùbá</option>
+                <option value="ig">Igbo</option>
+                <option value="zh">中文</option>
+            </select>
+        </div>
+
     </div>
-  </header>
+</header>
 
-  <main>
-    <section class="hero">
-      <div class="hero-inner">
+<section class="hero">
+    <div class="hero-inner">
+
         <div>
-          <h2 data-i18n="heroTitle">
-            Track Your Package <span>With Confidence</span>
-          </h2>
+            <h2 data-i18n="heroTitle">
+                Your Parcel, Tracked with Confidence.
+            </h2>
 
-          <p data-i18n="heroText">
-            Enter your tracking number to check your package's current
-            delivery status and latest update.
-          </p>
+            <p data-i18n="heroText">
+                Track your shipment with TrustNova Express.
+                Enter your tracking number to view the latest
+                available delivery status and estimated delivery date.
+            </p>
+
+            <a href="#track" class="hero-button" data-i18n="trackButton">
+                Track Your Parcel
+            </a>
         </div>
 
-        <div>
-          <img
+        <img
+            id="deliveryMan"
             class="hero-image"
             src="delivery-man.png"
-            alt="TrustNova Express delivery person"
-            onerror="if (!this.dataset.fallback) { this.dataset.fallback='1'; this.src='delivery-man.PNG'; }"
-          >
-        </div>
-      </div>
-    </section>
+            alt="TrustNova Express delivery man"
+        >
 
-    <section class="tracking-section">
-      <div class="tracking-card">
-        <h2 data-i18n="trackingTitle">Track Your Shipment</h2>
+    </div>
+</section>
 
-        <p class="section-intro" data-i18n="trackingIntro">
-          Enter the tracking number provided to you by TrustNova Express.
+<main>
+
+    <section class="card" id="track">
+
+        <h2 data-i18n="trackingTitle">Track Your Parcel</h2>
+
+        <p class="card-intro" data-i18n="trackingIntro">
+            Enter the tracking number given to you by TrustNova Express.
         </p>
 
         <form id="trackingForm" class="tracking-form">
-          <input
-            id="trackingNumber"
-            type="text"
-            placeholder="Enter tracking number"
-            data-i18n-placeholder="trackingPlaceholder"
-            autocomplete="off"
-            required
-          >
 
-          <button
-            id="trackButton"
-            class="primary-button"
-            type="submit"
-            data-i18n="trackButton"
-          >
-            Track Package
-          </button>
+            <input
+                type="text"
+                id="trackingNumber"
+                name="trackingNumber"
+                placeholder="Enter your tracking number"
+                data-i18n-placeholder="trackingPlaceholder"
+                autocomplete="off"
+                required
+                maxlength="100"
+                aria-label="Tracking number"
+            >
+
+            <button type="submit" id="trackSubmit" data-i18n="searchButton">
+                Track Parcel
+            </button>
+
         </form>
 
-        <div id="message" class="message" role="status" aria-live="polite"></div>
+        <div id="messageBox" class="message" role="status" aria-live="polite"></div>
 
-        <section id="result" class="result" aria-live="polite">
-          <div class="result-heading">
-            <h3 data-i18n="resultTitle">Package Information</h3>
-            <span id="resultStatus" class="status-badge">—</span>
-          </div>
-
-          <div class="details-grid">
-            <div class="detail-item">
-              <span class="detail-label" data-i18n="trackingNumberLabel">
-                Tracking Number
-              </span>
-              <span class="detail-value" id="resultTracking">—</span>
-            </div>
-
-            <div class="detail-item">
-              <span class="detail-label" data-i18n="senderLabel">
-                Sender Name
-              </span>
-              <span class="detail-value" id="resultSender">—</span>
-            </div>
-
-            <div class="detail-item">
-              <span class="detail-label" data-i18n="receiverLabel">
-                Receiver Name
-              </span>
-              <span class="detail-value" id="resultReceiver">—</span>
-            </div>
-
-            <div class="detail-item">
-              <span class="detail-label" data-i18n="pickupLabel">
-                Pickup Location
-              </span>
-              <span class="detail-value" id="resultPickup">—</span>
-            </div>
-
-            <div class="detail-item">
-              <span class="detail-label" data-i18n="destinationLabel">
-                Destination
-              </span>
-              <span class="detail-value" id="resultDestination">—</span>
-            </div>
-
-            <div class="detail-item">
-              <span class="detail-label" data-i18n="descriptionLabel">
-                Package Description
-              </span>
-              <span class="detail-value" id="resultDescription">—</span>
-            </div>
-
-            <div class="detail-item">
-              <span class="detail-label" data-i18n="deliveryDateLabel">
-                Expected Delivery Date
-              </span>
-              <span class="detail-value" id="resultDeliveryDate">—</span>
-            </div>
-          </div>
-
-          <div class="update-box">
-            <h4 data-i18n="updateTitle">Latest Delivery Update</h4>
-            <p id="resultUpdate">—</p>
-          </div>
-        </section>
-      </div>
     </section>
 
-    <section class="help-section">
-      <div class="help-card">
-        <h3 data-i18n="helpTitle">Need Help With Your Package?</h3>
+    <section class="card result-card" id="resultCard" aria-live="polite">
 
-        <p data-i18n="helpText">
-          Contact our support team if you need help with your shipment.
+        <div class="result-heading">
+
+            <div>
+                <h2 data-i18n="resultTitle">Parcel Information</h2>
+
+                <div class="tracking-number-display">
+                    <span data-i18n="trackingNumberLabel">Tracking Number:</span>
+                    <strong id="resultTrackingNumber"></strong>
+                </div>
+            </div>
+
+            <div>
+                <span class="status-badge" id="resultStatus"></span>
+            </div>
+
+        </div>
+
+        <div class="details-grid">
+
+            <div class="detail delivery-date">
+                <span class="detail-label" data-i18n="estimatedDeliveryLabel">
+                    Estimated Delivery
+                </span>
+                <span class="detail-value" id="resultEstimatedDelivery">
+                    —
+                </span>
+            </div>
+
+            <div class="detail">
+                <span class="detail-label" data-i18n="statusLabel">
+                    Delivery Status
+                </span>
+                <span class="detail-value" id="resultStatusText">
+                    —
+                </span>
+            </div>
+
+            <div class="detail" id="senderDetail">
+                <span class="detail-label" data-i18n="senderLabel">
+                    Sender Name
+                </span>
+                <span class="detail-value" id="resultSender">
+                    —
+                </span>
+            </div>
+
+            <div class="detail" id="receiverDetail">
+                <span class="detail-label" data-i18n="receiverLabel">
+                    Receiver Name
+                </span>
+                <span class="detail-value" id="resultReceiver">
+                    —
+                </span>
+            </div>
+
+            <div class="detail" id="pickupDetail">
+                <span class="detail-label" data-i18n="pickupLabel">
+                    Pickup Location
+                </span>
+                <span class="detail-value" id="resultPickup">
+                    —
+                </span>
+            </div>
+
+            <div class="detail" id="destinationDetail">
+                <span class="detail-label" data-i18n="destinationLabel">
+                    Destination
+                </span>
+                <span class="detail-value" id="resultDestination">
+                    —
+                </span>
+            </div>
+
+            <div class="detail" id="descriptionDetail">
+                <span class="detail-label" data-i18n="descriptionLabel">
+                    Parcel Description
+                </span>
+                <span class="detail-value" id="resultDescription">
+                    —
+                </span>
+            </div>
+
+        </div>
+
+        <p class="small-note" data-i18n="privacyNote">
+            Only information returned for the tracking number you entered
+            is displayed. If you need help, contact TrustNova Express.
         </p>
 
-        <a href="mailto:trustnovaexpress@gmail.com">
-          trustnovaexpress@gmail.com
-        </a>
-      </div>
     </section>
-  </main>
 
-  <footer>
-    <p><strong>TRUSTNOVA EXPRESS</strong></p>
-    <p class="footer-motto">Trust in Every Delivery.</p>
-    <p>&copy; <span id="year"></span> TrustNova Express. All rights reserved.</p>
-  </footer>
+    <section class="card">
 
-  <script>
-    /*
-      IMPORTANT:
-      These values must match your ACTUAL TrustNova Express Supabase project.
-      Do not use credentials copied from a different project.
+        <h2 data-i18n="howTitle">How It Works</h2>
 
-      The function track_parcel must exist in your Supabase database and
-      return the package that matches the tracking number entered.
-    */
+        <div class="how-grid">
 
-    const SUPABASE_URL = "PASTE_YOUR_TRUSTNOVA_EXPRESS_SUPABASE_URL_HERE";
-    const SUPABASE_ANON_KEY = "PASTE_YOUR_SUPABASE_ANON_OR_PUBLISHABLE_KEY_HERE";
+            <div class="how-item">
+                <span class="how-number">1</span>
+                <h3 data-i18n="stepOneTitle">Enter Your Number</h3>
+                <p data-i18n="stepOneText">
+                    Enter the tracking number provided for your parcel.
+                </p>
+            </div>
 
-    const translations = {
-      en: {
-        languageLabel: "Language",
-        heroTitle: "Track Your Package With Confidence",
-        heroText: "Enter your tracking number to check your package's current delivery status and latest update.",
-        trackingTitle: "Track Your Shipment",
-        trackingIntro: "Enter the tracking number provided to you by TrustNova Express.",
-        trackingPlaceholder: "Enter tracking number",
-        trackButton: "Track Package",
-        resultTitle: "Package Information",
-        trackingNumberLabel: "Tracking Number",
-        senderLabel: "Sender Name",
-        receiverLabel: "Receiver Name",
-        pickupLabel: "Pickup Location",
-        destinationLabel: "Destination",
-        descriptionLabel: "Package Description",
-        deliveryDateLabel: "Expected Delivery Date",
-        updateTitle: "Latest Delivery Update",
-        helpTitle: "Need Help With Your Package?",
-        helpText: "Contact our support team if you need help with your shipment.",
-        enterTracking: "Please enter your tracking number.",
-        checking: "Checking your tracking number...",
-        notConfigured: "Tracking is not connected yet. The website administrator must connect the correct Supabase project.",
-        notFound: "No package was found for that tracking number. Please check it and try again.",
-        error: "We could not retrieve your tracking details. Please try again later.",
-        unknown: "Not available yet",
-        noUpdate: "No delivery update has been added yet.",
-        trackFailed: "Tracking could not be completed.",
-        connectionError: "Unable to connect to the tracking service. Please try again later."
-      },
+            <div class="how-item">
+                <span class="how-number">2</span>
+                <h3 data-i18n="stepTwoTitle">View Your Parcel</h3>
+                <p data-i18n="stepTwoText">
+                    Check the delivery status and estimated delivery date.
+                </p>
+            </div>
 
-      fr: {
-        languageLabel: "Langue",
-        heroTitle: "Suivez votre colis en toute confiance",
-        heroText: "Saisissez votre numéro de suivi pour consulter le statut actuel et la dernière mise à jour.",
-        trackingTitle: "Suivre votre envoi",
-        trackingIntro: "Saisissez le numéro de suivi fourni par TrustNova Express.",
-        trackingPlaceholder: "Saisissez le numéro de suivi",
-        trackButton: "Suivre le colis",
-        resultTitle: "Informations du colis",
-        trackingNumberLabel: "Numéro de suivi",
-        senderLabel: "Nom de l'expéditeur",
-        receiverLabel: "Nom du destinataire",
-        pickupLabel: "Lieu de collecte",
-        destinationLabel: "Destination",
-        descriptionLabel: "Description du colis",
-        deliveryDateLabel: "Date de livraison prévue",
-        updateTitle: "Dernière mise à jour",
-        helpTitle: "Besoin d'aide ?",
-        helpText: "Contactez notre équipe d'assistance.",
-        enterTracking: "Veuillez saisir votre numéro de suivi.",
-        checking: "Vérification du numéro de suivi...",
-        notConfigured: "Le suivi n'est pas encore connecté.",
-        notFound: "Aucun colis trouvé pour ce numéro.",
-        error: "Impossible de récupérer les informations du colis.",
-        unknown: "Pas encore disponible",
-        noUpdate: "Aucune mise à jour disponible.",
-        trackFailed: "Le suivi n'a pas pu être effectué.",
-        connectionError: "Connexion au service de suivi impossible."
-      },
+            <div class="how-item">
+                <span class="how-number">3</span>
+                <h3 data-i18n="stepThreeTitle">Get Assistance</h3>
+                <p data-i18n="stepThreeText">
+                    Contact our support team if you need help with your parcel.
+                </p>
+            </div>
 
-      es: {
-        languageLabel: "Idioma",
-        heroTitle: "Rastrea tu paquete con confianza",
-        heroText: "Introduce tu número de seguimiento para consultar el estado actual y la última actualización.",
-        trackingTitle: "Rastrear envío",
-        trackingIntro: "Introduce el número de seguimiento de TrustNova Express.",
-        trackingPlaceholder: "Introduce el número de seguimiento",
-        trackButton: "Rastrear paquete",
-        resultTitle: "Información del paquete",
-        trackingNumberLabel: "Número de seguimiento",
-        senderLabel: "Nombre del remitente",
-        receiverLabel: "Nombre del destinatario",
-        pickupLabel: "Lugar de recogida",
-        destinationLabel: "Destino",
-        descriptionLabel: "Descripción del paquete",
-        deliveryDateLabel: "Fecha de entrega prevista",
-        updateTitle: "Última actualización",
-        helpTitle: "¿Necesitas ayuda?",
-        helpText: "Contacta con nuestro equipo de asistencia.",
-        enterTracking: "Introduce tu número de seguimiento.",
-        checking: "Comprobando el número de seguimiento...",
-        notConfigured: "El seguimiento todavía no está conectado.",
-        notFound: "No se encontró ningún paquete con ese número.",
-        error: "No se pudo obtener la información del paquete.",
-        unknown: "Aún no disponible",
-        noUpdate: "Todavía no hay actualizaciones.",
-        trackFailed: "No se pudo completar el seguimiento.",
-        connectionError: "No se pudo conectar al servicio de seguimiento."
-      },
+        </div>
 
-      de: {
-        languageLabel: "Sprache",
-        heroTitle: "Paket zuverlässig verfolgen",
-        heroText: "Geben Sie Ihre Sendungsnummer ein, um den aktuellen Status und die letzte Aktualisierung zu sehen.",
-        trackingTitle: "Sendung verfolgen",
-        trackingIntro: "Geben Sie die Sendungsnummer von TrustNova Express ein.",
-        trackingPlaceholder: "Sendungsnummer eingeben",
-        trackButton: "Paket verfolgen",
-        resultTitle: "Paketinformationen",
-        trackingNumberLabel: "Sendungsnummer",
-        senderLabel: "Absender",
-        receiverLabel: "Empfänger",
-        pickupLabel: "Abholort",
-        destinationLabel: "Zielort",
-        descriptionLabel: "Paketbeschreibung",
-        deliveryDateLabel: "Voraussichtliches Lieferdatum",
-        updateTitle: "Letzte Lieferaktualisierung",
-        helpTitle: "Benötigen Sie Hilfe?",
-        helpText: "Kontaktieren Sie unseren Support.",
-        enterTracking: "Bitte geben Sie Ihre Sendungsnummer ein.",
-        checking: "Sendungsnummer wird geprüft...",
-        notConfigured: "Die Sendungsverfolgung ist noch nicht verbunden.",
-        notFound: "Für diese Nummer wurde kein Paket gefunden.",
-        error: "Paketinformationen konnten nicht abgerufen werden.",
-        unknown: "Noch nicht verfügbar",
-        noUpdate: "Noch keine Aktualisierung vorhanden.",
-        trackFailed: "Die Sendungsverfolgung war nicht erfolgreich.",
-        connectionError: "Verbindung zum Sendungsdienst nicht möglich."
-      },
+    </section>
 
-      pt: {
-        languageLabel: "Idioma",
-        heroTitle: "Acompanhe sua encomenda com confiança",
-        heroText: "Digite seu código de rastreamento para consultar o status atual e a última atualização.",
-        trackingTitle: "Rastrear encomenda",
-        trackingIntro: "Digite o código de rastreamento fornecido pela TrustNova Express.",
-        trackingPlaceholder: "Digite o código de rastreamento",
-        trackButton: "Rastrear encomenda",
-        resultTitle: "Informações da encomenda",
-        trackingNumberLabel: "Código de rastreamento",
-        senderLabel: "Nome do remetente",
-        receiverLabel: "Nome do destinatário",
-        pickupLabel: "Local de coleta",
-        destinationLabel: "Destino",
-        descriptionLabel: "Descrição da encomenda",
-        deliveryDateLabel: "Data prevista de entrega",
-        updateTitle: "Última atualização",
-        helpTitle: "Precisa de ajuda?",
-        helpText: "Entre em contato com nossa equipe de suporte.",
-        enterTracking: "Digite seu código de rastreamento.",
-        checking: "Verificando o código de rastreamento...",
-        notConfigured: "O rastreamento ainda não está conectado.",
-        notFound: "Nenhuma encomenda encontrada para esse código.",
-        error: "Não foi possível obter os dados da encomenda.",
-        unknown: "Ainda não disponível",
-        noUpdate: "Ainda não há atualizações.",
-        trackFailed: "Não foi possível concluir o rastreamento.",
-        connectionError: "Não foi possível conectar ao serviço de rastreamento."
-      },
+    <section class="card contact-box">
 
-      it: {
-        languageLabel: "Lingua",
-        heroTitle: "Segui il tuo pacco con fiducia",
-        heroText: "Inserisci il numero di tracciamento per controllare lo stato attuale e l'ultimo aggiornamento.",
-        trackingTitle: "Traccia la spedizione",
-        trackingIntro: "Inserisci il numero di tracciamento fornito da TrustNova Express.",
-        trackingPlaceholder: "Inserisci il numero di tracciamento",
-        trackButton: "Traccia il pacco",
-        resultTitle: "Informazioni sul pacco",
-        trackingNumberLabel: "Numero di tracciamento",
-        senderLabel: "Nome del mittente",
-        receiverLabel: "Nome del destinatario",
-        pickupLabel: "Luogo di ritiro",
-        destinationLabel: "Destinazione",
-        descriptionLabel: "Descrizione del pacco",
-        deliveryDateLabel: "Data di consegna prevista",
-        updateTitle: "Ultimo aggiornamento",
-        helpTitle: "Hai bisogno di aiuto?",
-        helpText: "Contatta il nostro servizio di assistenza.",
-        enterTracking: "Inserisci il numero di tracciamento.",
-        checking: "Controllo del numero di tracciamento...",
-        notConfigured: "Il tracciamento non è ancora collegato.",
-        notFound: "Nessun pacco trovato con questo numero.",
-        error: "Impossibile recuperare le informazioni del pacco.",
-        unknown: "Non ancora disponibile",
-        noUpdate: "Nessun aggiornamento disponibile.",
-        trackFailed: "Impossibile completare il tracciamento.",
-        connectionError: "Impossibile connettersi al servizio di tracciamento."
-      },
+        <h2 data-i18n="contactTitle">Contact TrustNova Express</h2>
 
-      ar: {
-        languageLabel: "اللغة",
-        heroTitle: "تتبع طردك بثقة",
-        heroText: "أدخل رقم التتبع لمعرفة حالة التوصيل الحالية وآخر تحديث.",
-        trackingTitle: "تتبع الشحنة",
-        trackingIntro: "أدخل رقم التتبع الذي قدمته لك TrustNova Express.",
-        trackingPlaceholder: "أدخل رقم التتبع",
-        trackButton: "تتبع الطرد",
-        resultTitle: "معلومات الطرد",
-        trackingNumberLabel: "رقم التتبع",
-        senderLabel: "اسم المرسل",
-        receiverLabel: "اسم المستلم",
-        pickupLabel: "مكان الاستلام",
-        destinationLabel: "الوجهة",
-        descriptionLabel: "وصف الطرد",
-        deliveryDateLabel: "تاريخ التسليم المتوقع",
-        updateTitle: "آخر تحديث للتوصيل",
-        helpTitle: "هل تحتاج إلى مساعدة؟",
-        helpText: "تواصل مع فريق الدعم.",
-        enterTracking: "يرجى إدخال رقم التتبع.",
-        checking: "جارٍ التحقق من رقم التتبع...",
-        notConfigured: "لم يتم ربط خدمة التتبع بعد.",
-        notFound: "لم يتم العثور على طرد بهذا الرقم.",
-        error: "تعذر استرجاع معلومات الطرد.",
-        unknown: "غير متوفر بعد",
-        noUpdate: "لا توجد تحديثات حتى الآن.",
-        trackFailed: "تعذر إكمال التتبع.",
-        connectionError: "تعذر الاتصال بخدمة التتبع."
-      },
+        <p data-i18n="contactText">
+            Need assistance with your delivery? Contact our support team.
+        </p>
 
-      ha: {
-        languageLabel: "Harshe",
-        heroTitle: "Bibiyi kayanka cikin aminci",
-        heroText: "Shigar da lambar bibiyar kaya don ganin halin isarwa da sabon bayani.",
-        trackingTitle: "Bibiyar kaya",
-        trackingIntro: "Shigar da lambar bibiyar da TrustNova Express ta ba ka.",
-        trackingPlaceholder: "Shigar da lambar bibiyar kaya",
-        trackButton: "Bibiyi kaya",
-        resultTitle: "Bayanin kaya",
-        trackingNumberLabel: "Lambar bibiyar kaya",
-        senderLabel: "Sunan mai aikawa",
-        receiverLabel: "Sunan mai karɓa",
-        pickupLabel: "Wurin ɗaukar kaya",
-        destinationLabel: "Wurin zuwa",
-        descriptionLabel: "Bayanin kaya",
-        deliveryDateLabel: "Ranar isarwa da ake tsammani",
-        updateTitle: "Sabon bayanin isarwa",
-        helpTitle: "Kana buƙatar taimako?",
-        helpText: "Tuntuɓi ƙungiyar taimakonmu.",
-        enterTracking: "Da fatan shigar da lambar bibiyar kaya.",
-        checking: "Ana duba lambar bibiyar kaya...",
-        notConfigured: "Ba a haɗa tsarin bibiyar kaya ba tukuna.",
-        notFound: "Ba a sami kaya mai wannan lamba ba.",
-        error: "An kasa samun bayanin kaya.",
-        unknown: "Ba a samu ba tukuna",
-        noUpdate: "Babu sabon bayani tukuna.",
-        trackFailed: "An kasa kammala bibiyar kaya.",
-        connectionError: "An kasa haɗuwa da tsarin bibiyar kaya."
-      },
+        <p>
+            <strong>Email:</strong>
+            <a href="mailto:trustnovaexpress@gmail.com">
+                trustnovaexpress@gmail.com
+            </a>
+        </p>
 
-      yo: {
-        languageLabel: "Èdè",
-        heroTitle: "Tọpinpin ẹrù rẹ pẹlu ìgbẹ́kẹ̀lé",
-        heroText: "Tẹ nọ́mbà ìtọpinpin rẹ láti rí ipò ìfijiṣẹ́ àti ìròyìn tuntun.",
-        trackingTitle: "Tọpinpin ẹrù",
-        trackingIntro: "Tẹ nọ́mbà ìtọpinpin tí TrustNova Express fún ọ.",
-        trackingPlaceholder: "Tẹ nọ́mbà ìtọpinpin",
-        trackButton: "Tọpinpin ẹrù",
-        resultTitle: "Àlàyé ẹrù",
-        trackingNumberLabel: "Nọ́mbà ìtọpinpin",
-        senderLabel: "Orúkọ olùránṣẹ́",
-        receiverLabel: "Orúkọ olùgbà",
-        pickupLabel: "Ibi gbígbà ẹrù",
-        destinationLabel: "Ibi tí ẹrù ń lọ",
-        descriptionLabel: "Àpèjúwe ẹrù",
-        deliveryDateLabel: "Ọjọ́ ìfijiṣẹ́ tí a retí",
-        updateTitle: "Ìròyìn ìfijiṣẹ́ tuntun",
-        helpTitle: "Ṣé o nílò ìrànlọ́wọ́?",
-        helpText: "Kàn sí ẹgbẹ́ ìrànlọ́wọ́ wa.",
-        enterTracking: "Jọ̀wọ́ tẹ nọ́mbà ìtọpinpin rẹ.",
-        checking: "A ń ṣàyẹ̀wò nọ́mbà ìtọpinpin...",
-        notConfigured: "A kò tíì so ètò ìtọpinpin pọ̀.",
-        notFound: "A kò rí ẹrù pẹ̀lú nọ́mbà yẹn.",
-        error: "A kò lè gba àlàyé ẹrù náà.",
-        unknown: "Kò tíì sí",
-        noUpdate: "Kò sí ìròyìn tuntun síbẹ̀.",
-        trackFailed: "A kò lè parí ìtọpinpin náà.",
-        connectionError: "A kò lè sopọ̀ mọ́ ètò ìtọpinpin."
-      },
+    </section>
 
-      ig: {
-        languageLabel: "Asụsụ",
-        heroTitle: "Soro njem ngwugwu gị n'obi ike",
-        heroText: "Tinye nọmba nsochi gị iji hụ ọnọdụ nnyefe ugbu a na ozi ọhụrụ.",
-        trackingTitle: "Soro ngwugwu gị",
-        trackingIntro: "Tinye nọmba nsochi nke TrustNova Express nyere gị.",
-        trackingPlaceholder: "Tinye nọmba nsochi",
-        trackButton: "Soro ngwugwu",
-        resultTitle: "Ozi gbasara ngwugwu",
-        trackingNumberLabel: "Nọmba nsochi",
-        senderLabel: "Aha onye zitere",
-        receiverLabel: "Aha onye ga-anata",
-        pickupLabel: "Ebe e si ewere ngwugwu",
-        destinationLabel: "Ebe a na-aga",
-        descriptionLabel: "Nkọwa ngwugwu",
-        deliveryDateLabel: "Ụbọchị nnyefe a na-atụ anya ya",
-        updateTitle: "Ozi nnyefe kacha ọhụrụ",
-        helpTitle: "Ị chọrọ enyemaka?",
-        helpText: "Kpọtụrụ ndị ọrụ enyemaka anyị.",
-        enterTracking: "Biko tinye nọmba nsochi gị.",
-        checking: "A na-enyocha nọmba nsochi...",
-        notConfigured: "Ejikọbeghị usoro nsochi ahụ.",
-        notFound: "Ahụghị ngwugwu nwere nọmba ahụ.",
-        error: "Enweghị ike inweta ozi ngwugwu.",
-        unknown: "Ọ dịbeghị",
-        noUpdate: "Enweghị ozi ọhụrụ ugbu a.",
-        trackFailed: "Enweghị ike imecha nsochi ahụ.",
-        connectionError: "Enweghị ike ijikọ na usoro nsochi."
-      },
+</main>
 
-      zh: {
-        languageLabel: "语言",
-        heroTitle: "放心追踪您的包裹",
-        heroText: "输入追踪号码，查看包裹当前状态和最新更新。",
-        trackingTitle: "追踪包裹",
-        trackingIntro: "请输入 TrustNova Express 提供的追踪号码。",
-        trackingPlaceholder: "输入追踪号码",
-        trackButton: "追踪包裹",
-        resultTitle: "包裹信息",
-        trackingNumberLabel: "追踪号码",
-        senderLabel: "寄件人姓名",
-        receiverLabel: "收件人姓名",
-        pickupLabel: "取件地点",
-        destinationLabel: "目的地",
-        descriptionLabel: "包裹描述",
-        deliveryDateLabel: "预计送达日期",
-        updateTitle: "最新配送更新",
-        helpTitle: "需要帮助吗？",
-        helpText: "请联系我们的客服团队。",
-        enterTracking: "请输入追踪号码。",
-        checking: "正在检查追踪号码...",
-        notConfigured: "追踪服务尚未连接。",
-        notFound: "未找到该追踪号码对应的包裹。",
-        error: "无法获取包裹信息。",
-        unknown: "暂不可用",
-        noUpdate: "暂时没有配送更新。",
-        trackFailed: "无法完成追踪。",
-        connectionError: "无法连接到追踪服务。"
-      }
-    };
+<footer class="site-footer">
+    <p class="footer-brand">TRUSTNOVA EXPRESS</p>
+    <p data-i18n="footerMotto">Trust in Every Delivery.</p>
+    <p>
+        &copy; <span id="currentYear"></span>
+        TrustNova Express.
+        <span data-i18n="rightsText">All rights reserved.</span>
+    </p>
+</footer>
 
-    const form = document.getElementById("trackingForm");
-    const trackingInput = document.getElementById("trackingNumber");
-    const trackButton = document.getElementById("trackButton");
-    const messageBox = document.getElementById("message");
-    const resultSection = document.getElementById("result");
-    const languageSelect = document.getElementById("languageSelect");
+<script>
+/* =====================================================
+   TRUSTNOVA EXPRESS DATABASE CONNECTION
+   Uses the Supabase project URL and publishable key.
+   Never put a service-role or secret key in this file.
+===================================================== */
 
-    let currentLanguage = "en";
+const SUPABASE_URL =
+    "https://trydftaqqypqcxsgixto.supabase.co";
 
-    document.getElementById("year").textContent =
-      new Date().getFullYear();
+const SUPABASE_ANON_KEY =
+    "sb_publishable_2h0EyOMhtBx3eWEiuoAOyg_qjw2QzED";
 
-    function translate(key) {
-      return (
-        translations[currentLanguage]?.[key] ||
-        translations.en[key] ||
-        key
-      );
+
+/* =====================================================
+   LANGUAGE TRANSLATIONS
+===================================================== */
+
+const translations = {
+
+en: {
+    motto: "Trust in Every Delivery.",
+    languageLabel: "Language:",
+    heroTitle: "Your Parcel, Tracked with Confidence.",
+    heroText: "Track your shipment with TrustNova Express. Enter your tracking number to view the latest available delivery status and estimated delivery date.",
+    trackButton: "Track Your Parcel",
+    trackingTitle: "Track Your Parcel",
+    trackingIntro: "Enter the tracking number given to you by TrustNova Express.",
+    trackingPlaceholder: "Enter your tracking number",
+    searchButton: "Track Parcel",
+    resultTitle: "Parcel Information",
+    trackingNumberLabel: "Tracking Number:",
+    estimatedDeliveryLabel: "Estimated Delivery",
+    statusLabel: "Delivery Status",
+    senderLabel: "Sender Name",
+    receiverLabel: "Receiver Name",
+    pickupLabel: "Pickup Location",
+    destinationLabel: "Destination",
+    descriptionLabel: "Parcel Description",
+    privacyNote: "Only information returned for the tracking number you entered is displayed. If you need help, contact TrustNova Express.",
+    howTitle: "How It Works",
+    stepOneTitle: "Enter Your Number",
+    stepOneText: "Enter the tracking number provided for your parcel.",
+    stepTwoTitle: "View Your Parcel",
+    stepTwoText: "Check the delivery status and estimated delivery date.",
+    stepThreeTitle: "Get Assistance",
+    stepThreeText: "Contact our support team if you need help with your parcel.",
+    contactTitle: "Contact TrustNova Express",
+    contactText: "Need assistance with your delivery? Contact our support team.",
+    footerMotto: "Trust in Every Delivery.",
+    rightsText: "All rights reserved.",
+    emptyTracking: "Please enter your tracking number.",
+    loading: "Searching for your parcel. Please wait...",
+    notFound: "We could not find a parcel with that tracking number. Please check the number and try again.",
+    connectionError: "We could not connect to the tracking service. Please check your internet connection and try again.",
+    serverError: "The tracking service returned an error. Please try again later or contact support.",
+    noEstimate: "Not available yet",
+    noStatus: "Status not available",
+    noInformation: "Not provided",
+    statuses: {
+        "out for delivery": "Out for Delivery",
+        "delivered": "Delivered",
+        "in transit": "In Transit",
+        "pending": "Pending",
+        "processing": "Processing",
+        "dispatched": "Dispatched",
+        "shipped": "Shipped",
+        "picked up": "Picked Up",
+        "returned": "Returned",
+        "cancelled": "Cancelled",
+        "on hold": "On Hold",
+        "failed delivery": "Failed Delivery"
     }
+},
 
-    function applyLanguage(language) {
-      currentLanguage = translations[language] ? language : "en";
+fr: {
+    motto: "La confiance à chaque livraison.",
+    languageLabel: "Langue :",
+    heroTitle: "Suivez votre colis en toute confiance.",
+    heroText: "Suivez votre envoi avec TrustNova Express. Entrez votre numéro de suivi pour consulter le statut disponible et la date de livraison estimée.",
+    trackButton: "Suivre mon colis",
+    trackingTitle: "Suivre votre colis",
+    trackingIntro: "Entrez le numéro de suivi fourni par TrustNova Express.",
+    trackingPlaceholder: "Entrez votre numéro de suivi",
+    searchButton: "Suivre le colis",
+    resultTitle: "Informations du colis",
+    trackingNumberLabel: "Numéro de suivi :",
+    estimatedDeliveryLabel: "Livraison estimée",
+    statusLabel: "Statut de livraison",
+    senderLabel: "Nom de l'expéditeur",
+    receiverLabel: "Nom du destinataire",
+    pickupLabel: "Lieu d'enlèvement",
+    destinationLabel: "Destination",
+    descriptionLabel: "Description du colis",
+    privacyNote: "Seules les informations associées au numéro saisi sont affichées. Contactez-nous si vous avez besoin d'aide.",
+    howTitle: "Comment ça marche",
+    stepOneTitle: "Entrez votre numéro",
+    stepOneText: "Entrez le numéro de suivi de votre colis.",
+    stepTwoTitle: "Consultez votre colis",
+    stepTwoText: "Consultez le statut et la date de livraison estimée.",
+    stepThreeTitle: "Obtenez de l'aide",
+    stepThreeText: "Contactez notre équipe si vous avez besoin d'aide.",
+    contactTitle: "Contacter TrustNova Express",
+    contactText: "Besoin d'aide pour votre livraison ? Contactez notre équipe.",
+    footerMotto: "La confiance à chaque livraison.",
+    rightsText: "Tous droits réservés.",
+    emptyTracking: "Veuillez entrer votre numéro de suivi.",
+    loading: "Recherche de votre colis. Veuillez patienter...",
+    notFound: "Aucun colis trouvé avec ce numéro. Vérifiez-le et réessayez.",
+    connectionError: "Impossible de se connecter au service. Vérifiez votre connexion Internet.",
+    serverError: "Le service de suivi a rencontré une erreur. Réessayez plus tard.",
+    noEstimate: "Pas encore disponible",
+    noStatus: "Statut indisponible",
+    noInformation: "Non renseigné",
+    statuses: {
+        "out for delivery": "En cours de livraison",
+        "delivered": "Livré",
+        "in transit": "En transit",
+        "pending": "En attente",
+        "processing": "En traitement",
+        "dispatched": "Expédié",
+        "shipped": "Envoyé",
+        "picked up": "Récupéré",
+        "returned": "Retourné",
+        "cancelled": "Annulé",
+        "on hold": "En attente",
+        "failed delivery": "Échec de livraison"
+    }
+},
 
-      document.documentElement.lang = currentLanguage;
-      document.documentElement.dir =
+es: {
+    motto: "Confianza en cada entrega.",
+    languageLabel: "Idioma:",
+    heroTitle: "Sigue tu paquete con confianza.",
+    heroText: "Rastrea tu envío con TrustNova Express. Introduce tu número de seguimiento para consultar el estado disponible y la fecha estimada de entrega.",
+    trackButton: "Rastrear paquete",
+    trackingTitle: "Rastrear tu paquete",
+    trackingIntro: "Introduce el número de seguimiento que te proporcionó TrustNova Express.",
+    trackingPlaceholder: "Introduce tu número de seguimiento",
+    searchButton: "Rastrear paquete",
+    resultTitle: "Información del paquete",
+    trackingNumberLabel: "Número de seguimiento:",
+    estimatedDeliveryLabel: "Entrega estimada",
+    statusLabel: "Estado de entrega",
+    senderLabel: "Nombre del remitente",
+    receiverLabel: "Nombre del destinatario",
+    pickupLabel: "Lugar de recogida",
+    destinationLabel: "Destino",
+    descriptionLabel: "Descripción del paquete",
+    privacyNote: "Solo se muestra la información asociada al número introducido. Contacta con nosotros si necesitas ayuda.",
+    howTitle: "Cómo funciona",
+    stepOneTitle: "Introduce tu número",
+    stepOneText: "Introduce el número de seguimiento de tu paquete.",
+    stepTwoTitle: "Consulta tu paquete",
+    stepTwoText: "Consulta el estado y la fecha estimada de entrega.",
+    stepThreeTitle: "Obtén ayuda",
+    stepThreeText: "Contacta con nuestro equipo si necesitas ayuda.",
+    contactTitle: "Contactar con TrustNova Express",
+    contactText: "¿Necesitas ayuda con tu entrega? Contacta con nuestro equipo.",
+    footerMotto: "Confianza en cada entrega.",
+    rightsText: "Todos los derechos reservados.",
+    emptyTracking: "Introduce tu número de seguimiento.",
+    loading: "Buscando tu paquete. Espera, por favor...",
+    notFound: "No encontramos un paquete con ese número. Comprueba el número e inténtalo de nuevo.",
+    connectionError: "No se pudo conectar con el servicio. Comprueba tu conexión a Internet.",
+    serverError: "El servicio de seguimiento devolvió un error. Inténtalo más tarde.",
+    noEstimate: "Todavía no disponible",
+    noStatus: "Estado no disponible",
+    noInformation: "No proporcionado",
+    statuses: {
+        "out for delivery": "En reparto",
+        "delivered": "Entregado",
+        "in transit": "En tránsito",
+        "pending": "Pendiente",
+        "processing": "En proceso",
+        "dispatched": "Despachado",
+        "shipped": "Enviado",
+        "picked up": "Recogido",
+        "returned": "Devuelto",
+        "cancelled": "Cancelado",
+        "on hold": "En espera",
+        "failed delivery": "Entrega fallida"
+    }
+},
+
+de: {
+    motto: "Vertrauen bei jeder Lieferung.",
+    languageLabel: "Sprache:",
+    heroTitle: "Verfolgen Sie Ihr Paket mit Vertrauen.",
+    heroText: "Verfolgen Sie Ihre Sendung mit TrustNova Express. Geben Sie Ihre Sendungsnummer ein, um den verfügbaren Lieferstatus und das voraussichtliche Lieferdatum zu sehen.",
+    trackButton: "Paket verfolgen",
+    trackingTitle: "Paket verfolgen",
+    trackingIntro: "Geben Sie die von TrustNova Express bereitgestellte Sendungsnummer ein.",
+    trackingPlaceholder: "Sendungsnummer eingeben",
+    searchButton: "Paket verfolgen",
+    resultTitle: "Paketinformationen",
+    trackingNumberLabel: "Sendungsnummer:",
+    estimatedDeliveryLabel: "Voraussichtliche Lieferung",
+    statusLabel: "Lieferstatus",
+    senderLabel: "Absendername",
+    receiverLabel: "Empfängername",
+    pickupLabel: "Abholort",
+    destinationLabel: "Zielort",
+    descriptionLabel: "Paketbeschreibung",
+    privacyNote: "Es werden nur Informationen zur eingegebenen Sendungsnummer angezeigt. Kontaktieren Sie uns, wenn Sie Hilfe benötigen.",
+    howTitle: "So funktioniert es",
+    stepOneTitle: "Nummer eingeben",
+    stepOneText: "Geben Sie die Sendungsnummer Ihres Pakets ein.",
+    stepTwoTitle: "Paket ansehen",
+    stepTwoText: "Prüfen Sie den Lieferstatus und das voraussichtliche Lieferdatum.",
+    stepThreeTitle: "Hilfe erhalten",
+    stepThreeText: "Kontaktieren Sie unser Team, wenn Sie Hilfe benötigen.",
+    contactTitle: "TrustNova Express kontaktieren",
+    contactText: "Benötigen Sie Hilfe bei Ihrer Lieferung? Kontaktieren Sie unser Team.",
+    footerMotto: "Vertrauen bei jeder Lieferung.",
+    rightsText: "Alle Rechte vorbehalten.",
+    emptyTracking: "Bitte geben Sie Ihre Sendungsnummer ein.",
+    loading: "Ihr Paket wird gesucht. Bitte warten...",
+    notFound: "Zu dieser Sendungsnummer wurde kein Paket gefunden. Bitte prüfen Sie die Nummer.",
+    connectionError: "Der Trackingdienst konnte nicht erreicht werden. Prüfen Sie Ihre Internetverbindung.",
+    serverError: "Der Trackingdienst hat einen Fehler gemeldet. Bitte versuchen Sie es später erneut.",
+    noEstimate: "Noch nicht verfügbar",
+    noStatus: "Status nicht verfügbar",
+    noInformation: "Nicht angegeben",
+    statuses: {
+        "out for delivery": "In Zustellung",
+        "delivered": "Zugestellt",
+        "in transit": "Unterwegs",
+        "pending": "Ausstehend",
+        "processing": "In Bearbeitung",
+        "dispatched": "Versandt",
+        "shipped": "Versendet",
+        "picked up": "Abgeholt",
+        "returned": "Zurückgesendet",
+        "cancelled": "Storniert",
+        "on hold": "Angehalten",
+        "failed delivery": "Zustellung fehlgeschlagen"
+    }
+},
+
+pt: {
+    motto: "Confiança em cada entrega.",
+    languageLabel: "Idioma:",
+    heroTitle: "Acompanhe sua encomenda com confiança.",
+    heroText: "Acompanhe seu envio com a TrustNova Express. Digite seu código de rastreamento para consultar o status disponível e a data estimada de entrega.",
+    trackButton: "Rastrear encomenda",
+    trackingTitle: "Rastrear encomenda",
+    trackingIntro: "Digite o código de rastreamento fornecido pela TrustNova Express.",
+    trackingPlaceholder: "Digite seu código de rastreamento",
+    searchButton: "Rastrear encomenda",
+    resultTitle: "Informações da encomenda",
+    trackingNumberLabel: "Código de rastreamento:",
+    estimatedDeliveryLabel: "Entrega estimada",
+    statusLabel: "Status da entrega",
+    senderLabel: "Nome do remetente",
+    receiverLabel: "Nome do destinatário",
+    pickupLabel: "Local de recolha",
+    destinationLabel: "Destino",
+    descriptionLabel: "Descrição da encomenda",
+    privacyNote: "São exibidas apenas as informações associadas ao código informado. Entre em contato se precisar de ajuda.",
+    howTitle: "Como funciona",
+    stepOneTitle: "Digite seu código",
+    stepOneText: "Digite o código de rastreamento da sua encomenda.",
+    stepTwoTitle: "Consulte sua encomenda",
+    stepTwoText: "Veja o status e a data estimada de entrega.",
+    stepThreeTitle: "Obtenha ajuda",
+    stepThreeText: "Entre em contato com nossa equipe se precisar de ajuda.",
+    contactTitle: "Contate a TrustNova Express",
+    contactText: "Precisa de ajuda com sua entrega? Entre em contato com nossa equipe.",
+    footerMotto: "Confiança em cada entrega.",
+    rightsText: "Todos os direitos reservados.",
+    emptyTracking: "Digite seu código de rastreamento.",
+    loading: "Procurando sua encomenda. Aguarde...",
+    notFound: "Não encontramos uma encomenda com esse código. Verifique e tente novamente.",
+    connectionError: "Não foi possível conectar ao serviço. Verifique sua conexão com a Internet.",
+    serverError: "O serviço de rastreamento apresentou um erro. Tente novamente mais tarde.",
+    noEstimate: "Ainda não disponível",
+    noStatus: "Status indisponível",
+    noInformation: "Não informado",
+    statuses: {
+        "out for delivery": "Saiu para entrega",
+        "delivered": "Entregue",
+        "in transit": "Em trânsito",
+        "pending": "Pendente",
+        "processing": "Em processamento",
+        "dispatched": "Despachado",
+        "shipped": "Enviado",
+        "picked up": "Recolhido",
+        "returned": "Devolvido",
+        "cancelled": "Cancelado",
+        "on hold": "Em espera",
+        "failed delivery": "Falha na entrega"
+    }
+},
+
+it: {
+    motto: "Fiducia in ogni consegna.",
+    languageLabel: "Lingua:",
+    heroTitle: "Segui il tuo pacco con fiducia.",
+    heroText: "Segui la tua spedizione con TrustNova Express. Inserisci il numero di tracciamento per vedere lo stato disponibile e la data di consegna prevista.",
+    trackButton: "Traccia il pacco",
+    trackingTitle: "Traccia il tuo pacco",
+    trackingIntro: "Inserisci il numero di tracciamento fornito da TrustNova Express.",
+    trackingPlaceholder: "Inserisci il numero di tracciamento",
+    searchButton: "Traccia il pacco",
+    resultTitle: "Informazioni sul pacco",
+    trackingNumberLabel: "Numero di tracciamento:",
+    estimatedDeliveryLabel: "Consegna prevista",
+    statusLabel: "Stato della consegna",
+    senderLabel: "Nome del mittente",
+    receiverLabel: "Nome del destinatario",
+    pickupLabel: "Luogo di ritiro",
+    destinationLabel: "Destinazione",
+    descriptionLabel: "Descrizione del pacco",
+    privacyNote: "Vengono mostrate solo le informazioni associate al numero inserito. Contattaci se hai bisogno di assistenza.",
+    howTitle: "Come funziona",
+    stepOneTitle: "Inserisci il numero",
+    stepOneText: "Inserisci il numero di tracciamento del tuo pacco.",
+    stepTwoTitle: "Visualizza il pacco",
+    stepTwoText: "Controlla lo stato e la data di consegna prevista.",
+    stepThreeTitle: "Ricevi assistenza",
+    stepThreeText: "Contatta il nostro team se hai bisogno di aiuto.",
+    contactTitle: "Contatta TrustNova Express",
+    contactText: "Hai bisogno di assistenza per la consegna? Contatta il nostro team.",
+    footerMotto: "Fiducia in ogni consegna.",
+    rightsText: "Tutti i diritti riservati.",
+    emptyTracking: "Inserisci il numero di tracciamento.",
+    loading: "Ricerca del pacco in corso. Attendi...",
+    notFound: "Non abbiamo trovato un pacco con questo numero. Controlla e riprova.",
+    connectionError: "Impossibile connettersi al servizio. Controlla la connessione Internet.",
+    serverError: "Il servizio di tracciamento ha restituito un errore. Riprova più tardi.",
+    noEstimate: "Non ancora disponibile",
+    noStatus: "Stato non disponibile",
+    noInformation: "Non fornito",
+    statuses: {
+        "out for delivery": "In consegna",
+        "delivered": "Consegnato",
+        "in transit": "In transito",
+        "pending": "In attesa",
+        "processing": "In elaborazione",
+        "dispatched": "Spedito",
+        "shipped": "Spedito",
+        "picked up": "Ritirato",
+        "returned": "Restituito",
+        "cancelled": "Annullato",
+        "on hold": "In sospeso",
+        "failed delivery": "Consegna non riuscita"
+    }
+},
+
+ar: {
+    motto: "الثقة في كل عملية توصيل.",
+    languageLabel: "اللغة:",
+    heroTitle: "تتبع طردك بكل ثقة.",
+    heroText: "تتبع شحنتك مع TrustNova Express. أدخل رقم التتبع لمعرفة حالة التوصيل المتاحة وموعد التسليم المتوقع.",
+    trackButton: "تتبع الطرد",
+    trackingTitle: "تتبع طردك",
+    trackingIntro: "أدخل رقم التتبع الذي قدمته لك TrustNova Express.",
+    trackingPlaceholder: "أدخل رقم التتبع",
+    searchButton: "تتبع الطرد",
+    resultTitle: "معلومات الطرد",
+    trackingNumberLabel: "رقم التتبع:",
+    estimatedDeliveryLabel: "موعد التسليم المتوقع",
+    statusLabel: "حالة التوصيل",
+    senderLabel: "اسم المرسل",
+    receiverLabel: "اسم المستلم",
+    pickupLabel: "مكان الاستلام",
+    destinationLabel: "الوجهة",
+    descriptionLabel: "وصف الطرد",
+    privacyNote: "تظهر فقط المعلومات المرتبطة برقم التتبع الذي أدخلته. اتصل بنا إذا كنت بحاجة إلى مساعدة.",
+    howTitle: "كيف تعمل الخدمة",
+    stepOneTitle: "أدخل رقمك",
+    stepOneText: "أدخل رقم التتبع الخاص بطردك.",
+    stepTwoTitle: "عرض الطرد",
+    stepTwoText: "تحقق من حالة التوصيل وموعد التسليم المتوقع.",
+    stepThreeTitle: "احصل على المساعدة",
+    stepThreeText: "اتصل بفريق الدعم إذا كنت بحاجة إلى مساعدة.",
+    contactTitle: "اتصل بـ TrustNova Express",
+    contactText: "هل تحتاج إلى مساعدة بشأن التوصيل؟ اتصل بفريق الدعم.",
+    footerMotto: "الثقة في كل عملية توصيل.",
+    rightsText: "جميع الحقوق محفوظة.",
+    emptyTracking: "يرجى إدخال رقم التتبع.",
+    loading: "جارٍ البحث عن طردك. يرجى الانتظار...",
+    notFound: "لم نعثر على طرد بهذا الرقم. تحقق من الرقم وحاول مرة أخرى.",
+    connectionError: "تعذر الاتصال بخدمة التتبع. تحقق من اتصال الإنترنت.",
+    serverError: "حدث خطأ في خدمة التتبع. حاول مرة أخرى لاحقًا.",
+    noEstimate: "غير متاح بعد",
+    noStatus: "الحالة غير متاحة",
+    noInformation: "لم يتم تقديمه",
+    statuses: {
+        "out for delivery": "خرج للتوصيل",
+        "delivered": "تم التسليم",
+        "in transit": "قيد النقل",
+        "pending": "قيد الانتظار",
+        "processing": "قيد المعالجة",
+        "dispatched": "تم الإرسال",
+        "shipped": "تم الشحن",
+        "picked up": "تم الاستلام",
+        "returned": "تم الإرجاع",
+        "cancelled": "تم الإلغاء",
+        "on hold": "معلق",
+        "failed delivery": "فشل التسليم"
+    }
+},
+
+ha: {
+    motto: "Aminci a kowace isarwa.",
+    languageLabel: "Harshe:",
+    heroTitle: "Bi sawun kayanka cikin aminci.",
+    heroText: "Bi sawun kayan da aka aika ta TrustNova Express. Shigar da lambar bin sawu don ganin halin isarwa da ranar isarwa da ake tsammani.",
+    trackButton: "Bi sawun kaya",
+    trackingTitle: "Bi sawun kayanka",
+    trackingIntro: "Shigar da lambar bin sawu da TrustNova Express ta ba ka.",
+    trackingPlaceholder: "Shigar da lambar bin sawu",
+    searchButton: "Bi sawun kaya",
+    resultTitle: "Bayanan kaya",
+    trackingNumberLabel: "Lambar bin sawu:",
+    estimatedDeliveryLabel: "Ranar isarwa da ake tsammani",
+    statusLabel: "Halin isarwa",
+    senderLabel: "Sunan mai aikawa",
+    receiverLabel: "Sunan mai karɓa",
+    pickupLabel: "Wurin karɓa",
+    destinationLabel: "Wurin zuwa",
+    descriptionLabel: "Bayanin kaya",
+    privacyNote: "Ana nuna bayanan da suka dace da lambar da ka shigar kawai. Tuntuɓe mu idan kana buƙatar taimako.",
+    howTitle: "Yadda yake aiki",
+    stepOneTitle: "Shigar da lamba",
+    stepOneText: "Shigar da lambar bin sawun kayanka.",
+    stepTwoTitle: "Duba kayanka",
+    stepTwoText: "Duba halin isarwa da ranar da ake tsammani.",
+    stepThreeTitle: "Nemi taimako",
+    stepThreeText: "Tuntuɓi ma'aikatanmu idan kana buƙatar taimako.",
+    contactTitle: "Tuntuɓi TrustNova Express",
+    contactText: "Kana buƙatar taimako game da isarwa? Tuntuɓi ma'aikatanmu.",
+    footerMotto: "Aminci a kowace isarwa.",
+    rightsText: "An kiyaye duk haƙƙoƙi.",
+    emptyTracking: "Da fatan za ka shigar da lambar bin sawu.",
+    loading: "Ana neman kayanka. Da fatan ka jira...",
+    notFound: "Ba a sami kaya mai wannan lamba ba. Duba lambar ka sake gwadawa.",
+    connectionError: "An kasa haɗuwa da sabis ɗin bin sawu. Duba intanet ɗinka.",
+    serverError: "An samu kuskure a sabis ɗin bin sawu. Sake gwadawa daga baya.",
+    noEstimate: "Ba a samu ba tukuna",
+    noStatus: "Ba a samu halin isarwa ba",
+    noInformation: "Ba a bayar ba",
+    statuses: {
+        "out for delivery": "Ana kaiwa mai karɓa",
+        "delivered": "An kai",
+        "in transit": "Yana kan hanya",
+        "pending": "Ana jira",
+        "processing": "Ana sarrafawa",
+        "dispatched": "An aika",
+        "shipped": "An aika",
+        "picked up": "An karɓa",
+        "returned": "An mayar",
+        "cancelled": "An soke",
+        "on hold": "An dakatar",
+        "failed delivery": "Isarwa ta gaza"
+    }
+},
+
+yo: {
+    motto: "Ìgbẹ́kẹ̀lé nínú gbogbo ìfijiṣẹ́.",
+    languageLabel: "Èdè:",
+    heroTitle: "Tọpinpin ẹrù rẹ pẹ̀lú ìgbẹ́kẹ̀lé.",
+    heroText: "Tọpinpin ẹrù rẹ pẹ̀lú TrustNova Express. Tẹ nọ́mbà ìtọpinpin rẹ láti rí ipò ìfijiṣẹ́ àti ọjọ́ tí a retí láti fi ẹrù dé.",
+    trackButton: "Tọpinpin ẹrù",
+    trackingTitle: "Tọpinpin ẹrù rẹ",
+    trackingIntro: "Tẹ nọ́mbà ìtọpinpin tí TrustNova Express fún ọ.",
+    trackingPlaceholder: "Tẹ nọ́mbà ìtọpinpin rẹ",
+    searchButton: "Tọpinpin ẹrù",
+    resultTitle: "Àlàyé ẹrù",
+    trackingNumberLabel: "Nọ́mbà ìtọpinpin:",
+    estimatedDeliveryLabel: "Ọjọ́ tí a retí ìfijiṣẹ́",
+    statusLabel: "Ipò ìfijiṣẹ́",
+    senderLabel: "Orúkọ olùránṣẹ́",
+    receiverLabel: "Orúkọ olùgbà",
+    pickupLabel: "Ibi gbígbà ẹrù",
+    destinationLabel: "Ibi tí ẹrù ń lọ",
+    descriptionLabel: "Àpèjúwe ẹrù",
+    privacyNote: "Àlàyé tó ní í ṣe pẹ̀lú nọ́mbà tí o tẹ nìkan ni a máa fi hàn. Kàn sí wa bí o bá nílò ìrànlọ́wọ́.",
+    howTitle: "Bí ó ṣe ń ṣiṣẹ́",
+    stepOneTitle: "Tẹ nọ́mbà rẹ",
+    stepOneText: "Tẹ nọ́mbà ìtọpinpin ẹrù rẹ.",
+    stepTwoTitle: "Wo ẹrù rẹ",
+    stepTwoText: "Ṣàyẹ̀wò ipò ìfijiṣẹ́ àti ọjọ́ tí a retí.",
+    stepThreeTitle: "Gba ìrànlọ́wọ́",
+    stepThreeText: "Kàn sí ẹgbẹ́ wa bí o bá nílò ìrànlọ́wọ́.",
+    contactTitle: "Kàn sí TrustNova Express",
+    contactText: "Ṣé o nílò ìrànlọ́wọ́ nípa ìfijiṣẹ́ rẹ? Kàn sí ẹgbẹ́ wa.",
+    footerMotto: "Ìgbẹ́kẹ̀lé nínú gbogbo ìfijiṣẹ́.",
+    rightsText: "Gbogbo ẹ̀tọ́ ni a pamọ́.",
+    emptyTracking: "Jọ̀wọ́ tẹ nọ́mbà ìtọpinpin rẹ.",
+    loading: "A ń wá ẹrù rẹ. Jọ̀wọ́ dúró...",
+    notFound: "A kò rí ẹrù pẹ̀lú nọ́mbà yìí. Ṣàyẹ̀wò rẹ kí o sì tún gbìyànjú.",
+    connectionError: "A kò lè sopọ̀ mọ́ iṣẹ́ ìtọpinpin. Ṣàyẹ̀wò ìsopọ̀ Íńtánẹ́ẹ̀tì rẹ.",
+    serverError: "Àṣìṣe ṣẹlẹ̀ nínú iṣẹ́ ìtọpinpin. Gbìyànjú lẹ́ẹ̀kan sí i lẹ́yìn náà.",
+    noEstimate: "Kò tíì sí",
+    noStatus: "Ipò kò sí",
+    noInformation: "A kò pèsè rẹ̀",
+    statuses: {
+        "out for delivery": "Ó ti jáde fún ìfijiṣẹ́",
+        "delivered": "A ti fi í dé",
+        "in transit": "Ó wà lójú ọ̀nà",
+        "pending": "Ó ń dúró",
+        "processing": "A ń ṣiṣẹ́ lórí rẹ̀",
+        "dispatched": "A ti rán an",
+        "shipped": "A ti fi ránṣẹ́",
+        "picked up": "A ti gbà á",
+        "returned": "A ti dá a padà",
+        "cancelled": "A ti fagilé",
+        "on hold": "A ti dá dúró",
+        "failed delivery": "Ìfijiṣẹ́ kò yọrí sí rere"
+    }
+},
+
+ig: {
+    motto: "Ntụkwasị obi n’ọ bụla nnyefe.",
+    languageLabel: "Asụsụ:",
+    heroTitle: "Soro njem ngwugwu gị n’enweghị nchegbu.",
+    heroText: "Soro njem ngwugwu gị na TrustNova Express. Tinye nọmba nsochi gị ka ị hụ ọnọdụ nnyefe na ụbọchị a tụrụ anya ya.",
+    trackButton: "Soro ngwugwu",
+    trackingTitle: "Soro ngwugwu gị",
+    trackingIntro: "Tinye nọmba nsochi nke TrustNova Express nyere gị.",
+    trackingPlaceholder: "Tinye nọmba nsochi gị",
+    searchButton: "Soro ngwugwu",
+    resultTitle: "Ozi gbasara ngwugwu",
+    trackingNumberLabel: "Nọmba nsochi:",
+    estimatedDeliveryLabel: "Ụbọchị nnyefe a tụrụ anya ya",
+    statusLabel: "Ọnọdụ nnyefe",
+    senderLabel: "Aha onye zitere",
+    receiverLabel: "Aha onye ga-anata",
+    pickupLabel: "Ebe e si were ya",
+    destinationLabel: "Ebe ọ na-aga",
+    descriptionLabel: "Nkọwa ngwugwu",
+    privacyNote: "A ga-egosi naanị ozi metụtara nọmba nsochi ị tinyere. Kpọtụrụ anyị ma ọ bụrụ na ịchọrọ enyemaka.",
+    howTitle: "Otu o si arụ ọrụ",
+    stepOneTitle: "Tinye nọmba gị",
+    stepOneText: "Tinye nọmba nsochi ngwugwu gị.",
+    stepTwoTitle: "Lelee ngwugwu gị",
+    stepTwoText: "Lelee ọnọdụ nnyefe na ụbọchị a tụrụ anya ya.",
+    stepThreeTitle: "Nweta enyemaka",
+    stepThreeText: "Kpọtụrụ ndị ọrụ anyị ma ọ bụrụ na ịchọrọ enyemaka.",
+    contactTitle: "Kpọtụrụ TrustNova Express",
+    contactText: "Ị chọrọ enyemaka gbasara nnyefe gị? Kpọtụrụ ndị ọrụ anyị.",
+    footerMotto: "Ntụkwasị obi n’ọ bụla nnyefe.",
+    rightsText: "Echekwabara ikike niile.",
+    emptyTracking: "Biko tinye nọmba nsochi gị.",
+    loading: "Anyị na-achọ ngwugwu gị. Biko chere...",
+    notFound: "Anyị ahụghị ngwugwu nwere nọmba a. Lelee nọmba ahụ ma nwaa ọzọ.",
+    connectionError: "Anyị enweghị ike ijikọ na ọrụ nsochi. Lelee njikọ ịntanetị gị.",
+    serverError: "Enwere njehie n’ọrụ nsochi. Biko nwaa ọzọ ma emechaa.",
+    noEstimate: "Ọ dịbeghị",
+    noStatus: "Ọnọdụ adịghị",
+    noInformation: "Enyeghị ya",
+    statuses: {
+        "out for delivery": "Ọ nọ n'ụzọ ịnyefe",
+        "delivered": "E nyefela ya",
+        "in transit": "Ọ nọ n'ụzọ",
+        "pending": "A na-eche",
+        "processing": "A na-ahazi ya",
+        "dispatched": "Ezipụla ya",
+        "shipped": "Ezipụla ya",
+        "picked up": "Ewerela ya",
+        "returned": "Eweghachila ya",
+        "cancelled": "Akagbuola ya",
+        "on hold": "Akwụsịla nwa oge",
+        "failed delivery": "Nnyefe emeghị nke ọma"
+    }
+},
+
+zh: {
+    motto: "每一次配送，值得信赖。",
+    languageLabel: "语言：",
+    heroTitle: "放心追踪您的包裹。",
+    heroText: "使用 TrustNova Express 追踪您的包裹。输入追踪号码即可查看当前可用的配送状态和预计送达日期。",
+    trackButton: "追踪包裹",
+    trackingTitle: "追踪您的包裹",
+    trackingIntro: "请输入 TrustNova Express 提供给您的追踪号码。",
+    trackingPlaceholder: "输入追踪号码",
+    searchButton: "追踪包裹",
+    resultTitle: "包裹信息",
+    trackingNumberLabel: "追踪号码：",
+    estimatedDeliveryLabel: "预计送达日期",
+    statusLabel: "配送状态",
+    senderLabel: "寄件人姓名",
+    receiverLabel: "收件人姓名",
+    pickupLabel: "取件地点",
+    destinationLabel: "目的地",
+    descriptionLabel: "包裹描述",
+    privacyNote: "仅显示与您输入的追踪号码相关的信息。如需帮助，请联系 TrustNova Express。",
+    howTitle: "使用方法",
+    stepOneTitle: "输入号码",
+    stepOneText: "输入您的包裹追踪号码。",
+    stepTwoTitle: "查看包裹",
+    stepTwoText: "查看配送状态和预计送达日期。",
+    stepThreeTitle: "获取帮助",
+    stepThreeText: "如需帮助，请联系我们的支持团队。",
+    contactTitle: "联系 TrustNova Express",
+    contactText: "需要配送帮助？请联系我们的支持团队。",
+    footerMotto: "每一次配送，值得信赖。",
+    rightsText: "保留所有权利。",
+    emptyTracking: "请输入追踪号码。",
+    loading: "正在查找您的包裹，请稍候...",
+    notFound: "未找到该追踪号码对应的包裹。请检查号码后重试。",
+    connectionError: "无法连接追踪服务。请检查您的网络连接。",
+    serverError: "追踪服务发生错误。请稍后重试。",
+    noEstimate: "暂不可用",
+    noStatus: "暂无状态",
+    noInformation: "未提供",
+    statuses: {
+        "out for delivery": "正在派送",
+        "delivered": "已送达",
+        "in transit": "运输途中",
+        "pending": "待处理",
+        "processing": "处理中",
+        "dispatched": "已发出",
+        "shipped": "已发货",
+        "picked up": "已取件",
+        "returned": "已退回",
+        "cancelled": "已取消",
+        "on hold": "暂停",
+        "failed delivery": "派送失败"
+    }
+}
+
+};
+
+
+/* =====================================================
+   PAGE ELEMENTS AND LANGUAGE FUNCTIONS
+===================================================== */
+
+const languageSelect = document.getElementById("languageSelect");
+const trackingForm = document.getElementById("trackingForm");
+const trackingInput = document.getElementById("trackingNumber");
+const trackSubmit = document.getElementById("trackSubmit");
+const messageBox = document.getElementById("messageBox");
+const resultCard = document.getElementById("resultCard");
+
+let currentLanguage = "en";
+
+document.getElementById("currentYear").textContent =
+    new Date().getFullYear();
+
+
+function t(key) {
+    const selected = translations[currentLanguage] || translations.en;
+    return selected[key] || translations.en[key] || key;
+}
+
+
+function applyLanguage(language) {
+    currentLanguage = translations[language] ? language : "en";
+
+    document.documentElement.lang = currentLanguage;
+    document.documentElement.dir =
         currentLanguage === "ar" ? "rtl" : "ltr";
 
-      document.querySelectorAll("[data-i18n]").forEach((element) => {
-        const key = element.dataset.i18n;
-        const value = translate(key);
+    document.querySelectorAll("[data-i18n]").forEach(function(element) {
+        const key = element.getAttribute("data-i18n");
+        const translated = t(key);
 
-        // Use textContent so translated text cannot insert HTML.
-        element.textContent = value;
-      });
-
-      // Keep the hero title's green emphasis.
-      const heroTitle = document.querySelector(".hero h2");
-      if (heroTitle) {
-        const titleText = translate("heroTitle");
-
-        if (currentLanguage === "en") {
-          heroTitle.replaceChildren(
-            document.createTextNode("Track Your Package ")
-          );
-
-          const greenText = document.createElement("span");
-          greenText.textContent = "With Confidence";
-          heroTitle.appendChild(greenText);
-        } else {
-          heroTitle.textContent = titleText;
+        if (typeof translated === "string") {
+            element.textContent = translated;
         }
-      }
-
-      document.querySelectorAll("[data-i18n-placeholder]").forEach((element) => {
-        element.placeholder = translate(element.dataset.i18nPlaceholder);
-      });
-
-      // Refresh visible feedback in the selected language.
-      if (messageBox.dataset.messageKey) {
-        showMessage(
-          translate(messageBox.dataset.messageKey),
-          messageBox.dataset.messageType || "info",
-          messageBox.dataset.messageKey
-        );
-      }
-    }
-
-    languageSelect.addEventListener("change", () => {
-      applyLanguage(languageSelect.value);
     });
 
-    function showMessage(text, type = "info", key = "") {
-      messageBox.textContent = text;
-      messageBox.className = "message " + type;
-      messageBox.dataset.messageKey = key;
-      messageBox.dataset.messageType = type;
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(function(element) {
+        const key = element.getAttribute("data-i18n-placeholder");
+        element.placeholder = t(key);
+    });
+
+    updateDisplayedStatus();
+}
+
+
+languageSelect.addEventListener("change", function() {
+    applyLanguage(languageSelect.value);
+});
+
+
+function showMessage(message, type) {
+    messageBox.textContent = message;
+    messageBox.className = "message " + type;
+    messageBox.style.display = "block";
+}
+
+
+function clearMessage() {
+    messageBox.textContent = "";
+    messageBox.className = "message";
+    messageBox.style.display = "none";
+}
+
+
+function setOptionalDetail(elementId, value) {
+    const element = document.getElementById(elementId);
+    const detail = element.closest(".detail");
+
+    if (value === null || value === undefined || String(value).trim() === "") {
+        detail.style.display = "none";
+        element.textContent = "";
+    } else {
+        detail.style.display = "block";
+        element.textContent = String(value);
+    }
+}
+
+
+function formatDate(dateValue) {
+    if (!dateValue) {
+        return t("noEstimate");
     }
 
-    function hideMessage() {
-      messageBox.textContent = "";
-      messageBox.className = "message";
-      messageBox.dataset.messageKey = "";
-      messageBox.dataset.messageType = "";
-    }
+    const raw = String(dateValue).trim();
 
-    function safeValue(value) {
-      if (value === null || value === undefined || value === "") {
-        return translate("unknown");
-      }
+    // Avoid timezone shifting for a database date like 2026-10-30.
+    const match = raw.match(/^(\d{4})-(\d{2})-(\d{2})$/);
 
-      if (typeof value === "object") {
-        return translate("unknown");
-      }
-
-      return String(value);
-    }
-
-    function getValue(object, possibleKeys) {
-      if (!object || typeof object !== "object") {
-        return null;
-      }
-
-      for (const key of possibleKeys) {
-        if (
-          Object.prototype.hasOwnProperty.call(object, key) &&
-          object[key] !== null &&
-          object[key] !== undefined &&
-          object[key] !== ""
-        ) {
-          return object[key];
-        }
-      }
-
-      return null;
-    }
-
-    function setText(id, value) {
-      document.getElementById(id).textContent = safeValue(value);
-    }
-
-    function setStatus(status) {
-      const statusElement = document.getElementById("resultStatus");
-      const statusText = safeValue(status);
-
-      statusElement.textContent = statusText;
-      statusElement.className = "status-badge";
-
-      const normalized = String(status || "").toLowerCase();
-
-      if (
-        normalized.includes("deliver") ||
-        normalized.includes("completed")
-      ) {
-        statusElement.classList.add("delivered");
-      } else if (
-        normalized.includes("transit") ||
-        normalized.includes("shipped") ||
-        normalized.includes("dispatch") ||
-        normalized.includes("out for delivery")
-      ) {
-        statusElement.classList.add("transit");
-      } else if (
-        normalized.includes("delay") ||
-        normalized.includes("failed") ||
-        normalized.includes("exception") ||
-        normalized.includes("cancel")
-      ) {
-        statusElement.classList.add("problem");
-      }
-    }
-
-    function displayParcel(parcel, searchedTrackingNumber) {
-      /*
-        Supports common status field names. Your database must return
-        at least one of these fields for the current status to appear.
-      */
-      const status = getValue(parcel, [
-        "status",
-        "current_status",
-        "delivery_status",
-        "parcel_status",
-        "tracking_status",
-        "shipment_status",
-        "current_delivery_status"
-      ]);
-
-      const trackingNumber = getValue(parcel, [
-        "tracking_number",
-        "trackingNumber",
-        "tracking_id",
-        "tracking_code"
-      ]) || searchedTrackingNumber;
-
-      const sender = getValue(parcel, [
-        "sender_name",
-        "sender",
-        "customer_name",
-        "customer",
-        "from_name"
-      ]);
-
-      const receiver = getValue(parcel, [
-        "receiver_name",
-        "recipient_name",
-        "receiver",
-        "recipient",
-        "to_name"
-      ]);
-
-      const pickup = getValue(parcel, [
-        "pickup_location",
-        "pickup_address",
-        "origin",
-        "from_location"
-      ]);
-
-      const destination = getValue(parcel, [
-        "destination",
-        "destination_location",
-        "delivery_address",
-        "to_location"
-      ]);
-
-      const description = getValue(parcel, [
-        "package_description",
-        "description",
-        "parcel_description",
-        "package_details"
-      ]);
-
-      const deliveryDate = getValue(parcel, [
-        "expected_delivery_date",
-        "estimated_delivery_date",
-        "delivery_date",
-        "estimated_delivery"
-      ]);
-
-      const update = getValue(parcel, [
-        "public_update",
-        "tracking_update",
-        "status_update",
-        "update_message",
-        "delivery_update",
-        "current_update",
-        "admin_note"
-      ]);
-
-      setText("resultTracking", trackingNumber);
-      setText("resultSender", sender);
-      setText("resultReceiver", receiver);
-      setText("resultPickup", pickup);
-      setText("resultDestination", destination);
-      setText("resultDescription", description);
-      setText("resultDeliveryDate", deliveryDate);
-
-      // Current status appears prominently above the package details.
-      setStatus(status);
-
-      document.getElementById("resultUpdate").textContent =
-        update ? String(update) : translate("noUpdate");
-
-      resultSection.style.display = "block";
-
-      // If the database omitted status, tell the customer clearly.
-      if (!status) {
-        showMessage(
-          "The package was found, but its current status has not been provided by the tracking database.",
-          "info"
+    if (match) {
+        const date = new Date(
+            Number(match[1]),
+            Number(match[2]) - 1,
+            Number(match[3])
         );
-      }
+
+        try {
+            return new Intl.DateTimeFormat(currentLanguage, {
+                year: "numeric",
+                month: "long",
+                day: "numeric"
+            }).format(date);
+        } catch (error) {
+            return raw;
+        }
     }
 
-    async function trackPackage(trackingNumber) {
-      if (
-        SUPABASE_URL.includes("PASTE_YOUR_") ||
-        SUPABASE_ANON_KEY.includes("PASTE_YOUR_")
-      ) {
-        showMessage(translate("notConfigured"), "error", "notConfigured");
+    const parsed = new Date(raw);
+
+    if (Number.isNaN(parsed.getTime())) {
+        return raw;
+    }
+
+    try {
+        return new Intl.DateTimeFormat(currentLanguage, {
+            year: "numeric",
+            month: "long",
+            day: "numeric"
+        }).format(parsed);
+    } catch (error) {
+        return raw;
+    }
+}
+
+
+function translatedStatus(status) {
+    if (!status) {
+        return t("noStatus");
+    }
+
+    const original = String(status).trim();
+    const key = original.toLowerCase();
+
+    const selected = translations[currentLanguage] || translations.en;
+    const english = translations.en.statuses;
+
+    if (selected.statuses && selected.statuses[key]) {
+        return selected.statuses[key];
+    }
+
+    if (english[key] && selected.statuses && selected.statuses[key]) {
+        return selected.statuses[key];
+    }
+
+    // Preserve any custom status written by the administrator.
+    return original;
+}
+
+
+let lastReturnedStatus = "";
+
+
+function updateDisplayedStatus() {
+    if (!lastReturnedStatus) {
         return;
-      }
-
-      const baseUrl = SUPABASE_URL.replace(/\/+$/, "");
-
-      trackButton.disabled = true;
-      trackButton.textContent = translate("checking");
-      hideMessage();
-      resultSection.style.display = "none";
-
-      showMessage(translate("checking"), "info", "checking");
-
-      try {
-        const response = await fetch(
-          baseUrl + "/rest/v1/rpc/track_parcel",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              "apikey": SUPABASE_ANON_KEY,
-              "Authorization": "Bearer " + SUPABASE_ANON_KEY
-            },
-            body: JSON.stringify({
-              p_tracking_number: trackingNumber
-            })
-          }
-        );
-
-        if (!response.ok) {
-          // Do not display private database error details to customers.
-          console.error(
-            "Tracking request failed. HTTP status:",
-            response.status
-          );
-
-          if (response.status === 404) {
-            showMessage(translate("notConfigured"), "error", "notConfigured");
-          } else {
-            showMessage(translate("error"), "error", "error");
-          }
-
-          return;
-        }
-
-        const data = await response.json();
-
-        if (!data || (Array.isArray(data) && data.length === 0)) {
-          showMessage(translate("notFound"), "error", "notFound");
-          return;
-        }
-
-        const parcel = Array.isArray(data) ? data[0] : data;
-
-        if (!parcel || typeof parcel !== "object") {
-          showMessage(translate("notFound"), "error", "notFound");
-          return;
-        }
-
-        displayParcel(parcel, trackingNumber);
-
-      } catch (error) {
-        console.error("Tracking connection error:", error);
-        showMessage(
-          translate("connectionError"),
-          "error",
-          "connectionError"
-        );
-      } finally {
-        trackButton.disabled = false;
-        trackButton.textContent = translate("trackButton");
-      }
     }
 
-    form.addEventListener("submit", async (event) => {
-      event.preventDefault();
+    const displayed = translatedStatus(lastReturnedStatus);
 
-      const trackingNumber = trackingInput.value.trim();
+    document.getElementById("resultStatus").textContent = displayed;
+    document.getElementById("resultStatusText").textContent = displayed;
+}
 
-      if (!trackingNumber) {
-        resultSection.style.display = "none";
-        showMessage(translate("enterTracking"), "error", "enterTracking");
+
+function showParcel(parcel, searchedTrackingNumber) {
+    if (!parcel || typeof parcel !== "object") {
+        resultCard.classList.remove("visible");
+        showMessage(t("notFound"), "error");
+        return;
+    }
+
+    const returnedTrackingNumber = parcel.tracking_number;
+
+    if (!returnedTrackingNumber) {
+        resultCard.classList.remove("visible");
+        showMessage(t("notFound"), "error");
+        return;
+    }
+
+    document.getElementById("resultTrackingNumber").textContent =
+        String(returnedTrackingNumber);
+
+    document.getElementById("resultEstimatedDelivery").textContent =
+        formatDate(parcel.estimated_delivery);
+
+    lastReturnedStatus = parcel.status || "";
+
+    const displayedStatus = translatedStatus(lastReturnedStatus);
+
+    document.getElementById("resultStatus").textContent =
+        displayedStatus;
+
+    document.getElementById("resultStatusText").textContent =
+        displayedStatus;
+
+    /*
+       These fields are returned by the existing track_parcel function.
+       Only the matching parcel is displayed.
+    */
+
+    setOptionalDetail(
+        "resultSender",
+        parcel.sender_name,
+        "senderDetail"
+    );
+
+    setOptionalDetail(
+        "resultReceiver",
+        parcel.receiver_name,
+        "receiverDetail"
+    );
+
+    setOptionalDetail(
+        "resultPickup",
+        parcel.sender_address,
+        "pickupDetail"
+    );
+
+    setOptionalDetail(
+        "resultDestination",
+        parcel.receiver_address,
+        "destinationDetail"
+    );
+
+    setOptionalDetail(
+        "resultDescription",
+        parcel.parcel_description,
+        "descriptionDetail"
+    );
+
+    resultCard.classList.add("visible");
+    clearMessage();
+
+    resultCard.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+    });
+}
+
+
+/* =====================================================
+   SUPABASE PARCEL TRACKING
+===================================================== */
+
+trackingForm.addEventListener("submit", async function(event) {
+    event.preventDefault();
+
+    clearMessage();
+    resultCard.classList.remove("visible");
+    lastReturnedStatus = "";
+
+    const trackingNumber = trackingInput.value.trim();
+
+    if (!trackingNumber) {
+        showMessage(t("emptyTracking"), "error");
         trackingInput.focus();
         return;
-      }
+    }
 
-      await trackPackage(trackingNumber);
-    });
+    if (
+        SUPABASE_URL.includes("PASTE_") ||
+        SUPABASE_ANON_KEY.includes("PASTE_") ||
+        !SUPABASE_URL.startsWith("https://")
+    ) {
+        showMessage(
+            "The tracking service has not been configured correctly. Please contact the website administrator.",
+            "error"
+        );
+        return;
+    }
 
-    applyLanguage("en");
-  </script>
+    trackSubmit.disabled = true;
+    trackSubmit.textContent = t("loading");
+
+    showMessage(t("loading"), "info");
+
+    try {
+        const endpoint =
+            SUPABASE_URL.replace(/\/+$/, "") +
+            "/rest/v1/rpc/track_parcel";
+
+        const response = await fetch(endpoint, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "apikey": SUPABASE_ANON_KEY,
+                "Authorization": "Bearer " + SUPABASE_ANON_KEY
+            },
+            body: JSON.stringify({
+                p_tracking_number: trackingNumber
+            })
+        });
+
+        const responseText = await response.text();
+
+        let data = null;
+
+        try {
+            data = responseText ? JSON.parse(responseText) : null;
+        } catch (parseError) {
+            data = null;
+        }
+
+        if (!response.ok) {
+            console.error(
+                "TrustNova tracking request failed:",
+                response.status,
+                data || responseText
+            );
+
+            showMessage(t("serverError"), "error");
+            return;
+        }
+
+        /*
+          The SQL function returns a table.
+          PostgREST normally returns the rows as a JSON array.
+        */
+
+        let parcel = null;
+
+        if (Array.isArray(data)) {
+            parcel = data.length > 0 ? data[0] : null;
+        } else if (data && typeof data === "object") {
+            parcel = data;
+        }
+
+        if (!parcel) {
+            showMessage(t("notFound"), "error");
+            return;
+        }
+
+        /*
+          Confirm the returned tracking number matches the number searched.
+          This prevents displaying a different parcel's result.
+        */
+
+        const returnedNumber =
+            String(parcel.tracking_number || "").trim().toUpperCase();
+
+        const searchedNumber =
+            trackingNumber.trim().toUpperCase();
+
+        if (!returnedNumber || returnedNumber !== searchedNumber) {
+            showMessage(t("notFound"), "error");
+            return;
+        }
+
+        showParcel(parcel, trackingNumber);
+
+    } catch (error) {
+        console.error("TrustNova tracking connection error:", error);
+
+        showMessage(t("connectionError"), "error");
+
+    } finally {
+        trackSubmit.disabled = false;
+        trackSubmit.textContent = t("searchButton");
+    }
+});
+
+
+/* =====================================================
+   LOGO AND DELIVERY IMAGE FALLBACKS
+===================================================== */
+
+const companyLogo = document.getElementById("companyLogo");
+
+companyLogo.addEventListener("error", function() {
+    if (companyLogo.dataset.fallbackTried !== "yes") {
+        companyLogo.dataset.fallbackTried = "yes";
+        companyLogo.src = "logo.png";
+    }
+});
+
+
+const deliveryMan = document.getElementById("deliveryMan");
+
+deliveryMan.addEventListener("error", function() {
+    if (deliveryMan.dataset.fallbackTried !== "yes") {
+        deliveryMan.dataset.fallbackTried = "yes";
+        deliveryMan.src = "delivery-man.PNG";
+    }
+});
+
+
+/* Start the homepage in English. */
+
+applyLanguage("en");
+
+</script>
+
 </body>
 </html>
