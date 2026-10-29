@@ -32,7 +32,7 @@
     <div class="brand"><h1><span class="trustnova">TRUSTNOVA</span> <span class="express">EXPRESS</span></h1><p>Delivering Trust, Worldwide</p></div>
     <div class="header-tag">Reliable • Secure • Worldwide</div>
   </div></header>
-  <nav><a href="#home">Home</a><a href="#track">Track Your Parcel</a><a href="#services">Our Services</a><a href="#contact">Contact Us</a></nav>
+  <nav><a href="#home">Home</a><a href="#track">Track Your Parcel</a><a href="#services">Our Services</a><a href="#contact">Contact Us</a><div id="google_translate_element" aria-label="Choose website language"></div></nav>
   <main>
     <section class="hero" id="home"><div class="hero-inner">
       <div class="hero-copy"><span class="eyebrow">PARCEL DELIVERY & TRACKING</span>
@@ -106,9 +106,9 @@
     return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleDateString();
   }
   /*
-    Public tracking function currently returns:
+    Public tracking function should return:
     tracking_number, sender_name, sender_address, receiver_name,
-    receiver_address, parcel_description, status, estimated_delivery.
+    receiver_address, parcel_description, admin_note, status, estimated_delivery.
     It does not return phone numbers or email addresses.
   */
   $("tracking-form").addEventListener("submit", async (event) => {
@@ -142,7 +142,7 @@
       result.innerHTML = `
         <div class="tracking-result-card">
           <h3>📦 Your Parcel Details</h3>
-          <div class="current-status-banner"><small>CURRENT STATUS</small><strong>${escapeHTML(parcel.status || "Registered")}</strong></div>
+          <div class="current-status-banner"><small>CURRENT STATUS</small><strong>${escapeHTML(parcel.admin_note || parcel.status || "Registered")}</strong></div>
           <div class="tracking-detail"><strong>Tracking Number</strong><span>${escapeHTML(parcel.tracking_number || trackingNumber)}</span></div>
           <div class="tracking-detail"><strong>Estimated Delivery</strong><span>${escapeHTML(displayDate(parcel.estimated_delivery))}</span></div>
           <h4>Sender Information</h4>
@@ -164,6 +164,20 @@
       submitButton.textContent = "TRACK PARCEL →";
     }
   });
+
+  // Google Website Translator provides automatic page translation.
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+      pageLanguage: 'en',
+      includedLanguages: 'en,pt,es,fr,de,it,tr,ar,zh-CN,ha,yo,ig',
+      autoDisplay: false,
+      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
+  }
+  const translateScript = document.createElement('script');
+  translateScript.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+  translateScript.async = true;
+  document.body.appendChild(translateScript);
 
 </script>
 </body>
