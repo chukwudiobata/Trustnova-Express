@@ -6,7 +6,6 @@
   <title>TrustNova Express | Delivering Trust, Worldwide</title>
   <meta name="description" content="Track your parcel with TrustNova Express. View shipment details, status updates, and delivery notes.">
   <meta name="theme-color" content="#c8102e">
-
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -14,355 +13,246 @@
       --red: #c8102e;
       --red-dark: #9e0b22;
       --green: #16834a;
-      --white: #fff;
+      --yellow: #ffd400;
       --ink: #17202b;
       --muted: #667085;
-      --pink: #fff0f5;
-      --line: #e7e9ee;
-      --soft: #f7f8fa;
+      --line: #e3e5e8;
+      --soft: #f5f5f5;
     }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     body {
       margin: 0;
       font-family: Arial, Helvetica, sans-serif;
-      background: #fff;
       color: var(--ink);
-      line-height: 1.65;
+      background: #fff;
+      line-height: 1.55;
     }
-
-    button, input, select, textarea {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    a {
-      color: inherit;
-    }
-
+    button, input { font: inherit; }
+    button, a { cursor: pointer; }
     .top-strip {
-      background: #111827;
-      color: #fff;
-      text-align: center;
-      padding: 8px 12px;
-      font-size: 12px;
-      letter-spacing: 1.3px;
-      font-weight: 800;
+      height: 7px;
+      background: var(--yellow);
     }
-
     header {
-      background: var(--red);
-      color: #fff;
-      padding: 18px 16px;
-      border-bottom: 5px solid var(--red-dark);
+      background: linear-gradient(#fff, #f2f2f2);
+      color: var(--red);
+      padding: 18px 4%;
+      border-bottom: 1px solid #ddd;
     }
-
     .header-inner {
-      max-width: 1180px;
+      max-width: 1200px;
       margin: auto;
       display: flex;
       align-items: center;
       gap: 18px;
-      flex-wrap: wrap;
     }
-
     .logo {
-      width: 100px;
-      height: 90px;
+      width: 104px;
+      height: 96px;
       object-fit: contain;
-      flex-shrink: 0;
-      background: #fff;
-      border-radius: 14px;
-      padding: 5px;
-      box-shadow: 0 7px 20px #0002;
+      flex: 0 0 auto;
+      background: transparent;
     }
-
-    .brand {
-      flex: 1;
-      min-width: 220px;
-    }
-
+    .brand { min-width: 0; }
     .brand h1 {
       margin: 0;
-      font-size: clamp(25px, 4.5vw, 40px);
+      color: var(--red);
+      font-size: clamp(27px, 5vw, 48px);
+      line-height: 1.05;
       font-weight: 950;
-      line-height: 1.1;
-      letter-spacing: .5px;
+      letter-spacing: -.8px;
+      text-shadow: 1px 2px 1px #00000018;
     }
-
-    .brand .trustnova {
-      color: #63e69b;
-    }
-
-    .brand .express {
-      color: #fff;
-    }
-
     .brand p {
-      margin: 7px 0 0;
-      font-weight: 700;
-      color: #fff;
-      text-transform: uppercase;
-      letter-spacing: 1.6px;
-      font-size: 12px;
-    }
-
-    .header-tag {
-      font-size: 13px;
-      font-weight: 700;
-      border: 1px solid #ffffff66;
-      padding: 9px 13px;
-      border-radius: 30px;
-    }
-
-    nav {
-      background: #fff;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 8px;
-      flex-wrap: wrap;
-      padding: 10px 12px;
-      border-bottom: 1px solid var(--line);
-      box-shadow: 0 3px 12px #00000008;
-      position: sticky;
-      top: 0;
-      z-index: 10;
-    }
-
-    nav a {
-      color: #222;
-      text-decoration: none;
-      padding: 9px 13px;
-      border-radius: 7px;
-      font-size: 13px;
+      margin: 6px 0 0;
+      color: var(--red);
+      font-size: clamp(13px, 2vw, 19px);
       font-weight: 800;
     }
-
-    nav a:hover,
-    nav a:focus {
-      background: var(--red);
-      color: #fff;
-    }
-
-    #google_translate_element {
-      min-height: 32px;
-      display: flex;
-      align-items: center;
-    }
-
-    .hero {
-      background: linear-gradient(120deg, #fff4f5, #fff 62%, #f1fff6);
-      padding: 55px 18px 48px;
-    }
-
-    .hero-inner {
-      max-width: 1120px;
-      margin: auto;
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      align-items: center;
-      gap: 35px;
-    }
-
-    .hero-copy {
-      text-align: left;
-    }
-
-    .eyebrow {
-      display: inline-block;
-      color: var(--green);
+    .partner-line {
+      color: #555;
       font-size: 12px;
-      letter-spacing: 1.8px;
-      font-weight: 900;
-      text-transform: uppercase;
-      margin-bottom: 12px;
+      font-weight: 700;
+      margin-top: 4px;
     }
-
-    .hero h2 {
-      font-size: clamp(32px, 5vw, 54px);
-      line-height: 1.08;
-      margin: 0 0 18px;
-      font-weight: 950;
-      letter-spacing: -1.3px;
-    }
-
-    .hero h2 span {
-      color: var(--red);
-    }
-
-    .hero p {
-      max-width: 590px;
-      margin: 0 0 24px;
-      color: #4c5563;
-      font-size: 17px;
-    }
-
-    .hero-image-wrap {
+    nav {
       display: flex;
+      align-items: stretch;
+      justify-content: flex-start;
+      overflow-x: auto;
+      background: var(--yellow);
+      border-top: 1px solid #e4bd00;
+      border-bottom: 1px solid #d7b300;
+      padding: 0 12px;
+      position: relative;
+      z-index: 5;
+      white-space: nowrap;
+    }
+    nav a {
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-height: 240px;
-    }
-
-    .delivery-image {
-      width: min(100%, 420px);
-      max-height: 330px;
-      object-fit: contain;
-      filter: drop-shadow(0 15px 20px #18223018);
-    }
-
-    .button {
-      display: inline-block;
-      border: 0;
-      border-radius: 8px;
-      padding: 13px 19px;
-      font-weight: 900;
+      color: #111;
       text-decoration: none;
+      font-weight: 800;
+      font-size: 16px;
+      padding: 17px 23px;
+      border-left: 3px solid #fff;
+      min-height: 68px;
+    }
+    nav a:last-of-type { border-right: 3px solid #fff; }
+    nav a:hover, nav a:focus { background: #f0c500; }
+    #google_translate_element {
+      display: flex;
+      align-items: center;
+      padding: 5px 10px;
+      min-height: 45px;
+    }
+    .hero-banner {
+      width: 100%;
+      height: clamp(300px, 62vw, 570px);
+      margin: 0;
+      overflow: hidden;
+      background: #e8edf0;
+    }
+    .hero-banner img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 55%;
+    }
+    .intro {
+      padding: 28px 5% 12px;
       text-align: center;
-      transition: transform .15s, background .15s;
     }
-
-    .button:hover {
-      transform: translateY(-1px);
+    .intro h2 {
+      margin: 0 0 8px;
+      font-size: clamp(25px, 4vw, 36px);
+      font-weight: 900;
+      color: #222;
     }
-
-    .button-red {
-      background: var(--red);
-      color: #fff;
-    }
-
-    .button-red:hover {
-      background: var(--red-dark);
-    }
-
-    .button-black {
-      background: #18202b;
-      color: #fff;
-    }
-
-    .container {
-      width: min(1100px, 92%);
+    .intro p {
+      max-width: 760px;
       margin: auto;
+      color: #555;
+      font-size: 16px;
     }
-
-    section {
-      padding: 45px 0;
+    .container { width: min(1160px, 92%); margin: auto; }
+    section { scroll-margin-top: 12px; }
+    .services-section { padding: 20px 0 45px; }
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
     }
-
+    .service-card {
+      background: #f4f4f4;
+      border: 1px solid #d5d5d5;
+      padding: 9px;
+      min-width: 0;
+    }
+    .service-card img {
+      width: 100%;
+      height: 190px;
+      object-fit: cover;
+      display: block;
+      border-bottom: 4px solid var(--red);
+    }
+    .service-card h3 {
+      margin: 0;
+      padding: 12px 8px 8px;
+      background: #f4f4f4;
+      font-size: clamp(20px, 2.5vw, 27px);
+      font-weight: 500;
+      color: #333;
+      text-transform: uppercase;
+    }
+    .service-card h3 span { color: var(--red); font-weight: 900; }
+    .service-card p {
+      margin: 8px 8px 13px;
+      color: #444;
+      font-size: 16px;
+      line-height: 1.45;
+    }
+    .tracking-section {
+      background: #f7f8fa;
+      padding: 48px 0;
+    }
     .section-heading {
       text-align: center;
       margin: 0 0 10px;
-      font-size: clamp(25px, 3vw, 34px);
+      font-size: clamp(26px, 3vw, 36px);
       font-weight: 950;
-      letter-spacing: -.5px;
     }
-
     .section-subtitle {
       text-align: center;
-      max-width: 650px;
+      max-width: 700px;
       margin: 0 auto 25px;
       color: var(--muted);
     }
-
-    .tracking-section {
-      background: #fafbfc;
-    }
-
     .tracking-box {
       max-width: 760px;
-      margin: 26px auto 0;
+      margin: 25px auto 0;
       background: #fff;
       border: 1px solid var(--line);
-      box-shadow: 0 18px 50px #10182812;
+      box-shadow: 0 15px 40px #10182812;
       padding: 27px;
-      border-radius: 16px;
+      border-radius: 12px;
     }
-
-    .tracking-box > p:first-child {
-      margin-top: 0;
-      text-align: center;
-      color: #596273;
-    }
-
+    .tracking-box > p:first-child { margin-top: 0; text-align: center; color: #596273; }
     .tracking-box label {
       display: block;
       margin: 12px 0 5px;
       font-weight: 800;
       font-size: 14px;
     }
-
     input {
       display: block;
       width: 100%;
       padding: 13px;
       border: 1px solid #cfd4dc;
-      border-radius: 8px;
+      border-radius: 7px;
       background: #fff;
       color: var(--ink);
     }
-
-    input:focus {
-      outline: 3px solid #16834a20;
-      border-color: var(--green);
+    input:focus { outline: 3px solid #16834a20; border-color: var(--green); }
+    .button {
+      display: inline-block;
+      border: 0;
+      border-radius: 6px;
+      padding: 13px 19px;
+      font-weight: 900;
+      text-decoration: none;
+      text-align: center;
     }
-
+    .button-red { background: var(--red); color: #fff; }
+    .button-red:hover { background: var(--red-dark); }
     .tracking-box button[type="submit"] {
       width: 100%;
       margin-top: 15px;
       min-height: 50px;
       font-size: 15px;
     }
-
     .message {
       margin-top: 15px;
       padding: 13px;
       border-radius: 9px;
       overflow-wrap: anywhere;
     }
-
-    .message:empty {
-      display: none;
-    }
-
-    .success {
-      background: #e8f8ee;
-      color: #145c35;
-    }
-
-    .error {
-      background: #fff0f0;
-      color: #9a0013;
-    }
-
-    .info {
-      background: #f0f3f8;
-      color: #252525;
-    }
-
+    .message:empty { display: none; }
+    .success { background: #e8f8ee; color: #145c35; }
+    .error { background: #fff0f0; color: #9a0013; }
+    .info { background: #f0f3f8; color: #252525; }
     .tracking-result-card {
-      background: var(--pink);
+      background: #fff0f5;
       border: 1px solid #f4bfd0;
-      border-radius: 14px;
+      border-radius: 12px;
       padding: 18px;
       color: var(--ink);
     }
-
-    .tracking-result-card h3 {
-      margin: 0 0 14px;
-      font-size: 22px;
-    }
-
+    .tracking-result-card h3 { margin: 0 0 14px; font-size: 22px; }
     .tracking-result-card h4 {
       margin: 20px 0 8px;
       color: var(--red);
@@ -370,7 +260,6 @@
       text-transform: uppercase;
       letter-spacing: .7px;
     }
-
     .current-status-banner {
       padding: 14px 16px;
       background: #fff;
@@ -379,15 +268,13 @@
       margin: 10px 0 16px;
       box-shadow: 0 4px 14px #00000008;
     }
-
-    .current-status-banner small {
+    .current-status-banner small, .admin-note-box small {
       display: block;
       font-size: 11px;
       font-weight: 900;
       letter-spacing: 1px;
-      color: var(--muted);
     }
-
+    .current-status-banner small { color: var(--muted); }
     .current-status-banner strong {
       display: block;
       font-size: 18px;
@@ -395,7 +282,6 @@
       margin-top: 3px;
       overflow-wrap: anywhere;
     }
-
     .admin-note-box {
       padding: 15px;
       margin: 12px 0 16px;
@@ -405,23 +291,8 @@
       border-radius: 8px;
       overflow-wrap: anywhere;
     }
-
-    .admin-note-box small {
-      display: block;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 1px;
-      color: #315fc5;
-      text-transform: uppercase;
-    }
-
-    .admin-note-box p {
-      margin: 6px 0 0;
-      color: #263449;
-      white-space: pre-wrap;
-      font-weight: 600;
-    }
-
+    .admin-note-box small { color: #315fc5; text-transform: uppercase; }
+    .admin-note-box p { margin: 6px 0 0; color: #263449; white-space: pre-wrap; font-weight: 600; }
     .tracking-detail {
       padding: 12px;
       margin: 8px 0;
@@ -430,7 +301,6 @@
       border-radius: 8px;
       overflow-wrap: anywhere;
     }
-
     .tracking-detail strong {
       display: block;
       margin-bottom: 3px;
@@ -439,38 +309,9 @@
       text-transform: uppercase;
       letter-spacing: .35px;
     }
-
-    .tracking-detail span {
-      font-weight: 700;
-      white-space: pre-wrap;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 18px;
-    }
-
-    .feature {
-      padding: 24px;
-      border: 1px solid var(--line);
-      border-radius: 13px;
-      background: #fff;
-      box-shadow: 0 8px 25px #00000005;
-    }
-
-    .feature h3 {
-      margin: 8px 0;
-    }
-
-    .feature-icon {
-      font-size: 30px;
-    }
-
-    .grey-section {
-      background: var(--soft);
-    }
-
+    .tracking-detail span { font-weight: 700; white-space: pre-wrap; }
+    .small-note { color: #667085; font-size: 12px; }
+    .contact-section { padding: 45px 0; }
     .contact-card {
       max-width: 700px;
       margin: auto;
@@ -478,10 +319,9 @@
       padding: 30px 20px;
       background: #fff;
       border: 1px solid var(--line);
-      border-radius: 16px;
+      border-radius: 12px;
       box-shadow: 0 12px 35px #0000000a;
     }
-
     .contact-email {
       display: none;
       margin: 18px auto 0;
@@ -493,167 +333,121 @@
       font-weight: 800;
       overflow-wrap: anywhere;
     }
-
-    .contact-email a {
-      color: var(--green);
-      text-decoration: none;
-    }
-
-    .contact-email.visible {
-      display: block;
-    }
-
+    .contact-email a { color: var(--green); text-decoration: none; }
+    .contact-email.visible { display: block; }
     footer {
-      background: #111827;
+      background: #171717;
       color: #fff;
       padding: 30px 15px;
       text-align: center;
+      border-top: 5px solid var(--yellow);
     }
-
-    footer p {
-      margin: 5px 0;
-      color: #d4d9e1;
+    footer p { margin: 5px 0; color: #d4d9e1; }
+    @media (max-width: 760px) {
+      .header-inner { gap: 12px; }
+      .logo { width: 76px; height: 76px; }
+      .brand h1 { font-size: clamp(24px, 6vw, 34px); }
+      nav a { min-height: 58px; padding: 13px 15px; font-size: 14px; }
+      .service-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .service-card img { height: 145px; }
     }
-
-    @media (max-width: 700px) {
-      .hero-inner {
-        grid-template-columns: 1fr;
-        gap: 12px;
-      }
-
-      .hero-copy {
-        text-align: center;
-      }
-
-      .hero p {
-        margin-left: auto;
-        margin-right: auto;
-      }
-
-      .hero-image-wrap {
-        min-height: 150px;
-      }
-
-      .delivery-image {
-        max-height: 230px;
-        max-width: 310px;
-      }
-
-      .header-tag {
-        display: none;
-      }
-
-      .logo {
-        width: 78px;
-        height: 75px;
-      }
-
-      .hero {
-        padding: 38px 15px;
-      }
-
-      .tracking-box {
-        padding: 17px;
-      }
-
-      nav a {
-        padding: 8px 10px;
-        font-size: 12px;
-      }
-
-      .tracking-result-card {
-        padding: 13px;
-      }
+    @media (max-width: 480px) {
+      header { padding: 13px 12px; }
+      .logo { width: 66px; height: 66px; }
+      .brand h1 { font-size: 24px; }
+      .brand p { font-size: 11px; }
+      .partner-line { font-size: 10px; }
+      nav { padding: 0 5px; }
+      nav a { padding: 11px 12px; font-size: 13px; }
+      .hero-banner { height: 300px; }
+      .service-grid { gap: 10px; }
+      .service-card { padding: 6px; }
+      .service-card img { height: 115px; }
+      .service-card h3 { font-size: 18px; padding: 9px 5px 5px; }
+      .service-card p { font-size: 13px; margin: 5px; }
+      .tracking-box { padding: 17px; }
+      .tracking-result-card { padding: 13px; }
     }
   </style>
 </head>
 
 <body>
-
-  <div class="top-strip">
-    TRUSTNOVA EXPRESS · DELIVERING TRUST, WORLDWIDE
-  </div>
+  <div class="top-strip"></div>
 
   <header>
     <div class="header-inner">
       <img class="logo" src="logo.png.png" alt="TrustNova Express company logo">
-
       <div class="brand">
-        <h1>
-          <span class="trustnova">TRUSTNOVA</span>
-          <span class="express">EXPRESS</span>
-        </h1>
+        <h1>TRUSTNOVA EXPRESS</h1>
         <p>Delivering Trust, Worldwide</p>
+        <div class="partner-line">INTERNATIONAL PARCEL & LOGISTICS SERVICES</div>
       </div>
-
-      <div class="header-tag">Reliable • Secure • Worldwide</div>
     </div>
   </header>
 
-  <nav>
+  <nav aria-label="Main navigation">
     <a href="#home">Home</a>
-    <a href="#track">Track Your Parcel</a>
+    <a href="#about">About Us</a>
     <a href="#services">Our Services</a>
+    <a href="#track">Shipment Tracking</a>
     <a href="#contact">Contact Us</a>
     <div id="google_translate_element" aria-label="Choose website language"></div>
   </nav>
 
   <main>
+    <section class="hero-banner" id="home" aria-label="TrustNova Express logistics">
+      <img
+        src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=2000&q=85"
+        alt="Freight truck travelling on a road"
+        fetchpriority="high"
+      >
+    </section>
 
-    <section class="hero" id="home">
-      <div class="hero-inner">
+    <section class="intro" id="about">
+      <h2>Moving Your Shipments Forward</h2>
+      <p>
+        TrustNova Express provides parcel and logistics information with a
+        convenient shipment tracking experience. Enter your tracking number
+        to view the latest update recorded in our system.
+      </p>
+    </section>
 
-        <div class="hero-copy">
-          <span class="eyebrow">PARCEL DELIVERY & TRACKING</span>
+    <section class="services-section" id="services">
+      <div class="container">
+        <div class="service-grid">
+          <article class="service-card">
+            <img src="https://images.unsplash.com/photo-1494412519320-aa613dfb7738?auto=format&fit=crop&w=1000&q=85" alt="Cargo containers aboard a shipping vessel" loading="lazy">
+            <h3><span>Sea</span> Shipping »</h3>
+            <p>Explore sea-freight shipping for containerised cargo and goods moving across international ports.</p>
+          </article>
 
-          <h2>
-            Your Parcel.<br>
-            <span>Our Responsibility.</span>
-          </h2>
+          <article class="service-card">
+            <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=1000&q=85" alt="Passenger and cargo aircraft in flight" loading="lazy">
+            <h3><span>Air</span> Transport »</h3>
+            <p>Learn about air-freight options for shipments that require air transport between destinations.</p>
+          </article>
 
-          <p>
-            Stay informed about your shipment with a clear tracking
-            experience from TrustNova Express. Enter your tracking number
-            to view the latest recorded parcel update.
-          </p>
-
-          <a class="button button-red" href="#track">
-            TRACK YOUR PARCEL&nbsp; →
-          </a>
-
-          <a class="button button-black" href="#services">
-            Explore Our Services
-          </a>
+          <article class="service-card">
+            <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&fit=crop&w=1000&q=85" alt="Heavy goods truck on a highway" loading="lazy">
+            <h3><span>Road</span> Transport »</h3>
+            <p>Road transport supports the movement of parcels and goods between connected locations.</p>
+          </article>
         </div>
-
-        <div class="hero-image-wrap">
-          <img
-            class="delivery-image"
-            src="delivery-man.png"
-            alt="TrustNova Express delivery professional"
-            loading="eager"
-          >
-        </div>
-
       </div>
     </section>
 
     <section class="tracking-section" id="track">
       <div class="container">
-
-        <h2 class="section-heading">TRACK YOUR PARCEL</h2>
-
+        <h2 class="section-heading">SHIPMENT TRACKING</h2>
         <p class="section-subtitle">
-          Your shipment information, clearly presented. Enter your unique
-          tracking number below to check the latest recorded update.
+          Enter your unique tracking number to check the latest shipment
+          information recorded by TrustNova Express.
         </p>
 
         <div class="tracking-box">
           <p>Use the tracking number provided by TrustNova Express.</p>
-
           <form id="tracking-form">
             <label for="tracking-number">Tracking Number</label>
-
             <input
               id="tracking-number"
               type="text"
@@ -662,94 +456,31 @@
               autocapitalize="characters"
               required
             >
-
-            <button class="button button-red" type="submit">
-              TRACK PARCEL&nbsp; →
-            </button>
+            <button class="button button-red" type="submit">TRACK PARCEL&nbsp; →</button>
           </form>
-
           <div id="tracking-result" class="message" aria-live="polite"></div>
-
           <p class="small-note">
             For your privacy, keep your tracking number secure. Shipment
             details shown here are based on information recorded in our
             tracking system.
           </p>
         </div>
-
       </div>
     </section>
 
-    <section class="grey-section" id="services">
+    <section class="contact-section" id="contact">
       <div class="container">
-
-        <h2 class="section-heading">Our Services</h2>
-
-        <div class="grid">
-
-          <article class="feature">
-            <div class="feature-icon">📦</div>
-            <h3>Parcel Registration</h3>
-            <p>
-              Register shipment details and issue a unique tracking number.
-            </p>
-          </article>
-
-          <article class="feature">
-            <div class="feature-icon">🌍</div>
-            <h3>Shipment Tracking</h3>
-            <p>
-              Check the latest recorded status of a registered parcel.
-            </p>
-          </article>
-
-          <article class="feature">
-            <div class="feature-icon">📧</div>
-            <h3>Email Updates</h3>
-            <p>
-              Shipment confirmations and delivery notifications can be added
-              through a secure email service.
-            </p>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <section id="contact">
-      <div class="container">
-
         <div class="contact-card">
           <h2 class="section-heading">CONTACT US</h2>
-
-          <p>
-            Need help with your shipment? Our team is ready to hear from you.
-          </p>
-
-          <button
-            id="contact-toggle"
-            class="button button-red"
-            type="button"
-            aria-expanded="false"
-          >
-            CONTACT US
-          </button>
-
-          <div
-            id="contact-email"
-            class="contact-email"
-            aria-hidden="true"
-          >
+          <p>Need help with your shipment? Our team is ready to hear from you.</p>
+          <button id="contact-toggle" class="button button-red" type="button" aria-expanded="false">CONTACT US</button>
+          <div id="contact-email" class="contact-email" aria-hidden="true">
             Email our team<br>
-            <a href="mailto:trustnovaexpress@gmail.com">
-              trustnovaexpress@gmail.com
-            </a>
+            <a href="mailto:trustnovaexpress@gmail.com">trustnovaexpress@gmail.com</a>
           </div>
         </div>
-
       </div>
     </section>
-
   </main>
 
   <footer>
@@ -764,52 +495,30 @@
       Keep the publishable key in browser code.
       Never put a Supabase service-role key here.
     */
-
-    const SUPABASE_URL =
-      "https://trydftaqqypqcxsgixto.supabase.co";
-
-    const SUPABASE_PUBLISHABLE_KEY =
-      "sb_publishable_2h0EyOMhtBx3eWEiuoAOyg_qjw2QzED";
+    const SUPABASE_URL = "https://trydftaqqypqcxsgixto.supabase.co";
+    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_2h0EyOMhtBx3eWEiuoAOyg_qjw2QzED";
 
     const supabaseClient = window.supabase.createClient(
       SUPABASE_URL,
       SUPABASE_PUBLISHABLE_KEY
     );
-
     const $ = (id) => document.getElementById(id);
-
     $("year").textContent = new Date().getFullYear();
 
-    /*
-      Contact Us:
-      The company email stays hidden until the customer presses the button.
-    */
-
+    // Keep the company email hidden until Contact Us is pressed.
     $("contact-toggle").addEventListener("click", () => {
       const panel = $("contact-email");
       const isOpen = panel.classList.toggle("visible");
-
       panel.setAttribute("aria-hidden", String(!isOpen));
-
-      $("contact-toggle").setAttribute(
-        "aria-expanded",
-        String(isOpen)
-      );
-
-      $("contact-toggle").textContent =
-        isOpen ? "HIDE EMAIL" : "CONTACT US";
+      $("contact-toggle").setAttribute("aria-expanded", String(isOpen));
+      $("contact-toggle").textContent = isOpen ? "HIDE EMAIL" : "CONTACT US";
     });
 
     function showMessage(id, text, type = "info") {
       const element = $(id);
-
       element.textContent = text;
       element.className = "message " + type;
     }
-
-    /*
-      Safely display text returned by the tracking database.
-    */
 
     function escapeHTML(value) {
       return String(value ?? "").replace(/[&<>"']/g, (character) => ({
@@ -822,239 +531,127 @@
     }
 
     function displayDate(value) {
-      if (!value) {
-        return "Not provided";
-      }
-
+      if (!value) return "Not provided";
       const date = new Date(value);
-
-      return Number.isNaN(date.getTime())
-        ? String(value)
-        : date.toLocaleDateString();
+      return Number.isNaN(date.getTime()) ? String(value) : date.toLocaleDateString();
     }
 
     /*
-      TRACKING RESULT
-
       Expected fields from the existing track_parcel function:
-      tracking_number
-      sender_name
-      sender_address
-      receiver_name
-      receiver_address
-      parcel_description
-      status
-      admin_note
-      estimated_delivery
-
-      Weight is intentionally not displayed.
+      tracking_number, sender_name, sender_address, receiver_name,
+      receiver_address, parcel_description, status, admin_note,
+      estimated_delivery. Weight is intentionally not displayed.
     */
-
     $("tracking-form").addEventListener("submit", async (event) => {
       event.preventDefault();
-
       const trackingNumber = $("tracking-number").value.trim();
 
       if (!trackingNumber) {
-        showMessage(
-          "tracking-result",
-          "Please enter your tracking number.",
-          "error"
-        );
+        showMessage("tracking-result", "Please enter your tracking number.", "error");
         return;
       }
 
-      const submitButton = $("tracking-form").querySelector(
-        'button[type="submit"]'
-      );
-
+      const submitButton = $("tracking-form").querySelector('button[type="submit"]');
       submitButton.disabled = true;
       submitButton.textContent = "Checking…";
-
-      showMessage(
-        "tracking-result",
-        "Checking your tracking number…"
-      );
+      showMessage("tracking-result", "Checking your tracking number…");
 
       try {
-        const { data, error } = await supabaseClient.rpc(
-          "track_parcel",
-          {
-            p_tracking_number: trackingNumber
-          }
-        );
+        const { data, error } = await supabaseClient.rpc("track_parcel", {
+          p_tracking_number: trackingNumber
+        });
 
         if (error) {
           console.error("Tracking error:", error);
-
-          showMessage(
-            "tracking-result",
-            "Tracking is temporarily unavailable. Please try again later.",
-            "error"
-          );
-
+          showMessage("tracking-result", "Tracking is temporarily unavailable. Please try again later.", "error");
           return;
         }
 
         const parcel = Array.isArray(data) ? data[0] : data;
-
         if (!parcel) {
-          showMessage(
-            "tracking-result",
-            "No parcel was found. Please check your tracking number.",
-            "error"
-          );
-
+          showMessage("tracking-result", "No parcel was found. Please check your tracking number.", "error");
           return;
         }
 
-        /*
-          Status and Admin Note are separate fields.
-          Neither field replaces the other.
-        */
-
-        const parcelStatus =
-          parcel.status || "Status not yet updated";
-
-        const adminNote =
-          parcel.admin_note || "";
-
+        const parcelStatus = parcel.status || "Status not yet updated";
+        const adminNote = parcel.admin_note || "";
         const result = $("tracking-result");
-
         result.className = "message success";
 
         result.innerHTML = `
           <div class="tracking-result-card">
-
             <h3>📦 Your Parcel Details</h3>
-
             <div class="current-status-banner">
               <small>PARCEL STATUS</small>
               <strong>${escapeHTML(parcelStatus)}</strong>
             </div>
-
             <div class="admin-note-box">
               <small>Latest Update From TrustNova Express</small>
-              <p>${
-                adminNote
-                  ? escapeHTML(adminNote)
-                  : "No additional update has been provided yet."
-              }</p>
+              <p>${adminNote ? escapeHTML(adminNote) : "No additional update has been provided yet."}</p>
             </div>
-
             <div class="tracking-detail">
               <strong>Tracking Number</strong>
-              <span>${escapeHTML(
-                parcel.tracking_number || trackingNumber
-              )}</span>
+              <span>${escapeHTML(parcel.tracking_number || trackingNumber)}</span>
             </div>
-
             <div class="tracking-detail">
               <strong>Estimated Delivery</strong>
-              <span>${escapeHTML(
-                displayDate(parcel.estimated_delivery)
-              )}</span>
+              <span>${escapeHTML(displayDate(parcel.estimated_delivery))}</span>
             </div>
-
             <h4>Sender Information</h4>
-
             <div class="tracking-detail">
               <strong>Sender's Full Name</strong>
-              <span>${escapeHTML(
-                parcel.sender_name || "Not provided"
-              )}</span>
+              <span>${escapeHTML(parcel.sender_name || "Not provided")}</span>
             </div>
-
             <div class="tracking-detail">
               <strong>Sender's Full Address</strong>
-              <span>${escapeHTML(
-                parcel.sender_address || "Not provided"
-              )}</span>
+              <span>${escapeHTML(parcel.sender_address || "Not provided")}</span>
             </div>
-
             <h4>Receiver Information</h4>
-
             <div class="tracking-detail">
               <strong>Receiver's Full Name</strong>
-              <span>${escapeHTML(
-                parcel.receiver_name || "Not provided"
-              )}</span>
+              <span>${escapeHTML(parcel.receiver_name || "Not provided")}</span>
             </div>
-
             <div class="tracking-detail">
               <strong>Receiver's Full Delivery Address</strong>
-              <span>${escapeHTML(
-                parcel.receiver_address || "Not provided"
-              )}</span>
+              <span>${escapeHTML(parcel.receiver_address || "Not provided")}</span>
             </div>
-
             <h4>Parcel Information</h4>
-
             <div class="tracking-detail">
               <strong>Parcel Description</strong>
-              <span>${escapeHTML(
-                parcel.parcel_description || "Not provided"
-              )}</span>
+              <span>${escapeHTML(parcel.parcel_description || "Not provided")}</span>
             </div>
-
             <p class="small-note">
-              These details reflect the latest shipment information
-              recorded by TrustNova Express. Estimated delivery dates
-              may change.
+              These details reflect the latest shipment information recorded
+              by TrustNova Express. Estimated delivery dates may change.
             </p>
-
           </div>
         `;
-
       } catch (error) {
         console.error("Unexpected tracking error:", error);
-
-        showMessage(
-          "tracking-result",
-          "Something went wrong. Please try again.",
-          "error"
-        );
-
+        showMessage("tracking-result", "Something went wrong. Please try again.", "error");
       } finally {
         submitButton.disabled = false;
         submitButton.textContent = "TRACK PARCEL →";
       }
     });
 
-    /*
-      WEBSITE LANGUAGE SELECTOR
-
-      Google Website Translator provides automatic translation.
-      Availability and translation quality can vary by language.
-    */
-
+    // Google Website Translator language selector.
     function googleTranslateElementInit() {
       new google.translate.TranslateElement(
         {
           pageLanguage: "en",
-
-          includedLanguages:
-            "en,fr,de,es,pt,it,nl,pl,ru,tr,ar,zh-CN,ja,ko,hi,ha,yo,ig,sw,af,sv,no,da,fi,el,uk,ro,hu,cs,th,vi,id,ms,bn,ur,fa,he,fil",
-
+          includedLanguages: "en,fr,de,es,pt,it,nl,pl,ru,tr,ar,zh-CN,ja,ko,hi,ha,yo,ig,sw,af,sv,no,da,fi,el,uk,ro,hu,cs,th,vi,id,ms,bn,ur,fa,he,fil",
           autoDisplay: false,
-
-          layout:
-            google.translate.TranslateElement.InlineLayout.SIMPLE
-
+          layout: google.translate.TranslateElement.InlineLayout.SIMPLE
         },
         "google_translate_element"
       );
     }
 
     const translateScript = document.createElement("script");
-
-    translateScript.src =
-      "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-
+    translateScript.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
     translateScript.async = true;
-
     document.body.appendChild(translateScript);
   </script>
-
 </body>
 </html>
