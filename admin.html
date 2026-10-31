@@ -226,7 +226,7 @@ textarea { min-height: 90px; resize: vertical; }
 table {
   border-collapse: collapse;
   width: 100%;
-  min-width: 1150px;
+  min-width: 1250px;
   background: white;
 }
 
@@ -262,6 +262,10 @@ tbody tr:hover { background: #faf8fd; }
 .note-editor { min-width: 220px; }
 .note-editor textarea { min-height: 85px; margin-bottom: 8px; }
 .note-editor button { width: 100%; }
+
+.delete-cell { min-width: 110px; }
+.delete-button { background: var(--red); color: white; }
+.delete-button:hover { background: #a51e35; }
 
 .hidden { display: none !important; }
 
@@ -476,10 +480,11 @@ footer {
               <th>Status</th>
               <th>Update Status</th>
               <th>Admin Note</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody id="parcelTableBody">
-            <tr><td colspan="7">Sign in to load parcel records.</td></tr>
+            <tr><td colspan="8">Sign in to load parcel records.</td></tr>
           </tbody>
         </table>
       </div>
@@ -604,7 +609,7 @@ function renderParcels() {
   if (!filtered.length) {
     const row = document.createElement("tr");
     const cell = document.createElement("td");
-    cell.colSpan = 7;
+    cell.colSpan = 8;
     cell.textContent = query
       ? "No matching parcels found."
       : "No parcels registered yet.";
@@ -688,13 +693,29 @@ function renderParcels() {
     noteCell.appendChild(noteButton);
     row.appendChild(noteCell);
 
+    /* DELETE PARCEL */
+    const deleteCell = document.createElement("td");
+    deleteCell.className = "delete-cell";
+
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.className = "btn delete-button";
+    deleteButton.textContent = "Delete";
+
+    deleteButton.addEventListener("click", () => {
+      deleteParcel(parcel.tracking_number, deleteButton);
+    });
+
+    deleteCell.appendChild(deleteButton);
+    row.appendChild(deleteCell);
+
     body.appendChild(row);
   });
 
   updateStatistics();
 }
 
-/* Load parcel records, including admin_note */
+/* Load parcel records */
 async function loadParcels() {
   if (!currentUser) return;
 
@@ -720,6 +741,68 @@ async function loadParcels() {
 
   parcels = data || [];
   renderParcels();
+}
+
+/* DELETE PARCEL FROM DATABASE */
+async function deleteParcel(trackingNumber, button) {
+  if (!currentUser) {
+    notice("dashboardNotice", "Please sign in first.", "error");
+    return;
+  }
+
+  const confirmed = confirm(
+    "Are you sure you want to permanently delete parcel " +
+    trackingNumber +
+    "?\n\nThis action cannot be undone."
+  );
+
+  if (!confirmed) return;
+
+  setBusy(button, true, "Deleting...");
+
+  try {
+    const { data, error } = await db
+      .from(TABLE_NAME)
+      .delete()
+      .eq("tracking_number", trackingNumber)
+      .select("tracking_number");
+
+    if (error) {
+      notice(
+        "dashboardNotice",
+        "Parcel deletion failed: " + error.message,
+        "error"
+      );
+      return;
+    }
+
+    if (!data || data.length === 0) {
+      notice(
+        "dashboardNotice",
+        "Parcel was not deleted. Check Supabase DELETE permissions.",
+        "error"
+      );
+      return;
+    }
+
+    notice(
+      "dashboardNotice",
+      "Parcel " + trackingNumber + " was deleted successfully.",
+      "success"
+    );
+
+    await loadParcels();
+
+  } catch (error) {
+    notice(
+      "dashboardNotice",
+      "Unexpected deletion error: " + error.message,
+      "error"
+    );
+
+  } finally {
+    setBusy(button, false);
+  }
 }
 
 /* SAVE ADMIN NOTE */
