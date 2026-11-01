@@ -3,377 +3,71 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>TrustNova Express | Admin Dashboard</title>
 <meta name="theme-color" content="#54218b">
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <style>
-:root {
-  --purple: #54218b;
-  --purple-dark: #35115d;
-  --purple-light: #f3edfa;
-  --white: #ffffff;
-  --silver: #edf0f5;
-  --silver-dark: #d5d9e2;
-  --text: #252238;
-  --muted: #6d6b7b;
-  --green: #16834a;
-  --red: #c62845;
-  --shadow: 0 8px 28px rgba(46,24,75,.09);
-}
-
-* { box-sizing: border-box; }
-
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-  background: #f4f3f8;
-  color: var(--text);
-  line-height: 1.6;
-}
-
-button,input,textarea,select { font: inherit; }
-button { cursor: pointer; }
-button:disabled { opacity: .6; cursor: not-allowed; }
-a { color: inherit; }
-
-header {
-  background: linear-gradient(120deg,var(--purple-dark),var(--purple));
-  color: white;
-  padding: 18px 20px;
-  box-shadow: 0 4px 18px rgba(30,12,50,.2);
-}
-
-.header-inner {
-  max-width: 1200px;
-  margin: auto;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 18px;
-  flex-wrap: wrap;
-}
-
-.brand { display: flex; align-items: center; gap: 15px; }
-
-.logo { width: 82px; height: 65px; flex-shrink: 0; }
-
-.brand-name {
-  font-size: 23px;
-  font-weight: 900;
-  letter-spacing: .5px;
-  line-height: 1.25;
-}
-
-.brand-name small {
-  display: block;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: #e1d1f7;
-  margin-top: 5px;
-}
-
-.home-link {
-  text-decoration: none;
-  border: 1px solid rgba(255,255,255,.6);
-  padding: 10px 15px;
-  border-radius: 9px;
-  font-weight: 700;
-  font-size: 14px;
-}
-
-.home-link:hover { background: rgba(255,255,255,.13); }
-
-.container {
-  width: min(1200px,94%);
-  margin: 30px auto;
-}
-
-.page-intro { margin-bottom: 25px; }
-
-.page-intro h1 {
-  margin: 0 0 5px;
-  font-size: clamp(25px,4vw,34px);
-  color: var(--purple-dark);
-}
-
-.page-intro p { margin: 0; color: var(--muted); }
-
-.card {
-  background: white;
-  border: 1px solid var(--silver-dark);
-  border-radius: 16px;
-  padding: 25px;
-  margin-bottom: 24px;
-  box-shadow: var(--shadow);
-}
-
-.card h2 {
-  color: var(--purple-dark);
-  margin: 0 0 12px;
-  font-size: 23px;
-}
-
-.card h3 {
-  color: var(--purple);
-  margin: 24px 0 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--silver);
-  font-size: 17px;
-}
-
-.muted { color: var(--muted); font-size: 14px; }
-
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(2,minmax(0,1fr));
-  gap: 17px;
-}
-
-.full { grid-column: 1 / -1; }
-
-label {
-  display: block;
-  font-weight: 700;
-  font-size: 14px;
-  margin-bottom: 7px;
-}
-
-input,textarea,select {
-  width: 100%;
-  min-width: 0;
-  border: 1px solid #d5d2df;
-  border-radius: 9px;
-  background: white;
-  padding: 12px;
-  color: var(--text);
-  outline: none;
-}
-
-input:focus,textarea:focus,select:focus {
-  border-color: var(--purple);
-  box-shadow: 0 0 0 3px rgba(84,33,139,.12);
-}
-
-textarea { min-height: 90px; resize: vertical; }
-
-.actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 20px;
-}
-
-.btn {
-  border: 0;
-  border-radius: 9px;
-  padding: 12px 17px;
-  font-weight: 700;
-  transition: .2s;
-}
-
-.btn:hover { filter: brightness(.95); }
-
-.btn-primary { background: var(--purple); color: white; }
-.btn-secondary { background: var(--silver); color: var(--purple-dark); border: 1px solid var(--silver-dark); }
-.btn-danger { background: var(--red); color: white; }
-.btn-light { background: white; color: var(--purple-dark); border: 1px solid var(--silver-dark); }
-
-.notice {
-  display: none;
-  padding: 12px 14px;
-  border-radius: 9px;
-  margin-top: 15px;
-  overflow-wrap: anywhere;
-  font-size: 14px;
-}
-
-.notice.show { display: block; }
-.notice.info { background: var(--purple-light); color: var(--purple-dark); }
-.notice.success { background: #e6f6ec; color: #17683a; }
-.notice.error { background: #fff0f1; color: #a51e35; }
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3,minmax(0,1fr));
-  gap: 18px;
-  margin-bottom: 24px;
-}
-
-.stat {
-  background: white;
-  border: 1px solid var(--silver-dark);
-  border-left: 5px solid var(--purple);
-  border-radius: 14px;
-  padding: 22px;
-  box-shadow: var(--shadow);
-}
-
-.stat span { display: block; color: var(--muted); font-size: 14px; font-weight: 700; }
-.stat strong { display: block; font-size: 34px; line-height: 1.4; color: var(--purple-dark); }
-
-.table-wrap {
-  width: 100%;
-  overflow-x: auto;
-  margin-top: 18px;
-  border: 1px solid var(--silver-dark);
-  border-radius: 10px;
-}
-
-table {
-  border-collapse: collapse;
-  width: 100%;
-  min-width: 1250px;
-  background: white;
-}
-
-th,td {
-  padding: 13px;
-  text-align: left;
-  vertical-align: top;
-  border-bottom: 1px solid var(--silver);
-  font-size: 13px;
-}
-
-th { background: var(--purple); color: white; font-size: 12px; letter-spacing: .3px; }
-tbody tr:hover { background: #faf8fd; }
-.tracking { font-weight: 800; color: var(--purple); overflow-wrap: anywhere; }
-
-.status {
-  display: inline-block;
-  padding: 5px 9px;
-  border-radius: 20px;
-  background: var(--silver);
-  color: var(--purple-dark);
-  font-size: 12px;
-  font-weight: 700;
-  white-space: nowrap;
-}
-
-.status[data-status="Delivered"] { background: #e4f5e9; color: #17683a; }
-.status[data-status="Delayed"],
-.status[data-status="Cancelled"] { background: #fff0f1; color: #a51e35; }
-.status[data-status="In Transit"],
-.status[data-status="Out for Delivery"] { background: #eee5fb; color: #54218b; }
-
-.note-editor { min-width: 220px; }
-.note-editor textarea { min-height: 85px; margin-bottom: 8px; }
-.note-editor button { width: 100%; }
-
-.delete-cell { min-width: 110px; }
-.delete-button { background: var(--red); color: white; }
-.delete-button:hover { background: #a51e35; }
-
-.hidden { display: none !important; }
-
-.login-card { max-width: 560px; margin: 45px auto; }
-
-.login-icon {
-  width: 58px;
-  height: 58px;
-  display: grid;
-  place-items: center;
-  background: var(--purple-light);
-  color: var(--purple);
-  border-radius: 15px;
-  font-size: 28px;
-  margin-bottom: 16px;
-}
-
-footer {
-  text-align: center;
-  color: var(--muted);
-  font-size: 13px;
-  padding: 25px 15px;
-  border-top: 1px solid var(--silver-dark);
-  background: white;
-}
-
-@media(max-width:700px) {
-  .header-inner { align-items: flex-start; }
-  .brand-name { font-size: 19px; }
-  .logo { width: 65px; height: 55px; }
-  .container { width: 94%; margin-top: 20px; }
-  .card { padding: 18px; }
-  .form-grid { grid-template-columns: 1fr; }
-  .full { grid-column: auto; }
-  .stats { grid-template-columns: 1fr; gap: 12px; }
-  .stat { padding: 16px 19px; }
-  .stat strong { font-size: 28px; }
-  .login-card { margin: 25px auto; }
-}
+:root{--purple:#54218b;--dark:#35115d;--light:#f3edfa;--white:#fff;--silver:#edf0f5;--border:#d5d9e2;--text:#252238;--muted:#6d6b7b;--green:#16834a;--red:#c62845;--shadow:0 8px 28px rgba(46,24,75,.09)}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f3f8;color:var(--text);line-height:1.6}
+button,input,textarea,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.6;cursor:not-allowed}
+header{background:linear-gradient(120deg,var(--dark),var(--purple));color:white;padding:18px 20px;box-shadow:0 4px 18px rgba(30,12,50,.2)}
+.header-inner{max-width:1200px;margin:auto;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:15px}.logo{width:82px;height:65px;flex-shrink:0}
+.brand-name{font-size:23px;font-weight:900;letter-spacing:.5px;line-height:1.25}.brand-name small{display:block;font-size:11px;letter-spacing:2px;color:#e1d1f7;margin-top:5px}
+.home-link{text-decoration:none;border:1px solid rgba(255,255,255,.6);padding:10px 15px;border-radius:9px;font-weight:700;font-size:14px}
+.container{width:min(1200px,94%);margin:30px auto}.page-intro{margin-bottom:25px}.page-intro h1{margin:0 0 5px;font-size:clamp(25px,4vw,34px);color:var(--dark)}.page-intro p,.muted{color:var(--muted)}.muted{font-size:14px}
+.card{background:white;border:1px solid var(--border);border-radius:16px;padding:25px;margin-bottom:24px;box-shadow:var(--shadow)}
+.card h2{color:var(--dark);margin:0 0 12px;font-size:23px}.card h3{color:var(--purple);margin:24px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--silver);font-size:17px}
+.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:17px}.full{grid-column:1/-1}
+label{display:block;font-weight:700;font-size:14px;margin-bottom:7px}
+input,textarea,select{width:100%;min-width:0;border:1px solid #d5d2df;border-radius:9px;background:white;padding:12px;color:var(--text);outline:none}
+input:focus,textarea:focus,select:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(84,33,139,.12)}
+textarea{min-height:90px;resize:vertical}.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+.btn{border:0;border-radius:9px;padding:12px 17px;font-weight:700}.btn-primary{background:var(--purple);color:white}.btn-secondary{background:var(--silver);color:var(--dark);border:1px solid var(--border)}.btn-danger{background:var(--red);color:white}
+.notice{display:none;padding:12px 14px;border-radius:9px;margin-top:15px;overflow-wrap:anywhere;font-size:14px}.notice.show{display:block}.notice.info{background:var(--light);color:var(--dark)}.notice.success{background:#e6f6ec;color:#17683a}.notice.error{background:#fff0f1;color:#a51e35}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;margin-bottom:24px}.stat{background:white;border:1px solid var(--border);border-left:5px solid var(--purple);border-radius:14px;padding:22px;box-shadow:var(--shadow)}.stat span{display:block;color:var(--muted);font-size:14px;font-weight:700}.stat strong{display:block;font-size:34px;color:var(--dark)}
+.table-wrap{width:100%;overflow-x:auto;margin-top:18px;border:1px solid var(--border);border-radius:10px}
+table{border-collapse:collapse;width:100%;min-width:950px;background:white}th,td{padding:13px;text-align:left;vertical-align:top;border-bottom:1px solid var(--silver);font-size:13px}
+th{background:var(--purple);color:white;font-size:12px;letter-spacing:.3px}.tracking{font-weight:800;color:var(--purple);overflow-wrap:anywhere}
+.status{display:inline-block;padding:5px 9px;border-radius:20px;background:var(--silver);font-size:12px;font-weight:700;white-space:nowrap}
+.status[data-status="Delivered"]{background:#e4f5e9;color:#17683a}.status[data-status="Delayed"],.status[data-status="Cancelled"]{background:#fff0f1;color:#a51e35}
+.note-editor{min-width:220px}.note-editor textarea{min-height:85px;margin-bottom:8px}.note-editor button{width:100%}.delete-cell{min-width:110px}
+.hidden{display:none!important}.login-card{max-width:560px;margin:45px auto}.login-icon{width:58px;height:58px;display:grid;place-items:center;background:var(--light);color:var(--purple);border-radius:15px;font-size:28px;margin-bottom:16px}
+.history-table{min-width:700px}footer{text-align:center;color:var(--muted);font-size:13px;padding:25px 15px;border-top:1px solid var(--border);background:white}
+@media(max-width:700px){.header-inner{align-items:flex-start}.brand-name{font-size:19px}.logo{width:65px;height:55px}.container{width:94%;margin-top:20px}.card{padding:18px}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.stats{grid-template-columns:1fr;gap:12px}.stat{padding:16px 19px}.stat strong{font-size:28px}.login-card{margin:25px auto}}
 </style>
 </head>
-
 <body>
-
-<header>
-  <div class="header-inner">
-    <div class="brand">
-      <svg class="logo" viewBox="0 0 220 150" role="img" aria-label="TrustNova Express logo">
-        <path d="M12 77 L87 64 L128 18 L148 18 L133 59 L192 48 Q209 47 209 61 Q208 72 191 76 L132 86 L114 122 L97 122 L103 90 L44 99 L29 113 L18 113 L23 91 L12 77 Z"
-          fill="#ffffff" stroke="#d9c4f2" stroke-width="3" stroke-linejoin="round"/>
-        <path d="M40 79 L99 70 L110 75 L50 85 Z" fill="#b99add"/>
-        <text x="112" y="69" text-anchor="middle" font-size="10" font-weight="900" fill="#54218b" transform="rotate(-5 112 69)">TRUSTNOVA</text>
-        <text x="115" y="80" text-anchor="middle" font-size="8" font-weight="900" fill="#54218b" transform="rotate(-5 115 80)">EXPRESS</text>
-      </svg>
-
-      <div class="brand-name">
-        TRUSTNOVA EXPRESS
-        <small>PRIVATE ADMIN DASHBOARD</small>
-      </div>
-    </div>
-
-    <a class="home-link" href="./index.html">← Customer Homepage</a>
+<header><div class="header-inner">
+  <div class="brand">
+    <svg class="logo" viewBox="0 0 220 150" role="img" aria-label="TrustNova Express logo">
+      <path d="M12 77 L87 64 L128 18 L148 18 L133 59 L192 48 Q209 47 209 61 Q208 72 191 76 L132 86 L114 122 L97 122 L103 90 L44 99 L29 113 L18 113 L23 91 L12 77 Z" fill="#ffffff" stroke="#d9c4f2" stroke-width="3" stroke-linejoin="round"/>
+      <path d="M40 79 L99 70 L110 75 L50 85 Z" fill="#b99add"/>
+      <text x="112" y="69" text-anchor="middle" font-size="10" font-weight="900" fill="#54218b" transform="rotate(-5 112 69)">TRUSTNOVA</text>
+      <text x="115" y="80" text-anchor="middle" font-size="8" font-weight="900" fill="#54218b" transform="rotate(-5 115 80)">EXPRESS</text>
+    </svg>
+    <div class="brand-name">TRUSTNOVA EXPRESS<small>PRIVATE ADMIN DASHBOARD</small></div>
   </div>
-</header>
+  <a class="home-link" href="./index.html">← Customer Homepage</a>
+</div></header>
 
 <main class="container">
-
-  <div class="page-intro">
-    <h1>Welcome to TrustNova Express</h1>
-    <p>Administrator portal · Parcel management and delivery updates</p>
-  </div>
+  <div class="page-intro"><h1>Welcome to TrustNova Express</h1><p>Administrator portal · Parcel management and delivery updates</p></div>
 
   <section id="loginPanel" class="card login-card">
-    <div class="login-icon" aria-hidden="true">🔐</div>
-    <h2>Administrator Login</h2>
+    <div class="login-icon" aria-hidden="true">🔐</div><h2>Administrator Login</h2>
     <p class="muted">Sign in using your authorised administrator email and password.</p>
-
     <div id="loginNotice" class="notice" role="status"></div>
-
-    <form id="loginForm">
-      <div class="form-grid">
-        <div class="full">
-          <label for="adminEmail">Administrator Email</label>
-          <input id="adminEmail" type="email" autocomplete="username" required>
-        </div>
-        <div class="full">
-          <label for="adminPassword">Password</label>
-          <input id="adminPassword" type="password" autocomplete="current-password" required>
-        </div>
-      </div>
-      <div class="actions">
-        <button id="loginButton" class="btn btn-primary" type="submit">Sign In</button>
-      </div>
-    </form>
+    <form id="loginForm"><div class="form-grid">
+      <div class="full"><label for="adminEmail">Administrator Email</label><input id="adminEmail" type="email" autocomplete="username" required></div>
+      <div class="full"><label for="adminPassword">Password</label><input id="adminPassword" type="password" autocomplete="current-password" required></div>
+    </div><div class="actions"><button id="loginButton" class="btn btn-primary" type="submit">Sign In</button></div></form>
   </section>
 
   <section id="dashboard" class="hidden">
-
-    <section class="card">
-      <h2>Parcel Management</h2>
-      <p class="muted">Register parcels, search records, and update delivery status and admin notes.</p>
+    <section class="card"><h2>Parcel Management</h2><p class="muted">Register parcels, search records, and update delivery status and admin notes.</p>
       <p class="muted">Signed in as: <strong id="signedInEmail"></strong></p>
-
-      <div class="actions">
-        <button id="refreshButton" class="btn btn-primary" type="button">Refresh Parcels</button>
-        <button id="logoutButton" class="btn btn-secondary" type="button">Sign Out</button>
-      </div>
-
+      <div class="actions"><button id="refreshButton" class="btn btn-primary" type="button">Refresh Parcels</button><button id="logoutButton" class="btn btn-secondary" type="button">Sign Out</button></div>
       <div id="dashboardNotice" class="notice" role="status"></div>
     </section>
 
@@ -383,720 +77,230 @@ footer {
       <div class="stat"><span>Delivered</span><strong id="deliveredCount">0</strong></div>
     </div>
 
-    <section class="card">
-      <h2>Register a New Parcel</h2>
-      <p class="muted">Complete the parcel details below. Required fields are marked *.</p>
-
+    <section class="card"><h2>Register a New Parcel</h2><p class="muted">Complete the parcel details below. Required fields are marked *.</p>
       <form id="parcelForm">
-
-        <h3>Sender Information</h3>
-        <div class="form-grid">
-          <div>
-            <label for="senderName">Sender Full Name *</label>
-            <input id="senderName" required maxlength="150">
-          </div>
-          <div>
-            <label for="senderPhone">Sender Phone</label>
-            <input id="senderPhone" type="tel" maxlength="40">
-          </div>
-          <div>
-            <label for="senderEmail">Sender Email</label>
-            <input id="senderEmail" type="email" maxlength="254">
-          </div>
-          <div>
-            <label for="pickupAddress">Pickup Address *</label>
-            <textarea id="pickupAddress" required maxlength="1000"></textarea>
-          </div>
+        <h3>Sender Information</h3><div class="form-grid">
+          <div><label for="senderName">Sender Full Name *</label><input id="senderName" required maxlength="150"></div>
+          <div><label for="senderPhone">Sender Phone</label><input id="senderPhone" type="tel" maxlength="40"></div>
+          <div><label for="senderEmail">Sender Email</label><input id="senderEmail" type="email" maxlength="254"></div>
+          <div><label for="pickupAddress">Pickup Address *</label><textarea id="pickupAddress" required maxlength="1000"></textarea></div>
         </div>
-
-        <h3>Receiver Information</h3>
-        <div class="form-grid">
-          <div>
-            <label for="receiverName">Receiver Full Name *</label>
-            <input id="receiverName" required maxlength="150">
-          </div>
-          <div>
-            <label for="receiverPhone">Receiver Phone</label>
-            <input id="receiverPhone" type="tel" maxlength="40">
-          </div>
-          <div>
-            <label for="receiverEmail">Receiver Email</label>
-            <input id="receiverEmail" type="email" maxlength="254">
-          </div>
-          <div>
-            <label for="deliveryAddress">Delivery Address *</label>
-            <textarea id="deliveryAddress" required maxlength="1000"></textarea>
-          </div>
+        <h3>Receiver Information</h3><div class="form-grid">
+          <div><label for="receiverName">Receiver Full Name *</label><input id="receiverName" required maxlength="150"></div>
+          <div><label for="receiverPhone">Receiver Phone</label><input id="receiverPhone" type="tel" maxlength="40"></div>
+          <div><label for="receiverEmail">Receiver Email</label><input id="receiverEmail" type="email" maxlength="254"></div>
+          <div><label for="deliveryAddress">Delivery Address *</label><textarea id="deliveryAddress" required maxlength="1000"></textarea></div>
         </div>
-
-        <h3>Parcel Details</h3>
-        <div class="form-grid">
-          <div class="full">
-            <label for="parcelDescription">Parcel Description *</label>
-            <textarea id="parcelDescription" required maxlength="1000"></textarea>
-          </div>
-          <div>
-            <label for="estimatedDelivery">Estimated Delivery</label>
-            <input id="estimatedDelivery" type="date">
-          </div>
-          <div>
-            <label for="initialStatus">Initial Status</label>
-            <select id="initialStatus">
-              <option>Registered</option>
-              <option>Pending</option>
-              <option>In Transit</option>
-            </select>
-          </div>
-          <div class="full">
-            <label for="adminNote">Admin Note</label>
-            <textarea id="adminNote" maxlength="2000" placeholder="Enter a parcel update for the customer..."></textarea>
-          </div>
+        <h3>Parcel Details</h3><div class="form-grid">
+          <div class="full"><label for="parcelDescription">Parcel Description *</label><textarea id="parcelDescription" required maxlength="1000"></textarea></div>
+          <div><label for="estimatedDelivery">Estimated Delivery</label><input id="estimatedDelivery" type="date"></div>
+          <div><label for="initialStatus">Initial Status</label><select id="initialStatus"><option>Registered</option><option>Pending</option><option>In Transit</option></select></div>
+          <div class="full"><label for="adminNote">Admin Note</label><textarea id="adminNote" maxlength="2000" placeholder="Enter a parcel update for the customer..."></textarea></div>
         </div>
-
-        <div class="actions">
-          <button id="saveParcelButton" class="btn btn-primary" type="submit">Register Parcel</button>
-          <button class="btn btn-secondary" type="reset">Clear Form</button>
-        </div>
+        <div class="actions"><button id="saveParcelButton" class="btn btn-primary" type="submit">Register Parcel</button><button class="btn btn-secondary" type="reset">Clear Form</button></div>
       </form>
     </section>
 
+    <!-- NEW: SHIPMENT HISTORY MANAGEMENT -->
     <section class="card">
-      <h2>Registered Parcels</h2>
-      <p class="muted">Edit a parcel's Admin Note below and press Update Note to save it.</p>
-
-      <label for="searchParcel">Search by tracking number, sender, receiver or description</label>
-      <input id="searchParcel" type="search" placeholder="Enter tracking number or name">
-
-      <div id="listNotice" class="notice" role="status"></div>
-
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th>Tracking Number</th>
-              <th>Sender</th>
-              <th>Receiver</th>
-              <th>Parcel Description</th>
-              <th>Status</th>
-              <th>Update Status</th>
-              <th>Admin Note</th>
-              <th>Delete</th>
-            </tr>
-          </thead>
-          <tbody id="parcelTableBody">
-            <tr><td colspan="8">Sign in to load parcel records.</td></tr>
-          </tbody>
-        </table>
-      </div>
+      <h2>Shipment History Management</h2>
+      <p class="muted">Add a dated shipment journey update. Customers will see saved entries on their tracking page once the customer page is connected to this table.</p>
+      <form id="historyForm">
+        <div class="form-grid">
+          <div class="full"><label for="historyTracking">Tracking Number *</label><input id="historyTracking" required maxlength="150" placeholder="Enter the parcel tracking number"></div>
+          <div class="full"><label for="historyActivity">Shipment Activity *</label><textarea id="historyActivity" required maxlength="1000" placeholder="Example: Package arrived in USA"></textarea></div>
+          <div><label for="historyLocation">Location</label><input id="historyLocation" maxlength="250" placeholder="Example: New York, USA"></div>
+          <div><label for="historyDate">Date and Time *</label><input id="historyDate" type="datetime-local" required></div>
+        </div>
+        <div class="actions"><button id="historySaveButton" class="btn btn-primary" type="submit">Save Shipment Update</button></div>
+      </form>
+      <div id="historyNotice" class="notice" role="status"></div>
     </section>
 
+    <section class="card">
+      <h2>Saved Shipment History</h2><p class="muted">Recent updates saved by the administrator.</p>
+      <div class="table-wrap"><table class="history-table"><thead><tr><th>Tracking Number</th><th>Date and Time</th><th>Shipment Activity</th><th>Location</th></tr></thead><tbody id="historyTableBody"><tr><td colspan="4">No history loaded.</td></tr></tbody></table></div>
+    </section>
+
+    <section class="card"><h2>Registered Parcels</h2><p class="muted">Edit a parcel's Admin Note below and press Update Note to save it.</p>
+      <label for="searchParcel">Search by tracking number, sender, receiver or description</label><input id="searchParcel" type="search" placeholder="Enter tracking number or name">
+      <div id="listNotice" class="notice" role="status"></div>
+      <div class="table-wrap"><table><thead><tr><th>Tracking Number</th><th>Sender</th><th>Receiver</th><th>Parcel Description</th><th>Status</th><th>Update Status</th><th>Admin Note</th><th>Delete</th></tr></thead>
+        <tbody id="parcelTableBody"><tr><td colspan="8">Sign in to load parcel records.</td></tr></tbody></table></div>
+    </section>
   </section>
 </main>
-
-<footer>
-  <strong>TrustNova Express</strong><br>
-  Delivering Trust, Worldwide
-</footer>
+<footer><strong>TrustNova Express</strong><br>Delivering Trust, Worldwide</footer>
 
 <script>
 "use strict";
-
 const SUPABASE_URL = "https://trydftaqqypqcxsgixto.supabase.co";
-
-const SUPABASE_PUBLISHABLE_KEY =
-  "sb_publishable_2h0EyOMhtBx3eWEiuoAOyg_qjw2QzED";
-
+const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_2h0EyOMhtBx3eWEiuoAOyg_qjw2QzED";
 const ADMIN_EMAIL = "trustnovaexpress@gmail.com";
 const TABLE_NAME = "Parcels";
-
-const STATUS_OPTIONS = [
-  "Registered",
-  "Pending",
-  "Picked Up",
-  "In Transit",
-  "Out for Delivery",
-  "Delivered",
-  "Delayed",
-  "Cancelled"
-];
-
-const db = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
-
+const HISTORY_TABLE = "shipment_history";
+const STATUS_OPTIONS = ["Registered","Pending","Picked Up","In Transit","Out for Delivery","Delivered","Delayed","Cancelled"];
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
 let currentUser = null;
 let parcels = [];
-
 const $ = id => document.getElementById(id);
 
-function notice(id, message, type = "info") {
-  const element = $(id);
-  element.textContent = message;
-  element.className = "notice show " + type;
+function notice(id,message,type="info"){const el=$(id);el.textContent=message;el.className="notice show "+type;}
+function clearNotice(id){$(id).textContent="";$(id).className="notice";}
+function setBusy(button,busy,busyText){if(busy){button.dataset.originalText=button.textContent;button.disabled=true;button.textContent=busyText;}else{button.disabled=false;button.textContent=button.dataset.originalText||button.textContent;}}
+function showLogin(){$("loginPanel").classList.remove("hidden");$("dashboard").classList.add("hidden");}
+function showDashboard(user){$("loginPanel").classList.add("hidden");$("dashboard").classList.remove("hidden");$("signedInEmail").textContent=user.email||"";}
+function generateTrackingNumber(){const random=crypto.getRandomValues(new Uint32Array(1));return "TNX-"+Date.now().toString(36).toUpperCase()+"-"+random[0].toString(36).toUpperCase();}
+function updateStatistics(){$("totalCount").textContent=parcels.length;$("transitCount").textContent=parcels.filter(p=>["In Transit","Out for Delivery"].includes(p.status)).length;$("deliveredCount").textContent=parcels.filter(p=>p.status==="Delivered").length;}
+function makeCell(row,value){const cell=document.createElement("td");cell.textContent=value||"—";row.appendChild(cell);return cell;}
+
+function renderParcels(){
+  const body=$("parcelTableBody"),query=$("searchParcel").value.trim().toLowerCase();body.replaceChildren();
+  const filtered=parcels.filter(p=>[p.tracking_number,p.sender_name,p.receiver_name,p.parcel_description].join(" ").toLowerCase().includes(query));
+  if(!filtered.length){const row=document.createElement("tr"),cell=document.createElement("td");cell.colSpan=8;cell.textContent=query?"No matching parcels found.":"No parcels registered yet.";row.appendChild(cell);body.appendChild(row);updateStatistics();return;}
+  filtered.forEach(parcel=>{
+    const row=document.createElement("tr");makeCell(row,parcel.tracking_number).className="tracking";makeCell(row,parcel.sender_name);makeCell(row,parcel.receiver_name);makeCell(row,parcel.parcel_description);
+    const statusCell=document.createElement("td"),badge=document.createElement("span");badge.className="status";badge.dataset.status=parcel.status||"Pending";badge.textContent=parcel.status||"Pending";statusCell.appendChild(badge);row.appendChild(statusCell);
+    const statusEditor=document.createElement("td"),select=document.createElement("select");select.setAttribute("aria-label","New parcel status");
+    STATUS_OPTIONS.forEach(status=>{const option=document.createElement("option");option.value=status;option.textContent=status;option.selected=status===(parcel.status||"");select.appendChild(option);});
+    const statusButton=document.createElement("button");statusButton.type="button";statusButton.className="btn btn-primary";statusButton.textContent="Update";statusButton.style.marginTop="8px";statusButton.addEventListener("click",()=>updateStatus(parcel.tracking_number,select.value,statusButton));
+    statusEditor.appendChild(select);statusEditor.appendChild(document.createElement("br"));statusEditor.appendChild(statusButton);row.appendChild(statusEditor);
+    const noteCell=document.createElement("td");noteCell.className="note-editor";const note=document.createElement("textarea");note.maxLength=2000;note.setAttribute("aria-label","Admin Note");note.placeholder="Enter admin note...";note.value=parcel.admin_note||"";
+    const noteButton=document.createElement("button");noteButton.type="button";noteButton.className="btn btn-primary";noteButton.textContent="Update Note";noteButton.addEventListener("click",()=>updateAdminNote(parcel.tracking_number,note.value,noteButton));noteCell.appendChild(note);noteCell.appendChild(noteButton);row.appendChild(noteCell);
+    const deleteCell=document.createElement("td");deleteCell.className="delete-cell";const deleteButton=document.createElement("button");deleteButton.type="button";deleteButton.className="btn btn-danger";deleteButton.textContent="Delete";deleteButton.addEventListener("click",()=>deleteParcel(parcel.tracking_number,deleteButton));deleteCell.appendChild(deleteButton);row.appendChild(deleteCell);body.appendChild(row);
+  });updateStatistics();
 }
 
-function clearNotice(id) {
-  $(id).textContent = "";
-  $(id).className = "notice";
+async function loadParcels(){
+  if(!currentUser)return;clearNotice("listNotice");
+  const {data,error}=await db.from(TABLE_NAME).select("tracking_number, sender_name, receiver_name, parcel_description, status, admin_note, created_at").order("created_at",{ascending:false});
+  if(error){notice("listNotice","Unable to load parcels: "+error.message,"error");parcels=[];renderParcels();return;}
+  parcels=data||[];renderParcels();
 }
 
-function setBusy(button, busy, busyText) {
-  if (busy) {
-    button.dataset.originalText = button.textContent;
-    button.disabled = true;
-    button.textContent = busyText;
-  } else {
-    button.disabled = false;
-    button.textContent = button.dataset.originalText || button.textContent;
-  }
+async function loadShipmentHistory(){
+  if(!currentUser)return;
+  const body=$("historyTableBody");body.replaceChildren();
+  const {data,error}=await db.from(HISTORY_TABLE).select("tracking_number, activity, location, update_date").order("update_date",{ascending:false}).limit(100);
+  if(error){const row=document.createElement("tr"),cell=document.createElement("td");cell.colSpan=4;cell.textContent="Unable to load shipment history: "+error.message;row.appendChild(cell);body.appendChild(row);return;}
+  if(!data||!data.length){const row=document.createElement("tr"),cell=document.createElement("td");cell.colSpan=4;cell.textContent="No shipment history updates have been saved yet.";row.appendChild(cell);body.appendChild(row);return;}
+  data.forEach(item=>{const row=document.createElement("tr");makeCell(row,item.tracking_number);makeCell(row,item.update_date?new Date(item.update_date).toLocaleString():"—");makeCell(row,item.activity);makeCell(row,item.location);body.appendChild(row);});
 }
 
-function showLogin() {
-  $("loginPanel").classList.remove("hidden");
-  $("dashboard").classList.add("hidden");
+async function deleteParcel(trackingNumber,button){
+  if(!currentUser){notice("dashboardNotice","Please sign in first.","error");return;}
+  if(!confirm("Are you sure you want to permanently delete parcel "+trackingNumber+"?\n\nThis action cannot be undone."))return;
+  setBusy(button,true,"Deleting...");
+  try{const {data,error}=await db.from(TABLE_NAME).delete().eq("tracking_number",trackingNumber).select("tracking_number");
+    if(error){notice("dashboardNotice","Parcel deletion failed: "+error.message,"error");return;}
+    if(!data||!data.length){notice("dashboardNotice","Parcel was not deleted. Check Supabase DELETE permissions.","error");return;}
+    notice("dashboardNotice","Parcel "+trackingNumber+" was deleted successfully.","success");await loadParcels();
+  }catch(error){notice("dashboardNotice","Unexpected deletion error: "+error.message,"error");}finally{setBusy(button,false);}
 }
 
-function showDashboard(user) {
-  $("loginPanel").classList.add("hidden");
-  $("dashboard").classList.remove("hidden");
-  $("signedInEmail").textContent = user.email || "";
+async function updateAdminNote(trackingNumber,note,button){
+  if(!currentUser)return;setBusy(button,true,"Saving...");
+  try{const {data,error}=await db.from(TABLE_NAME).update({admin_note:note.trim()||null}).eq("tracking_number",trackingNumber).select("tracking_number");
+    if(error){notice("dashboardNotice","Admin Note could not be saved: "+error.message,"error");return;}
+    if(!data||!data.length){notice("dashboardNotice","No parcel was updated. Check table permissions and tracking number.","error");return;}
+    notice("dashboardNotice","Admin Note saved successfully for "+trackingNumber+".","success");await loadParcels();
+  }catch(error){notice("dashboardNotice","Unexpected error saving Admin Note: "+error.message,"error");}finally{setBusy(button,false);}
 }
 
-function generateTrackingNumber() {
-  const random = crypto.getRandomValues(new Uint32Array(1));
-
-  return "TNX-" +
-    Date.now().toString(36).toUpperCase() + "-" +
-    random[0].toString(36).toUpperCase();
+async function updateStatus(trackingNumber,status,button){
+  if(!currentUser)return;if(!STATUS_OPTIONS.includes(status)){notice("dashboardNotice","Invalid parcel status.","error");return;}
+  setBusy(button,true,"Updating...");
+  try{const {data,error}=await db.from(TABLE_NAME).update({status}).eq("tracking_number",trackingNumber).select("tracking_number");
+    if(error){notice("dashboardNotice","Status update failed: "+error.message,"error");return;}
+    if(!data||!data.length){notice("dashboardNotice","No parcel was updated. Check table permissions.","error");return;}
+    notice("dashboardNotice","Parcel status updated successfully.","success");await loadParcels();
+  }catch(error){notice("dashboardNotice","Unexpected error: "+error.message,"error");}finally{setBusy(button,false);}
 }
 
-function updateStatistics() {
-  $("totalCount").textContent = parcels.length;
-
-  $("transitCount").textContent = parcels.filter(parcel =>
-    ["In Transit", "Out for Delivery"].includes(parcel.status)
-  ).length;
-
-  $("deliveredCount").textContent =
-    parcels.filter(parcel => parcel.status === "Delivered").length;
-}
-
-function makeCell(row, value) {
-  const cell = document.createElement("td");
-  cell.textContent = value || "—";
-  row.appendChild(cell);
-  return cell;
-}
-
-function renderParcels() {
-  const body = $("parcelTableBody");
-  const query = $("searchParcel").value.trim().toLowerCase();
-
-  body.replaceChildren();
-
-  const filtered = parcels.filter(parcel => {
-    const searchable = [
-      parcel.tracking_number,
-      parcel.sender_name,
-      parcel.receiver_name,
-      parcel.parcel_description
-    ].join(" ").toLowerCase();
-
-    return searchable.includes(query);
-  });
-
-  if (!filtered.length) {
-    const row = document.createElement("tr");
-    const cell = document.createElement("td");
-    cell.colSpan = 8;
-    cell.textContent = query
-      ? "No matching parcels found."
-      : "No parcels registered yet.";
-    row.appendChild(cell);
-    body.appendChild(row);
-    updateStatistics();
-    return;
-  }
-
-  filtered.forEach(parcel => {
-    const row = document.createElement("tr");
-
-    makeCell(row, parcel.tracking_number).className = "tracking";
-    makeCell(row, parcel.sender_name);
-    makeCell(row, parcel.receiver_name);
-    makeCell(row, parcel.parcel_description);
-
-    const statusCell = document.createElement("td");
-    const badge = document.createElement("span");
-
-    badge.className = "status";
-    badge.dataset.status = parcel.status || "Pending";
-    badge.textContent = parcel.status || "Pending";
-
-    statusCell.appendChild(badge);
-    row.appendChild(statusCell);
-
-    /* Status update */
-    const statusCellEditor = document.createElement("td");
-    const select = document.createElement("select");
-
-    select.setAttribute("aria-label", "New parcel status");
-
-    STATUS_OPTIONS.forEach(status => {
-      const option = document.createElement("option");
-      option.value = status;
-      option.textContent = status;
-      option.selected = status === parcel.status;
-      select.appendChild(option);
-    });
-
-    const statusButton = document.createElement("button");
-    statusButton.type = "button";
-    statusButton.className = "btn btn-primary";
-    statusButton.textContent = "Update";
-    statusButton.style.marginTop = "8px";
-
-    statusButton.addEventListener("click", () => {
-      updateStatus(parcel.tracking_number, select.value, statusButton);
-    });
-
-    statusCellEditor.appendChild(select);
-    statusCellEditor.appendChild(document.createElement("br"));
-    statusCellEditor.appendChild(statusButton);
-    row.appendChild(statusCellEditor);
-
-    /* ADMIN NOTE EDITOR */
-    const noteCell = document.createElement("td");
-    noteCell.className = "note-editor";
-
-    const noteTextarea = document.createElement("textarea");
-    noteTextarea.maxLength = 2000;
-    noteTextarea.setAttribute("aria-label", "Admin Note");
-    noteTextarea.placeholder = "Enter admin note...";
-    noteTextarea.value = parcel.admin_note || "";
-
-    const noteButton = document.createElement("button");
-    noteButton.type = "button";
-    noteButton.className = "btn btn-primary";
-    noteButton.textContent = "Update Note";
-
-    noteButton.addEventListener("click", () => {
-      updateAdminNote(
-        parcel.tracking_number,
-        noteTextarea.value,
-        noteButton
-      );
-    });
-
-    noteCell.appendChild(noteTextarea);
-    noteCell.appendChild(noteButton);
-    row.appendChild(noteCell);
-
-    /* DELETE PARCEL */
-    const deleteCell = document.createElement("td");
-    deleteCell.className = "delete-cell";
-
-    const deleteButton = document.createElement("button");
-    deleteButton.type = "button";
-    deleteButton.className = "btn delete-button";
-    deleteButton.textContent = "Delete";
-
-    deleteButton.addEventListener("click", () => {
-      deleteParcel(parcel.tracking_number, deleteButton);
-    });
-
-    deleteCell.appendChild(deleteButton);
-    row.appendChild(deleteCell);
-
-    body.appendChild(row);
-  });
-
-  updateStatistics();
-}
-
-/* Load parcel records */
-async function loadParcels() {
-  if (!currentUser) return;
-
-  clearNotice("listNotice");
-
-  const { data, error } = await db
-    .from(TABLE_NAME)
-    .select(
-      "tracking_number, sender_name, receiver_name, parcel_description, status, admin_note, created_at"
-    )
-    .order("created_at", { ascending: false });
-
-  if (error) {
-    notice(
-      "listNotice",
-      "Unable to load parcels: " + error.message,
-      "error"
-    );
-    parcels = [];
-    renderParcels();
-    return;
-  }
-
-  parcels = data || [];
-  renderParcels();
-}
-
-/* DELETE PARCEL FROM DATABASE */
-async function deleteParcel(trackingNumber, button) {
-  if (!currentUser) {
-    notice("dashboardNotice", "Please sign in first.", "error");
-    return;
-  }
-
-  const confirmed = confirm(
-    "Are you sure you want to permanently delete parcel " +
-    trackingNumber +
-    "?\n\nThis action cannot be undone."
-  );
-
-  if (!confirmed) return;
-
-  setBusy(button, true, "Deleting...");
-
-  try {
-    const { data, error } = await db
-      .from(TABLE_NAME)
-      .delete()
-      .eq("tracking_number", trackingNumber)
-      .select("tracking_number");
-
-    if (error) {
-      notice(
-        "dashboardNotice",
-        "Parcel deletion failed: " + error.message,
-        "error"
-      );
-      return;
-    }
-
-    if (!data || data.length === 0) {
-      notice(
-        "dashboardNotice",
-        "Parcel was not deleted. Check Supabase DELETE permissions.",
-        "error"
-      );
-      return;
-    }
-
-    notice(
-      "dashboardNotice",
-      "Parcel " + trackingNumber + " was deleted successfully.",
-      "success"
-    );
-
-    await loadParcels();
-
-  } catch (error) {
-    notice(
-      "dashboardNotice",
-      "Unexpected deletion error: " + error.message,
-      "error"
-    );
-
-  } finally {
-    setBusy(button, false);
-  }
-}
-
-/* SAVE ADMIN NOTE */
-async function updateAdminNote(trackingNumber, note, button) {
-  if (!currentUser) {
-    notice("dashboardNotice", "Please sign in first.", "error");
-    return;
-  }
-
-  setBusy(button, true, "Saving...");
-
-  try {
-    const { data, error } = await db
-      .from(TABLE_NAME)
-      .update({
-        admin_note: note.trim() || null
-      })
-      .eq("tracking_number", trackingNumber)
-      .select("tracking_number");
-
-    if (error) {
-      notice(
-        "dashboardNotice",
-        "Admin Note could not be saved: " + error.message,
-        "error"
-      );
-      return;
-    }
-
-    if (!data || data.length === 0) {
-      notice(
-        "dashboardNotice",
-        "No parcel was updated. Check your table permissions and tracking number.",
-        "error"
-      );
-      return;
-    }
-
-    notice(
-      "dashboardNotice",
-      "Admin Note saved successfully for " + trackingNumber + ".",
-      "success"
-    );
-
-    await loadParcels();
-
-  } catch (error) {
-    notice(
-      "dashboardNotice",
-      "Unexpected error saving Admin Note: " + error.message,
-      "error"
-    );
-
-  } finally {
-    setBusy(button, false);
-  }
-}
-
-/* Update parcel status */
-async function updateStatus(trackingNumber, status, button) {
-  if (!currentUser) return;
-
-  if (!STATUS_OPTIONS.includes(status)) {
-    notice("dashboardNotice", "Invalid parcel status.", "error");
-    return;
-  }
-
-  setBusy(button, true, "Updating...");
-
-  try {
-    const { data, error } = await db
-      .from(TABLE_NAME)
-      .update({ status })
-      .eq("tracking_number", trackingNumber)
-      .select("tracking_number");
-
-    if (error) {
-      notice(
-        "dashboardNotice",
-        "Status update failed: " + error.message,
-        "error"
-      );
-      return;
-    }
-
-    if (!data || data.length === 0) {
-      notice(
-        "dashboardNotice",
-        "No parcel was updated. Check your table permissions.",
-        "error"
-      );
-      return;
-    }
-
-    notice("dashboardNotice", "Parcel status updated successfully.", "success");
-    await loadParcels();
-
-  } catch (error) {
-    notice("dashboardNotice", "Unexpected error: " + error.message, "error");
-
-  } finally {
-    setBusy(button, false);
-  }
-}
-
-/* Administrator login */
-$("loginForm").addEventListener("submit", async event => {
+/* Save a shipment-history entry in Supabase. */
+$("historyForm").addEventListener("submit",async event=>{
   event.preventDefault();
-
-  const button = $("loginButton");
-  const email = $("adminEmail").value.trim().toLowerCase();
-  const password = $("adminPassword").value;
-
-  clearNotice("loginNotice");
-
-  if (email !== ADMIN_EMAIL.toLowerCase()) {
-    notice("loginNotice", "This is not the configured administrator email.", "error");
-    return;
-  }
-
-  setBusy(button, true, "Signing in...");
-
-  try {
-    const { data, error } = await db.auth.signInWithPassword({
-      email,
-      password
+  if(!currentUser){notice("historyNotice","Please sign in first.","error");return;}
+  const button=$("historySaveButton");
+  const trackingNumber=$("historyTracking").value.trim();
+  const activity=$("historyActivity").value.trim();
+  const location=$("historyLocation").value.trim();
+  const localDate=$("historyDate").value;
+  if(!trackingNumber||!activity||!localDate){notice("historyNotice","Enter a tracking number, activity, and date/time.","error");return;}
+  const parcelExists=parcels.some(p=>String(p.tracking_number).toLowerCase()===trackingNumber.toLowerCase());
+  if(!parcelExists){notice("historyNotice","That tracking number is not in the registered parcels list. Check it and try again.","error");return;}
+  const updateDate=new Date(localDate);
+  if(Number.isNaN(updateDate.getTime())){notice("historyNotice","Please enter a valid date and time.","error");return;}
+  setBusy(button,true,"Saving update...");
+  try{
+    const {error}=await db.from(HISTORY_TABLE).insert({
+      tracking_number:trackingNumber,
+      activity,
+      location:location||null,
+      update_date:updateDate.toISOString()
     });
-
-    if (error) {
-      notice("loginNotice", "Login failed: " + error.message, "error");
-      return;
-    }
-
-    if (
-      !data.user ||
-      !data.user.email ||
-      data.user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()
-    ) {
-      await db.auth.signOut();
-      notice("loginNotice", "This account is not authorised for this dashboard.", "error");
-      return;
-    }
-
-    currentUser = data.user;
-    $("adminPassword").value = "";
-
-    showDashboard(currentUser);
-    notice("dashboardNotice", "Signed in. Loading parcel records...", "success");
-
-    await loadParcels();
-
-  } catch (error) {
-    notice("loginNotice", "Unexpected error: " + error.message, "error");
-
-  } finally {
-    setBusy(button, false);
-  }
+    if(error){notice("historyNotice","Shipment update could not be saved: "+error.message,"error");return;}
+    notice("historyNotice","Shipment history saved successfully for "+trackingNumber+".","success");
+    $("historyActivity").value="";$("historyLocation").value="";
+    $("historyDate").value=toLocalDateTimeValue(new Date());
+    await loadShipmentHistory();
+  }catch(error){notice("historyNotice","Unexpected error saving shipment history: "+error.message,"error");}
+  finally{setBusy(button,false);}
 });
 
-/* Register a new parcel */
-$("parcelForm").addEventListener("submit", async event => {
-  event.preventDefault();
+function toLocalDateTimeValue(date){
+  const pad=n=>String(n).padStart(2,"0");
+  return date.getFullYear()+"-"+pad(date.getMonth()+1)+"-"+pad(date.getDate())+"T"+pad(date.getHours())+":"+pad(date.getMinutes());
+}
 
-  if (!currentUser) {
-    notice("dashboardNotice", "Please sign in first.", "error");
-    return;
-  }
+$("loginForm").addEventListener("submit",async event=>{
+  event.preventDefault();const button=$("loginButton"),email=$("adminEmail").value.trim().toLowerCase(),password=$("adminPassword").value;clearNotice("loginNotice");
+  if(email!==ADMIN_EMAIL.toLowerCase()){notice("loginNotice","This is not the configured administrator email.","error");return;}
+  setBusy(button,true,"Signing in...");
+  try{const {data,error}=await db.auth.signInWithPassword({email,password});
+    if(error){notice("loginNotice","Login failed: "+error.message,"error");return;}
+    if(!data.user||!data.user.email||data.user.email.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){await db.auth.signOut();notice("loginNotice","This account is not authorised for this dashboard.","error");return;}
+    currentUser=data.user;$("adminPassword").value="";showDashboard(currentUser);notice("dashboardNotice","Signed in. Loading parcel records...","success");await loadParcels();await loadShipmentHistory();
+  }catch(error){notice("loginNotice","Unexpected error: "+error.message,"error");}finally{setBusy(button,false);}
+});
 
-  const button = $("saveParcelButton");
-
-  const parcel = {
-    tracking_number: generateTrackingNumber(),
-    sender_name: $("senderName").value.trim(),
-    sender_phone: $("senderPhone").value.trim() || null,
-    sender_email: $("senderEmail").value.trim().toLowerCase() || null,
-    pickup_address: $("pickupAddress").value.trim(),
-    receiver_name: $("receiverName").value.trim(),
-    receiver_phone: $("receiverPhone").value.trim() || null,
-    receiver_email: $("receiverEmail").value.trim().toLowerCase() || null,
-    delivery_address: $("deliveryAddress").value.trim(),
-    parcel_description: $("parcelDescription").value.trim(),
-    estimated_delivery: $("estimatedDelivery").value || null,
-    admin_note: $("adminNote").value.trim() || null,
-    status: $("initialStatus").value
+$("parcelForm").addEventListener("submit",async event=>{
+  event.preventDefault();if(!currentUser){notice("dashboardNotice","Please sign in first.","error");return;}
+  const button=$("saveParcelButton");
+  const parcel={
+    tracking_number:generateTrackingNumber(),sender_name:$("senderName").value.trim(),sender_phone:$("senderPhone").value.trim()||null,
+    sender_email:$("senderEmail").value.trim().toLowerCase()||null,pickup_address:$("pickupAddress").value.trim(),
+    receiver_name:$("receiverName").value.trim(),receiver_phone:$("receiverPhone").value.trim()||null,
+    receiver_email:$("receiverEmail").value.trim().toLowerCase()||null,delivery_address:$("deliveryAddress").value.trim(),
+    parcel_description:$("parcelDescription").value.trim(),estimated_delivery:$("estimatedDelivery").value||null,
+    admin_note:$("adminNote").value.trim()||null,status:$("initialStatus").value
   };
-
-  if (
-    !parcel.sender_name ||
-    !parcel.pickup_address ||
-    !parcel.receiver_name ||
-    !parcel.delivery_address ||
-    !parcel.parcel_description
-  ) {
-    notice("dashboardNotice", "Please complete all required fields.", "error");
-    return;
-  }
-
-  setBusy(button, true, "Registering...");
-
-  try {
-    const { data, error } = await db
-      .from(TABLE_NAME)
-      .insert(parcel)
-      .select("tracking_number")
-      .single();
-
-    if (error) {
-      notice("dashboardNotice", "Parcel was not saved: " + error.message, "error");
-      return;
-    }
-
-    notice(
-      "dashboardNotice",
-      "Parcel registered successfully. Tracking number: " + data.tracking_number,
-      "success"
-    );
-
-    $("parcelForm").reset();
-    await loadParcels();
-
-  } catch (error) {
-    notice("dashboardNotice", "Unexpected error: " + error.message, "error");
-
-  } finally {
-    setBusy(button, false);
-  }
+  if(!parcel.sender_name||!parcel.pickup_address||!parcel.receiver_name||!parcel.delivery_address||!parcel.parcel_description){notice("dashboardNotice","Please complete all required fields.","error");return;}
+  setBusy(button,true,"Registering...");
+  try{const {data,error}=await db.from(TABLE_NAME).insert(parcel).select("tracking_number").single();
+    if(error){notice("dashboardNotice","Parcel was not saved: "+error.message,"error");return;}
+    notice("dashboardNotice","Parcel registered successfully. Tracking number: "+data.tracking_number,"success");$("parcelForm").reset();await loadParcels();
+  }catch(error){notice("dashboardNotice","Unexpected error: "+error.message,"error");}finally{setBusy(button,false);}
 });
 
-/* Search and refresh */
-$("refreshButton").addEventListener("click", loadParcels);
-$("searchParcel").addEventListener("input", renderParcels);
-
-/* Sign out */
-$("logoutButton").addEventListener("click", async () => {
-  const { error } = await db.auth.signOut();
-
-  if (error) {
-    notice("dashboardNotice", "Sign out failed: " + error.message, "error");
-    return;
-  }
-
-  currentUser = null;
-  parcels = [];
-
-  $("loginForm").reset();
-  $("parcelForm").reset();
-
-  clearNotice("loginNotice");
-  clearNotice("dashboardNotice");
-  clearNotice("listNotice");
-
-  $("totalCount").textContent = "0";
-  $("transitCount").textContent = "0";
-  $("deliveredCount").textContent = "0";
-
-  showLogin();
+$("refreshButton").addEventListener("click",async()=>{await loadParcels();await loadShipmentHistory();});
+$("searchParcel").addEventListener("input",renderParcels);
+$("logoutButton").addEventListener("click",async()=>{
+  const {error}=await db.auth.signOut();if(error){notice("dashboardNotice","Sign out failed: "+error.message,"error");return;}
+  currentUser=null;parcels=[];$("loginForm").reset();$("parcelForm").reset();$("historyForm").reset();
+  ["loginNotice","dashboardNotice","listNotice","historyNotice"].forEach(clearNotice);
+  $("totalCount").textContent="0";$("transitCount").textContent="0";$("deliveredCount").textContent="0";showLogin();
 });
 
-/* Restore existing login session */
-async function restoreSession() {
-  const { data, error } = await db.auth.getSession();
-
-  if (error) {
-    showLogin();
-    notice("loginNotice", "Could not check your login session. Please sign in again.", "error");
-    return;
-  }
-
-  const user = data.session?.user;
-
-  if (!user) {
-    showLogin();
-    return;
-  }
-
-  if (
-    !user.email ||
-    user.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()
-  ) {
-    await db.auth.signOut();
-    showLogin();
-    notice("loginNotice", "This account is not authorised for this dashboard.", "error");
-    return;
-  }
-
-  currentUser = user;
-  showDashboard(user);
-
-  notice("dashboardNotice", "Your session has been restored.", "success");
-  await loadParcels();
+async function restoreSession(){
+  const {data,error}=await db.auth.getSession();
+  if(error){showLogin();notice("loginNotice","Could not check your login session. Please sign in again.","error");return;}
+  const user=data.session?.user;if(!user){showLogin();return;}
+  if(!user.email||user.email.toLowerCase()!==ADMIN_EMAIL.toLowerCase()){await db.auth.signOut();showLogin();notice("loginNotice","This account is not authorised for this dashboard.","error");return;}
+  currentUser=user;showDashboard(user);notice("dashboardNotice","Your session has been restored.","success");await loadParcels();await loadShipmentHistory();
 }
-
+$("historyDate").value=toLocalDateTimeValue(new Date());
 restoreSession();
 </script>
-
 </body>
 </html>
