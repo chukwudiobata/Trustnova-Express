@@ -91,10 +91,16 @@ th{background:var(--purple);color:white;font-size:12px;letter-spacing:.3px}.trac
           <div><label for="receiverEmail">Receiver Email</label><input id="receiverEmail" type="email" maxlength="254"></div>
           <div><label for="deliveryAddress">Delivery Address *</label><textarea id="deliveryAddress" required maxlength="1000"></textarea></div>
         </div>
-        <h3>Parcel Details</h3><div class="form-grid">
-          <div class="full"><label for="parcelDescription">Parcel Description *</label><textarea id="parcelDescription" required maxlength="1000"></textarea></div>
-          <div><label for="estimatedDelivery">Estimated Delivery</label><input id="estimatedDelivery" type="date"></div>
-          <div><label for="initialStatus">Initial Status</label><select id="initialStatus"><option>Registered</option><option>Pending</option><option>In Transit</option></select></div>
+        <h3>Shipment Details</h3><div class="form-grid">
+          <div><label for="referenceNumber">Reference Number *</label><input id="referenceNumber" required maxlength="80" placeholder="Example: 512943977D"></div>
+          <div><label for="shipDate">Ship Date and Time</label><input id="shipDate" type="datetime-local"></div>
+          <div><label for="estimatedDelivery">Delivery Date</label><input id="estimatedDelivery" type="date"></div>
+          <div><label for="destination">Destination</label><input id="destination" maxlength="200" placeholder="Example: United States"></div>
+          <div><label for="serviceType">Service Type</label><input id="serviceType" maxlength="150" placeholder="Example: Overnight Day Freight"></div>
+          <div><label for="weight">Weight</label><input id="weight" maxlength="80" placeholder="Example: Undisclosed"></div>
+          <div><label for="contentQuantity">Content Quantity</label><input id="contentQuantity" type="number" min="1" step="1" value="1"></div>
+          <div><label for="initialStatus">Initial Parcel Status</label><select id="initialStatus"><option>Registered</option><option>Pending</option><option>In Transit</option></select></div>
+          <div class="full"><label for="parcelDescription">Shipment Content / Description *</label><textarea id="parcelDescription" required maxlength="1000" placeholder="Example: ATM CARD"></textarea></div>
           <div class="full"><label for="adminNote">Admin Note</label><textarea id="adminNote" maxlength="2000" placeholder="Enter a parcel update for the customer..."></textarea></div>
         </div>
         <div class="actions"><button id="saveParcelButton" class="btn btn-primary" type="submit">Register Parcel</button><button class="btn btn-secondary" type="reset">Clear Form</button></div>
@@ -123,9 +129,9 @@ th{background:var(--purple);color:white;font-size:12px;letter-spacing:.3px}.trac
     </section>
 
     <section class="card"><h2>Registered Parcels</h2><p class="muted">Edit a parcel's Admin Note below and press Update Note to save it.</p>
-      <label for="searchParcel">Search by tracking number, sender, receiver or description</label><input id="searchParcel" type="search" placeholder="Enter tracking number or name">
+      <label for="searchParcel">Search by tracking number, reference number, sender, receiver or description</label><input id="searchParcel" type="search" placeholder="Enter tracking number, reference number or name">
       <div id="listNotice" class="notice" role="status"></div>
-      <div class="table-wrap"><table><thead><tr><th>Tracking Number</th><th>Sender</th><th>Receiver</th><th>Parcel Description</th><th>Status</th><th>Update Status</th><th>Admin Note</th><th>Delete</th></tr></thead>
+      <div class="table-wrap"><table><thead><tr><th>Tracking Number</th><th>Reference Number</th><th>Sender</th><th>Receiver</th><th>Parcel Description</th><th>Status</th><th>Update Status</th><th>Admin Note</th><th>Delete</th></tr></thead>
         <tbody id="parcelTableBody"><tr><td colspan="8">Sign in to load parcel records.</td></tr></tbody></table></div>
     </section>
   </section>
@@ -156,10 +162,10 @@ function makeCell(row,value){const cell=document.createElement("td");cell.textCo
 
 function renderParcels(){
   const body=$("parcelTableBody"),query=$("searchParcel").value.trim().toLowerCase();body.replaceChildren();
-  const filtered=parcels.filter(p=>[p.tracking_number,p.sender_name,p.receiver_name,p.parcel_description].join(" ").toLowerCase().includes(query));
-  if(!filtered.length){const row=document.createElement("tr"),cell=document.createElement("td");cell.colSpan=8;cell.textContent=query?"No matching parcels found.":"No parcels registered yet.";row.appendChild(cell);body.appendChild(row);updateStatistics();return;}
+  const filtered=parcels.filter(p=>[p.tracking_number,p.reference_number,p.sender_name,p.receiver_name,p.parcel_description].join(" ").toLowerCase().includes(query));
+  if(!filtered.length){const row=document.createElement("tr"),cell=document.createElement("td");cell.colSpan=9;cell.textContent=query?"No matching parcels found.":"No parcels registered yet.";row.appendChild(cell);body.appendChild(row);updateStatistics();return;}
   filtered.forEach(parcel=>{
-    const row=document.createElement("tr");makeCell(row,parcel.tracking_number).className="tracking";makeCell(row,parcel.sender_name);makeCell(row,parcel.receiver_name);makeCell(row,parcel.parcel_description);
+    const row=document.createElement("tr");makeCell(row,parcel.tracking_number).className="tracking";makeCell(row,parcel.reference_number).className="tracking";makeCell(row,parcel.sender_name);makeCell(row,parcel.receiver_name);makeCell(row,parcel.parcel_description);
     const statusCell=document.createElement("td"),badge=document.createElement("span");badge.className="status";badge.dataset.status=parcel.status||"Pending";badge.textContent=parcel.status||"Pending";statusCell.appendChild(badge);row.appendChild(statusCell);
     const statusEditor=document.createElement("td"),select=document.createElement("select");select.setAttribute("aria-label","New parcel status");
     STATUS_OPTIONS.forEach(status=>{const option=document.createElement("option");option.value=status;option.textContent=status;option.selected=status===(parcel.status||"");select.appendChild(option);});
@@ -173,7 +179,7 @@ function renderParcels(){
 
 async function loadParcels(){
   if(!currentUser)return;clearNotice("listNotice");
-  const {data,error}=await db.from(TABLE_NAME).select("tracking_number, sender_name, receiver_name, parcel_description, status, admin_note, created_at").order("created_at",{ascending:false});
+  const {data,error}=await db.from(TABLE_NAME).select("tracking_number, reference_number, sender_name, receiver_name, parcel_description, status, admin_note, created_at").order("created_at",{ascending:false});
   if(error){notice("listNotice","Unable to load parcels: "+error.message,"error");parcels=[];renderParcels();return;}
   parcels=data||[];renderParcels();
 }
@@ -267,19 +273,24 @@ $("loginForm").addEventListener("submit",async event=>{
 $("parcelForm").addEventListener("submit",async event=>{
   event.preventDefault();if(!currentUser){notice("dashboardNotice","Please sign in first.","error");return;}
   const button=$("saveParcelButton");
+  const referenceNumber=$("referenceNumber").value.trim();
   const parcel={
-    tracking_number:generateTrackingNumber(),sender_name:$("senderName").value.trim(),sender_phone:$("senderPhone").value.trim()||null,
+    tracking_number:generateTrackingNumber(),reference_number:referenceNumber,
+    sender_name:$("senderName").value.trim(),sender_phone:$("senderPhone").value.trim()||null,
     sender_email:$("senderEmail").value.trim().toLowerCase()||null,pickup_address:$("pickupAddress").value.trim(),
     receiver_name:$("receiverName").value.trim(),receiver_phone:$("receiverPhone").value.trim()||null,
     receiver_email:$("receiverEmail").value.trim().toLowerCase()||null,delivery_address:$("deliveryAddress").value.trim(),
     parcel_description:$("parcelDescription").value.trim(),estimated_delivery:$("estimatedDelivery").value||null,
+    ship_date:$("shipDate").value?new Date($("shipDate").value).toISOString():null,
+    destination:$("destination").value.trim()||null,service_type:$("serviceType").value.trim()||null,
+    weight:$("weight").value.trim()||null,content_quantity:$("contentQuantity").value?Number($("contentQuantity").value):1,
     admin_note:$("adminNote").value.trim()||null,status:$("initialStatus").value
   };
-  if(!parcel.sender_name||!parcel.pickup_address||!parcel.receiver_name||!parcel.delivery_address||!parcel.parcel_description){notice("dashboardNotice","Please complete all required fields.","error");return;}
+  if(!referenceNumber||!parcel.sender_name||!parcel.pickup_address||!parcel.receiver_name||!parcel.delivery_address||!parcel.parcel_description){notice("dashboardNotice","Please complete all required fields.","error");return;}
   setBusy(button,true,"Registering...");
   try{const {data,error}=await db.from(TABLE_NAME).insert(parcel).select("tracking_number").single();
     if(error){notice("dashboardNotice","Parcel was not saved: "+error.message,"error");return;}
-    notice("dashboardNotice","Parcel registered successfully. Tracking number: "+data.tracking_number,"success");$("parcelForm").reset();await loadParcels();
+    notice("dashboardNotice","Parcel registered successfully. Tracking number: "+data.tracking_number+" | Reference number: "+referenceNumber,"success");$("parcelForm").reset();await loadParcels();
   }catch(error){notice("dashboardNotice","Unexpected error: "+error.message,"error");}finally{setBusy(button,false);}
 });
 
