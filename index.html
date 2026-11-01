@@ -103,6 +103,11 @@
     .status-update-panel { border-top: 4px solid var(--green); }
     .status-update-panel .current-status-banner { margin: 0 0 12px; background: #1d6748; border: 1px solid #39835f; border-left: 5px solid var(--yellow); box-shadow: none; }
     .status-update-panel .admin-note-box { margin: 0; background: #174d37; border-color: #367657; border-left-color: var(--red); box-shadow: none; }
+    .shipment-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+    .shipment-grid .tracking-detail { margin:0; }
+    .shipment-section-title { margin:20px 0 10px; color:#ffe082; font-size:15px; letter-spacing:.5px; text-transform:uppercase; }
+    .shipment-content-row { display:grid; grid-template-columns:70px 90px minmax(0,1fr); gap:10px; }
+    @media (max-width:600px) { .shipment-grid { grid-template-columns:1fr; } }
     @media (max-width: 600px) { .sender-receiver-grid { grid-template-columns: 1fr; } .tracking-info-panel { padding: 14px; } }
     .history-section { margin-top: 24px; padding: 18px; background: #fff; border: 1px solid #d8e6dc; border-radius: 10px; }
     .history-section h4 { margin: 0 0 5px; color: #176b3d; font-size: 18px; text-transform: none; letter-spacing: 0; }
@@ -355,38 +360,65 @@
         result.innerHTML = `
           <div class="tracking-result-card">
             <h3>📦 Your Parcel Details</h3>
+
             <div class="tracking-info-panel">
-              <h4>Sender &amp; Receiver Details</h4>
+              <h4>Shipment Dates &amp; Destination</h4>
+              <div class="shipment-grid">
+                <div class="tracking-detail"><strong>Ship Date</strong><span>${escapeHTML(displayDateTime(parcel.ship_date))}</span></div>
+                <div class="tracking-detail"><strong>Delivery Date</strong><span>${escapeHTML(displayDate(parcel.estimated_delivery))}</span></div>
+                <div class="tracking-detail"><strong>Destination</strong><span>${escapeHTML(parcel.destination || "Not provided")}</span></div>
+                <div class="tracking-detail"><strong>Tracking Number</strong><span>${escapeHTML(parcel.tracking_number || trackingNumber)}</span></div>
+              </div>
+            </div>
+
+            <div class="tracking-info-panel">
+              <h4>Shipment Profile — Shipper &amp; Receiver Details</h4>
               <div class="sender-receiver-grid">
                 <div class="sender-receiver-block">
-                  <h5>Sender Details</h5>
+                  <h5>Shipper Details</h5>
                   <div class="tracking-detail"><strong>Full Name</strong><span>${escapeHTML(parcel.sender_name || "Not provided")}</span></div>
-                  <div class="tracking-detail"><strong>Full Address</strong><span>${escapeHTML(parcel.sender_address || "Not provided")}</span></div>
+                  <div class="tracking-detail"><strong>Address</strong><span>${escapeHTML(parcel.sender_address || "Not provided")}</span></div>
                 </div>
                 <div class="sender-receiver-block">
                   <h5>Receiver Details</h5>
                   <div class="tracking-detail"><strong>Full Name</strong><span>${escapeHTML(parcel.receiver_name || "Not provided")}</span></div>
-                  <div class="tracking-detail"><strong>Delivery Address</strong><span>${escapeHTML(parcel.receiver_address || "Not provided")}</span></div>
+                  <div class="tracking-detail"><strong>Address</strong><span>${escapeHTML(parcel.receiver_address || "Not provided")}</span></div>
                 </div>
               </div>
             </div>
+
+            <div class="tracking-info-panel">
+              <h4>Shipment Content / Description</h4>
+              <div class="shipment-grid">
+                <div class="tracking-detail"><strong>Item No.</strong><span>1</span></div>
+                <div class="tracking-detail"><strong>Quantity</strong><span>${escapeHTML(parcel.content_quantity ?? 1)}</span></div>
+                <div class="tracking-detail" style="grid-column:1/-1"><strong>Content</strong><span>${escapeHTML(parcel.parcel_description || "Not provided")}</span></div>
+              </div>
+            </div>
+
+            <div class="tracking-info-panel">
+              <h4>Shipment Facts</h4>
+              <div class="shipment-grid">
+                <div class="tracking-detail"><strong>Service Type</strong><span>${escapeHTML(parcel.service_type || "Not provided")}</span></div>
+                <div class="tracking-detail"><strong>Weight</strong><span>${escapeHTML(parcel.weight || "Undisclosed")}</span></div>
+                <div class="tracking-detail"><strong>Reference Number</strong><span>${escapeHTML(parcel.reference_number || "Not provided")}</span></div>
+              </div>
+            </div>
+
             <div class="tracking-info-panel status-update-panel">
-              <h4>Parcel Status &amp; Latest Update</h4>
+              <h4>Parcel Status &amp; Latest Update From TrustNova Express</h4>
               <div class="current-status-banner">
                 <small>PARCEL STATUS</small>
-                <strong>${escapeHTML(parcelStatus)}</strong>
+                <strong>${escapeHTML(parcel.status || "Status not yet updated")}</strong>
               </div>
               <div class="admin-note-box">
                 <small>Latest Update From TrustNova Express</small>
-                <p>${adminNote ? escapeHTML(adminNote) : "No additional update has been provided yet."}</p>
+                <p>${parcel.admin_note ? escapeHTML(parcel.admin_note) : "No additional update has been provided yet."}</p>
               </div>
             </div>
-            <div class="tracking-detail"><strong>Tracking Number</strong><span>${escapeHTML(parcel.tracking_number || trackingNumber)}</span></div>
-            <div class="tracking-detail"><strong>Estimated Delivery</strong><span>${escapeHTML(displayDate(parcel.estimated_delivery))}</span></div>
-            <h4>Parcel Information</h4>
-            <div class="tracking-detail"><strong>Parcel Description</strong><span>${escapeHTML(parcel.parcel_description || "Not provided")}</span></div>
+
             ${historyHTML}
-            <p class="small-note">These details reflect the latest shipment information recorded by TrustNova Express. Estimated delivery dates may change.</p>
+            <p class="small-note">These details reflect the latest shipment information recorded by TrustNova Express. Delivery dates may change.</p>
           </div>`;
       } catch (error) {
         console.error("Unexpected tracking error:", error);
