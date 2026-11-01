@@ -311,12 +311,14 @@
 
     function renderStatusProgress(status) {
       const value = String(status || "").toLowerCase();
-      const stages = ["Processing", "Pickup", "In Transit", "Delivered"];
+      // The final progress step reflects the parcel's actual final state.
+      const finalStage = value.includes("hold") ? "On Hold" : "Delivered";
+      const stages = ["Processing", "Pickup", "In Transit", finalStage];
       let active = 0;
-      if (value.includes("deliver")) active = 3;
+      if (value.includes("deliver") && !value.includes("out for delivery")) active = 3;
+      else if (value.includes("hold")) active = 3;
       else if (value.includes("pick")) active = 1;
       else if (value.includes("transit") || value.includes("destination") || value.includes("out for delivery")) active = 2;
-      if (value.includes("hold")) active = 3;
       return stages.map((stage, index) => `<div class="status-step ${index < active ? "done" : ""} ${index === active ? "active" : ""}">${stage}</div>`).join("");
     }
 
