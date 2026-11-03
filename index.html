@@ -566,13 +566,14 @@
 
     .history-table-wrapper {
       width: 100%;
-      overflow-x: auto;
+      overflow-x: hidden;
       margin-top: 10px;
     }
 
     .history-table {
       width: 100%;
-      min-width: 520px;
+      min-width: 0;
+      table-layout: fixed;
       border-collapse: collapse;
       font-family: Arial, Helvetica, sans-serif;
       font-size: 12px;
@@ -587,7 +588,8 @@
       text-align: left;
       padding: 8px 6px;
       border: 1px solid #bdbdbd;
-      letter-spacing: .4px;
+      letter-spacing: .2px;
+      white-space: nowrap;
     }
 
     .history-table td {
@@ -600,17 +602,17 @@
     .history-table tbody tr:nth-child(odd) { background: #e8e8e8; }
     .history-table tbody tr:nth-child(even) { background: #fff; }
 
-    .history-table th:first-child,
-    .history-table td:first-child { min-width: 105px; }
+    .history-table th:nth-child(1),
+    .history-table td:nth-child(1) { width: 27%; }
 
     .history-table th:nth-child(2),
-    .history-table td:nth-child(2) { min-width: 150px; }
+    .history-table td:nth-child(2) { width: 25%; }
 
     .history-table th:nth-child(3),
-    .history-table td:nth-child(3) { min-width: 90px; }
+    .history-table td:nth-child(3) { width: 25%; }
 
     .history-table th:nth-child(4),
-    .history-table td:nth-child(4) { min-width: 90px; }
+    .history-table td:nth-child(4) { width: 23%; }
 
     @media (max-width: 600px) {
       .sender-receiver-grid {
@@ -642,9 +644,9 @@
         padding: 6px 3px 6px 8px;
       }
 
-      .history-table { font-size: 11px; }
-      .history-table th { font-size: 10px; padding: 6px 4px; }
-      .history-table td { padding: 6px 4px; }
+      .history-table { font-size: 10px; }
+      .history-table th { font-size: 9px; padding: 7px 2px; letter-spacing: 0; }
+      .history-table td { padding: 6px 3px; font-size: 10px; }
     }
 
     .small-note { color: #667085; font-size: 12px; }
