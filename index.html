@@ -934,29 +934,11 @@
           });
     }
 
-    // The existing database "details" field stores the shipment STATUS.
-    // The "activity" field remains the description of what happened.
+    // Display the exact STATUS text entered by the admin.
+    // Do not replace it with an automatically generated status.
     function getJourneyStatus(item) {
-      const allowedStatuses = [
-        "Registered",
-        "Pending",
-        "In Transit",
-        "On Hold",
-        "Stop Order",
-        "Customs Hold",
-        "Out for Delivery",
-        "Delivered"
-      ];
-
-      const enteredStatus = String(item.details || "").trim().toLowerCase();
-      const matchedStatus = allowedStatuses.find(
-        status => status.toLowerCase() === enteredStatus
-      );
-
-      if (matchedStatus) return matchedStatus;
-
-      // Keep older journey records readable if their status field is blank.
-      return "Pending";
+      const enteredStatus = String(item.details || "").trim();
+      return enteredStatus || "Not provided";
     }
 
     // Shipment Journey: render the four-column history table.
