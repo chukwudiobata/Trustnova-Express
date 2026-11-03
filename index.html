@@ -602,17 +602,24 @@
     .history-table tbody tr:nth-child(odd) { background: #e8e8e8; }
     .history-table tbody tr:nth-child(even) { background: #fff; }
 
+    .journey-status {
+      display: inline-block;
+      font-weight: 800;
+      color: #176b3a;
+      overflow-wrap: anywhere;
+    }
+
     .history-table th:nth-child(1),
-    .history-table td:nth-child(1) { width: 26%; }
+    .history-table td:nth-child(1) { width: 27%; }
 
     .history-table th:nth-child(2),
-    .history-table td:nth-child(2) { width: 22%; }
+    .history-table td:nth-child(2) { width: 25%; }
 
     .history-table th:nth-child(3),
     .history-table td:nth-child(3) { width: 25%; }
 
     .history-table th:nth-child(4),
-    .history-table td:nth-child(4) { width: 27%; }
+    .history-table td:nth-child(4) { width: 23%; }
 
     @media (max-width: 600px) {
       .sender-receiver-grid {
@@ -644,32 +651,9 @@
         padding: 6px 3px 6px 8px;
       }
 
-      /* Keep all four Shipment Journey headings on one horizontal line. */
-      .history-table-wrapper { width: 100%; overflow-x: hidden; }
-      .history-table {
-        display: table;
-        width: 100%;
-        min-width: 0;
-        table-layout: fixed;
-        font-size: 9px;
-      }
-      .history-table thead { display: table-header-group; }
-      .history-table tbody { display: table-row-group; }
-      .history-table tr { display: table-row; }
-      .history-table th,
-      .history-table td {
-        display: table-cell;
-        padding: 6px 2px;
-        font-size: 9px;
-        line-height: 1.25;
-        overflow-wrap: anywhere;
-        word-break: normal;
-      }
-      .history-table th {
-        font-size: 8px;
-        letter-spacing: 0;
-        white-space: nowrap;
-      }
+      .history-table { font-size: 10px; }
+      .history-table th { font-size: 9px; padding: 7px 2px; letter-spacing: 0; }
+      .history-table td { padding: 6px 3px; font-size: 10px; }
     }
 
     .small-note { color: #667085; font-size: 12px; }
@@ -950,20 +934,29 @@
           });
     }
 
-    // Provide a clear customer-facing message when an update has no manual details.
-    // Any details entered for an individual shipment update take priority.
-    function getJourneyDetails(item) {
-      const enteredDetails = String(item.details || "").trim();
-      if (enteredDetails) return enteredDetails;
+    // The existing database "details" field stores the shipment STATUS.
+    // The "activity" field remains the description of what happened.
+    function getJourneyStatus(item) {
+      const allowedStatuses = [
+        "Registered",
+        "Pending",
+        "In Transit",
+        "On Hold",
+        "Stop Order",
+        "Customs Hold",
+        "Out for Delivery",
+        "Delivered"
+      ];
 
-      const activity = String(item.activity || "").toLowerCase().replace(/[-_]/g, " ");
-      if (activity.includes("hold")) {
-        return "Your package is temporarily on hold pending further processing. Please check back for the next update.";
-      }
-      if (activity.includes("transit")) {
-        return "Your package is currently in transit to its destination. Further updates will be provided as it progresses.";
-      }
-      return "Shipment update recorded by TrustNova Express.";
+      const enteredStatus = String(item.details || "").trim().toLowerCase();
+      const matchedStatus = allowedStatuses.find(
+        status => status.toLowerCase() === enteredStatus
+      );
+
+      if (matchedStatus) return matchedStatus;
+
+      // Keep older journey records readable if their status field is blank.
+      return "Pending";
     }
 
     // Shipment Journey: render the four-column history table.
@@ -1006,7 +999,7 @@
           <td>${escapeHTML(displayDateTime(item.update_date))}</td>
           <td>${escapeHTML(item.activity || "Shipment update")}</td>
           <td>${escapeHTML(item.location || "Not provided")}</td>
-          <td>${escapeHTML(getJourneyDetails(item))}</td>
+          <td><strong class="journey-status">${escapeHTML(getJourneyStatus(item))}</strong></td>
         </tr>
       `).join("");
 
