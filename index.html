@@ -572,6 +572,7 @@
 
     .history-table {
       width: 100%;
+      min-width: 520px;
       border-collapse: collapse;
       font-family: Arial, Helvetica, sans-serif;
       font-size: 12px;
@@ -924,6 +925,22 @@
           });
     }
 
+    // Provide a clear customer-facing message when an update has no manual details.
+    // Any details entered for an individual shipment update take priority.
+    function getJourneyDetails(item) {
+      const enteredDetails = String(item.details || "").trim();
+      if (enteredDetails) return enteredDetails;
+
+      const activity = String(item.activity || "").toLowerCase().replace(/[-_]/g, " ");
+      if (activity.includes("hold")) {
+        return "Your package is temporarily on hold pending further processing. Please check back for the next update.";
+      }
+      if (activity.includes("transit")) {
+        return "Your package is currently in transit to its destination. Further updates will be provided as it progresses.";
+      }
+      return "Shipment update recorded by TrustNova Express.";
+    }
+
     // Shipment Journey: render the four-column history table.
     // Table data comes from the public customer-readable shipment_history table.
     async function loadShipmentHistory(trackingNumber) {
@@ -964,7 +981,7 @@
           <td>${escapeHTML(displayDateTime(item.update_date))}</td>
           <td>${escapeHTML(item.activity || "Shipment update")}</td>
           <td>${escapeHTML(item.location || "Not provided")}</td>
-          <td>${escapeHTML(item.details || "Not provided")}</td>
+          <td>${escapeHTML(getJourneyDetails(item))}</td>
         </tr>
       `).join("");
 
