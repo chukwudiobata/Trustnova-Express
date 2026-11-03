@@ -603,16 +603,16 @@
     .history-table tbody tr:nth-child(even) { background: #fff; }
 
     .history-table th:nth-child(1),
-    .history-table td:nth-child(1) { width: 27%; }
+    .history-table td:nth-child(1) { width: 26%; }
 
     .history-table th:nth-child(2),
-    .history-table td:nth-child(2) { width: 25%; }
+    .history-table td:nth-child(2) { width: 22%; }
 
     .history-table th:nth-child(3),
     .history-table td:nth-child(3) { width: 25%; }
 
     .history-table th:nth-child(4),
-    .history-table td:nth-child(4) { width: 23%; }
+    .history-table td:nth-child(4) { width: 27%; }
 
     @media (max-width: 600px) {
       .sender-receiver-grid {
@@ -644,9 +644,32 @@
         padding: 6px 3px 6px 8px;
       }
 
-      .history-table { font-size: 10px; }
-      .history-table th { font-size: 9px; padding: 7px 2px; letter-spacing: 0; }
-      .history-table td { padding: 6px 3px; font-size: 10px; }
+      /* Keep all four Shipment Journey headings on one horizontal line. */
+      .history-table-wrapper { width: 100%; overflow-x: hidden; }
+      .history-table {
+        display: table;
+        width: 100%;
+        min-width: 0;
+        table-layout: fixed;
+        font-size: 9px;
+      }
+      .history-table thead { display: table-header-group; }
+      .history-table tbody { display: table-row-group; }
+      .history-table tr { display: table-row; }
+      .history-table th,
+      .history-table td {
+        display: table-cell;
+        padding: 6px 2px;
+        font-size: 9px;
+        line-height: 1.25;
+        overflow-wrap: anywhere;
+        word-break: normal;
+      }
+      .history-table th {
+        font-size: 8px;
+        letter-spacing: 0;
+        white-space: nowrap;
+      }
     }
 
     .small-note { color: #667085; font-size: 12px; }
