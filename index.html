@@ -934,16 +934,14 @@
           });
     }
 
-    // Display the exact STATUS text entered by the admin.
-    // Do not replace it with an automatically generated status.
-    function getJourneyStatus(item) {
-      const enteredStatus = String(item.details || "").trim();
-      return enteredStatus || "Not provided";
+    // Show the current parcel status selected in the admin dashboard.
+    function getJourneyStatus(parcelStatus) {
+      return String(parcelStatus || "Status not yet updated").trim();
     }
 
     // Shipment Journey: render the four-column history table.
     // Table data comes from the public customer-readable shipment_history table.
-    async function loadShipmentHistory(trackingNumber) {
+    async function loadShipmentHistory(trackingNumber, parcelStatus) {
       const { data, error } = await supabaseClient
         .from("shipment_history")
         .select("activity, location, update_date, details")
@@ -981,7 +979,7 @@
           <td>${escapeHTML(displayDateTime(item.update_date))}</td>
           <td>${escapeHTML(item.activity || "Shipment update")}</td>
           <td>${escapeHTML(item.location || "Not provided")}</td>
-          <td><strong class="journey-status">${escapeHTML(getJourneyStatus(item))}</strong></td>
+          <td><strong class="journey-status">${escapeHTML(getJourneyStatus(parcelStatus))}</strong></td>
         </tr>
       `).join("");
 
@@ -1081,11 +1079,11 @@
           return;
         }
 
-        const historyHTML = await loadShipmentHistory(
-          parcel.tracking_number || trackingNumber
-        );
-
         const parcelStatus = parcel.status || "Status not yet updated";
+        const historyHTML = await loadShipmentHistory(
+          parcel.tracking_number || trackingNumber,
+          parcelStatus
+        );
         const adminNote = parcel.admin_note || "";
         const result = $("tracking-result");
 
