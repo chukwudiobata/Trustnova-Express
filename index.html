@@ -3,17 +3,23 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   <title>TrustNova Express | Parcel Tracking and Logistics Information</title>
+
   <meta name="description" content="Track your TrustNova Express parcel and view shipment details, status updates and delivery information.">
   <meta name="keywords" content="TrustNova Express, parcel tracking, shipment tracking, delivery updates, logistics">
   <meta name="robots" content="index, follow">
+
   <link rel="canonical" href="https://trustnovaexpress.com/">
+
   <meta property="og:type" content="website">
   <meta property="og:title" content="TrustNova Express | Delivering Trust, Worldwide">
   <meta property="og:description" content="Track your parcel and view shipment updates with TrustNova Express.">
   <meta property="og:url" content="https://trustnovaexpress.com/">
   <meta property="og:image" content="https://trustnovaexpress.com/logo.png.png">
+
   <meta name="theme-color" content="#c8102e">
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
   <style>
@@ -37,18 +43,21 @@
       font-family:Arial,Helvetica,sans-serif;
       color:var(--ink);
       background:#fff;
-      line-height:1.5
+      line-height:1.5;
     }
 
     button,input{font:inherit}
     a,button{cursor:pointer}
 
-    .top-strip{height:7px;background:var(--yellow)}
+    .top-strip{
+      height:7px;
+      background:var(--yellow);
+    }
 
     header{
       background:#fff;
       border-bottom:4px solid var(--red);
-      padding:14px 4%
+      padding:14px 4%;
     }
 
     .header-inner{
@@ -56,14 +65,14 @@
       margin:auto;
       display:flex;
       align-items:center;
-      gap:17px
+      gap:17px;
     }
 
     .logo{
       width:92px;
       height:88px;
       object-fit:contain;
-      flex:none
+      flex:none;
     }
 
     .brand h1{
@@ -72,7 +81,7 @@
       font-size:clamp(25px,4.5vw,43px);
       line-height:1;
       font-weight:950;
-      letter-spacing:-.7px
+      letter-spacing:-.7px;
     }
 
     .brand h1 span{color:var(--red)}
@@ -81,7 +90,7 @@
       margin:6px 0 0;
       color:#333;
       font-weight:800;
-      font-size:clamp(12px,1.8vw,17px)
+      font-size:clamp(12px,1.8vw,17px);
     }
 
     .brand small{
@@ -90,7 +99,7 @@
       color:#666;
       font-weight:700;
       font-size:11px;
-      letter-spacing:.7px
+      letter-spacing:.7px;
     }
 
     nav{
@@ -99,7 +108,7 @@
       overflow-x:auto;
       background:var(--yellow);
       border-bottom:1px solid #d7b300;
-      white-space:nowrap
+      white-space:nowrap;
     }
 
     nav a{
@@ -110,7 +119,7 @@
       color:#111;
       text-decoration:none;
       font-weight:900;
-      border-right:2px solid #fff
+      border-right:2px solid #fff;
     }
 
     nav a:hover,nav a:focus{background:#f0c500}
@@ -119,13 +128,13 @@
       display:flex;
       align-items:center;
       padding:4px 9px;
-      min-height:48px
+      min-height:48px;
     }
 
     .hero-banner{
       height:clamp(220px,37vw,430px);
       overflow:hidden;
-      background:#e8edf0
+      background:#e8edf0;
     }
 
     .hero-banner img{
@@ -133,35 +142,35 @@
       height:100%;
       display:block;
       object-fit:cover;
-      object-position:center 55%
+      object-position:center 55%;
     }
 
     .intro{
       padding:28px 5% 15px;
-      text-align:center
+      text-align:center;
     }
 
     .intro h2{
       margin:0 0 8px;
       font-size:clamp(25px,4vw,35px);
-      font-weight:950
+      font-weight:950;
     }
 
     .intro h3{
       margin:20px 0 6px;
       color:var(--red);
-      font-size:21px
+      font-size:21px;
     }
 
     .intro p{
       max-width:800px;
       margin:auto;
-      color:#555
+      color:#555;
     }
 
     .container{
       width:min(1200px,94%);
-      margin:auto
+      margin:auto;
     }
 
     section{scroll-margin-top:12px}
@@ -171,14 +180,14 @@
     .service-grid{
       display:grid;
       grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:17px
+      gap:17px;
     }
 
     .service-card{
       padding:8px;
       background:#f5f5f5;
       border:1px solid #ddd;
-      min-width:0
+      min-width:0;
     }
 
     .service-card img{
@@ -186,7 +195,7 @@
       width:100%;
       height:180px;
       object-fit:cover;
-      border-bottom:4px solid var(--red)
+      border-bottom:4px solid var(--red);
     }
 
     .service-card h3{
@@ -194,36 +203,36 @@
       padding:10px 7px 4px;
       font-size:23px;
       font-weight:500;
-      text-transform:uppercase
+      text-transform:uppercase;
     }
 
     .service-card h3 span{
       color:var(--red);
-      font-weight:900
+      font-weight:900;
     }
 
     .service-card p{
       margin:6px 7px 12px;
-      color:#444
+      color:#444;
     }
 
     .tracking-section{
       background:#f3f5f7;
-      padding:42px 0 50px
+      padding:42px 0 50px;
     }
 
     .section-heading{
       text-align:center;
       margin:0 0 8px;
       font-size:clamp(25px,3vw,35px);
-      font-weight:950
+      font-weight:950;
     }
 
     .section-subtitle{
       text-align:center;
       max-width:720px;
       margin:0 auto 23px;
-      color:var(--muted)
+      color:var(--muted);
     }
 
     .tracking-box{
@@ -233,26 +242,26 @@
       background:#fff;
       border:1px solid var(--line);
       border-radius:12px;
-      box-shadow:0 12px 32px #10182812
+      box-shadow:0 12px 32px #10182812;
     }
 
     .tracking-box>p:first-child{
       text-align:center;
       color:#596273;
-      margin-top:0
+      margin-top:0;
     }
 
     #tracking-form{
       display:grid;
       grid-template-columns:minmax(0,1fr) 175px;
       gap:10px;
-      align-items:end
+      align-items:end;
     }
 
     #tracking-form label{
       grid-column:1/-1;
       font-weight:800;
-      font-size:14px
+      font-size:14px;
     }
 
     input{
@@ -260,12 +269,12 @@
       min-height:54px;
       padding:12px;
       border:2px solid #cfd4dc;
-      border-radius:7px
+      border-radius:7px;
     }
 
     input:focus{
       outline:3px solid #16834a20;
-      border-color:var(--green)
+      border-color:var(--green);
     }
 
     .button{
@@ -275,31 +284,31 @@
       padding:13px 18px;
       text-align:center;
       text-decoration:none;
-      font-weight:900
+      font-weight:900;
     }
 
     .button-red{
       background:var(--red);
-      color:#fff
+      color:#fff;
     }
 
     .button-red:hover{background:var(--red-dark)}
 
     #tracking-form button{
       min-height:54px;
-      font-size:16px
+      font-size:16px;
     }
 
     button:disabled{
       opacity:.65;
-      cursor:wait
+      cursor:wait;
     }
 
     .message{
       margin-top:16px;
       padding:13px;
       border-radius:9px;
-      overflow-wrap:anywhere
+      overflow-wrap:anywhere;
     }
 
     .message:empty{display:none}
@@ -307,22 +316,22 @@
     .success{
       background:#fff;
       color:var(--ink);
-      padding:0
+      padding:0;
     }
 
     .error{
       background:#fff0f0;
-      color:#9a0013
+      color:#9a0013;
     }
 
     .info{
       background:#f0f3f8;
-      color:#252525
+      color:#252525;
     }
 
     .small-note{
       color:#667085;
-      font-size:12px
+      font-size:12px;
     }
 
     /* CUSTOMER TRACKING RESULT */
@@ -332,7 +341,7 @@
       border:1px solid #d5dbe2;
       border-radius:13px;
       background:#fff;
-      box-shadow:0 8px 24px #10182812
+      box-shadow:0 8px 24px #10182812;
     }
 
     .result-heading{
@@ -343,7 +352,7 @@
       background:var(--green);
       color:#fff;
       font-size:clamp(19px,3vw,25px);
-      font-weight:900
+      font-weight:900;
     }
 
     .result-heading .box-icon{font-size:27px}
@@ -352,7 +361,7 @@
       display:grid;
       grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);
       gap:12px;
-      padding:14px
+      padding:14px;
     }
 
     .tracking-number-card{
@@ -364,18 +373,18 @@
       display:flex;
       flex-direction:column;
       justify-content:center;
-      min-width:0
+      min-width:0;
     }
 
     .tracking-number-card small{
       font-size:14px;
-      font-weight:800
+      font-weight:800;
     }
 
     .tracking-number-card strong{
       font-size:clamp(17px,2.7vw,25px);
       overflow-wrap:anywhere;
-      line-height:1.3
+      line-height:1.3;
     }
 
     .status-hero{
@@ -386,7 +395,7 @@
       color:#fff;
       border-radius:11px;
       padding:15px;
-      min-width:0
+      min-width:0;
     }
 
     .status-check{
@@ -398,45 +407,45 @@
       display:grid;
       place-items:center;
       font-size:39px;
-      font-weight:900
+      font-weight:900;
     }
 
     .status-hero strong{
       display:block;
       font-size:clamp(21px,3.5vw,34px);
       line-height:1.1;
-      overflow-wrap:anywhere
+      overflow-wrap:anywhere;
     }
 
     .status-hero small{
       display:block;
       margin-top:5px;
-      font-size:13px
+      font-size:13px;
     }
 
     .status-date{
       margin-left:auto;
       padding-left:13px;
       border-left:2px solid #ffffff90;
-      min-width:120px
+      min-width:120px;
     }
 
     .status-date span{
       display:block;
       font-size:12px;
-      font-weight:700
+      font-weight:700;
     }
 
     .status-date strong{
       font-size:16px;
-      color:var(--yellow)
+      color:var(--yellow);
     }
 
     .detail-grid{
       display:grid;
       grid-template-columns:repeat(3,minmax(0,1fr));
       gap:9px;
-      padding:0 14px 14px
+      padding:0 14px 14px;
     }
 
     .detail-card{
@@ -444,7 +453,7 @@
       padding:12px;
       background:#f5f7fa;
       border:1px solid #dbe1e8;
-      border-radius:8px
+      border-radius:8px;
     }
 
     .detail-card .label{
@@ -454,7 +463,7 @@
       font-weight:900;
       text-transform:uppercase;
       letter-spacing:.35px;
-      margin-bottom:4px
+      margin-bottom:4px;
     }
 
     .detail-card .value{
@@ -463,7 +472,7 @@
       font-size:14px;
       font-weight:700;
       overflow-wrap:anywhere;
-      white-space:pre-wrap
+      white-space:pre-wrap;
     }
 
     .detail-card .subvalue{
@@ -472,14 +481,14 @@
       color:#596273;
       font-size:12px;
       overflow-wrap:anywhere;
-      white-space:pre-wrap
+      white-space:pre-wrap;
     }
 
     .info-section{
       margin:0 14px 14px;
       border:1px solid #dce1e7;
       border-radius:9px;
-      overflow:hidden
+      overflow:hidden;
     }
 
     .info-section h4{
@@ -488,36 +497,36 @@
       background:#f0f2f5;
       border-bottom:1px solid #dce1e7;
       color:#263445;
-      font-size:16px
+      font-size:16px;
     }
 
     .info-section h4 .accent{color:var(--red)}
 
     .people-grid{
       display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr))
+      grid-template-columns:repeat(2,minmax(0,1fr));
     }
 
     .person-card{
       padding:13px;
-      min-width:0
+      min-width:0;
     }
 
     .person-card+.person-card{
-      border-left:1px solid #e1e5ea
+      border-left:1px solid #e1e5ea;
     }
 
     .person-card h5{
       margin:0 0 8px;
       color:var(--green);
-      font-size:15px
+      font-size:15px;
     }
 
     .person-card p{
       margin:4px 0;
       font-size:13px;
       overflow-wrap:anywhere;
-      white-space:pre-wrap
+      white-space:pre-wrap;
     }
 
     .person-card p strong{color:#4b5563}
@@ -525,13 +534,13 @@
     .shipment-facts{
       display:grid;
       grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:0
+      gap:0;
     }
 
     .fact{
       padding:12px;
       border-right:1px solid #e1e5ea;
-      min-width:0
+      min-width:0;
     }
 
     .fact:last-child{border-right:0}
@@ -541,14 +550,14 @@
       color:#657080;
       font-size:11px;
       font-weight:900;
-      text-transform:uppercase
+      text-transform:uppercase;
     }
 
     .fact strong{
       display:block;
       margin-top:4px;
       font-size:13px;
-      overflow-wrap:anywhere
+      overflow-wrap:anywhere;
     }
 
     .admin-note{
@@ -557,20 +566,20 @@
       background:#eaf8ed;
       border:1px solid #bce5c7;
       border-left:5px solid var(--green);
-      border-radius:8px
+      border-radius:8px;
     }
 
     .admin-note small{
       color:var(--green-dark);
       font-weight:900;
-      text-transform:uppercase
+      text-transform:uppercase;
     }
 
     .admin-note p{
       margin:5px 0 0;
       font-size:14px;
       white-space:pre-wrap;
-      overflow-wrap:anywhere
+      overflow-wrap:anywhere;
     }
 
     /* SHIPMENT PROGRESS */
@@ -580,13 +589,13 @@
     .progress-title{
       margin:0 0 10px;
       font-weight:900;
-      color:#253244
+      color:#253244;
     }
 
     .status-progress{
       display:flex;
       gap:3px;
-      overflow:hidden
+      overflow:hidden;
     }
 
     .status-step{
@@ -597,7 +606,7 @@
       background:#cbd1d8;
       color:#fff;
       font-size:clamp(9px,1.3vw,12px);
-      font-weight:800
+      font-weight:800;
     }
 
     .status-step:first-child{border-radius:6px 0 0 6px}
@@ -609,7 +618,7 @@
       background:var(--yellow);
       color:#222;
       outline:2px solid #e5b900;
-      outline-offset:-2px
+      outline-offset:-2px;
     }
 
     .progress-hold{
@@ -621,18 +630,19 @@
       border-radius:6px;
       color:#9a0013;
       font-size:13px;
-      font-weight:800
+      font-weight:800;
     }
 
-    /* SHIPMENT JOURNEY */
+    /* NEW DHL-INSPIRED SHIPMENT JOURNEY */
 
     .history-section{
       margin:0 14px 14px;
-      border:1px solid #dce1e7;
+      border:1px solid #d8dde3;
       border-radius:9px;
       overflow:hidden;
       width:auto;
-      max-width:100%
+      max-width:100%;
+      background:#fff;
     }
 
     .history-title{
@@ -640,30 +650,40 @@
       justify-content:space-between;
       align-items:center;
       gap:10px;
-      padding:11px 13px;
-      background:var(--red);
-      color:#fff
+      padding:13px 15px;
+      background:#fff;
+      color:#17202b;
+      border-bottom:4px solid var(--yellow);
     }
 
     .history-title h4{
       margin:0;
-      font-size:18px
+      font-size:19px;
+      font-weight:900;
     }
 
     .history-title span{
-      font-size:11px;
-      font-weight:800;
-      background:var(--yellow);
-      color:#222;
-      border-radius:20px;
-      padding:5px 9px
+      font-size:10px;
+      font-weight:900;
+      background:var(--red);
+      color:#fff;
+      border-radius:3px;
+      padding:6px 9px;
+      letter-spacing:.4px;
     }
 
-    /* Four columns always fit the available screen width. */
+    .journey-intro{
+      padding:10px 14px;
+      background:#f6f7f8;
+      color:#596273;
+      font-size:12px;
+      border-bottom:1px solid #e1e5ea;
+    }
+
     .history-table-wrapper{
       width:100%;
       max-width:100%;
-      overflow:hidden
+      overflow:hidden;
     }
 
     .history-table{
@@ -671,78 +691,139 @@
       max-width:100%;
       table-layout:fixed;
       border-collapse:collapse;
-      font-size:12px
+      font-size:12px;
     }
 
     .history-table th{
-      background:#f0f2f5;
-      color:#374151;
+      background:#263445;
+      color:#fff;
       text-align:left;
-      padding:10px 7px;
-      font-size:11px;
-      overflow-wrap:anywhere
+      padding:11px 7px;
+      font-size:10px;
+      letter-spacing:.3px;
+      overflow-wrap:anywhere;
     }
 
     .history-table td{
-      padding:10px 7px;
-      border-top:1px solid #e1e5ea;
+      padding:12px 7px;
+      border-bottom:1px solid #e1e5ea;
       vertical-align:top;
       overflow-wrap:anywhere;
-      word-break:break-word
+      word-break:break-word;
+    }
+
+    .history-table tbody tr:last-child td{
+      border-bottom:0;
     }
 
     .history-table th:nth-child(1),
-    .history-table td:nth-child(1){width:25%}
+    .history-table td:nth-child(1){width:24%}
 
     .history-table th:nth-child(2),
-    .history-table td:nth-child(2){width:26%}
+    .history-table td:nth-child(2){width:29%}
 
     .history-table th:nth-child(3),
     .history-table td:nth-child(3){width:23%}
 
     .history-table th:nth-child(4),
-    .history-table td:nth-child(4){width:26%}
+    .history-table td:nth-child(4){width:24%}
 
-    .history-table tbody tr:nth-child(even){background:#fafbfc}
+    .history-table tbody tr:nth-child(even){
+      background:#fafbfc;
+    }
 
-    .history-table tbody tr.current-update{background:#fff4bd}
+    .history-table tbody tr.current-update{
+      background:#fff9df;
+    }
+
+    /* Timeline line and marker in the Activity column */
+
+    .activity-cell{
+      position:relative;
+      padding-left:17px !important;
+      border-left:2px solid #e0e4e9;
+    }
+
+    .activity-cell::before{
+      content:"";
+      position:absolute;
+      left:-6px;
+      top:15px;
+      width:10px;
+      height:10px;
+      border-radius:50%;
+      background:var(--red);
+      border:2px solid #fff;
+      box-shadow:0 0 0 1px var(--red);
+    }
+
+    .current-update .activity-cell::before{
+      background:var(--yellow);
+      box-shadow:0 0 0 2px var(--red);
+    }
+
+    .activity-name{
+      display:block;
+      font-weight:900;
+      color:#263445;
+      line-height:1.35;
+    }
+
+    .activity-details{
+      display:block;
+      margin-top:4px;
+      color:#687385;
+      font-size:11px;
+      line-height:1.35;
+    }
 
     .journey-status{
       display:inline-block;
       max-width:100%;
-      padding:4px 7px;
-      border-radius:20px;
+      padding:5px 7px;
+      border-radius:4px;
       background:#e7f6ec;
       color:#116b38;
       font-weight:900;
       overflow-wrap:anywhere;
-      word-break:break-word
+      word-break:break-word;
+      text-align:center;
     }
 
     .journey-status.hold{
       background:#fff0f0;
       color:#a30b24;
-      border:1px solid #f1b8c0
+      border:1px solid #f1b8c0;
     }
 
     .journey-status.delivered{
       background:#e7f6ec;
-      color:#116b38
+      color:#116b38;
+    }
+
+    .journey-status.transit{
+      background:#eaf2ff;
+      color:#174ea6;
+    }
+
+    .journey-status.registered{
+      background:#f0f2f5;
+      color:#475467;
     }
 
     .history-empty{
-      padding:13px;
+      padding:15px;
       margin:0;
       color:#596273;
       background:#fafbfc;
-      font-size:13px
+      font-size:13px;
     }
 
     .result-footnote{
       margin:0;
       padding:0 15px 14px;
       color:#667085;
-      font-size:11px
+      font-size:11px;
     }
 
     .contact-section{padding:42px 0}
@@ -755,7 +836,7 @@
       background:#fff;
       border:1px solid var(--line);
       border-radius:12px;
-      box-shadow:0 10px 30px #0000000a
+      box-shadow:0 10px 30px #0000000a;
     }
 
     .contact-email{
@@ -767,12 +848,12 @@
       border-radius:9px;
       max-width:360px;
       font-weight:800;
-      overflow-wrap:anywhere
+      overflow-wrap:anywhere;
     }
 
     .contact-email a{
       color:var(--green);
-      text-decoration:none
+      text-decoration:none;
     }
 
     .contact-email.visible{display:block}
@@ -782,12 +863,12 @@
       color:#fff;
       padding:28px 15px;
       text-align:center;
-      border-top:6px solid var(--yellow)
+      border-top:6px solid var(--yellow);
     }
 
     footer p{
       margin:5px 0;
-      color:#d4d9e1
+      color:#d4d9e1;
     }
 
     @media(max-width:760px){
@@ -795,11 +876,11 @@
 
       nav a{
         padding:13px 14px;
-        font-size:14px
+        font-size:14px;
       }
 
       .service-grid{
-        grid-template-columns:repeat(2,minmax(0,1fr))
+        grid-template-columns:repeat(2,minmax(0,1fr));
       }
 
       .service-card img{height:145px}
@@ -807,7 +888,7 @@
       .result-main{grid-template-columns:1fr}
 
       .detail-grid{
-        grid-template-columns:repeat(2,minmax(0,1fr))
+        grid-template-columns:repeat(2,minmax(0,1fr));
       }
     }
 
@@ -818,12 +899,12 @@
 
       .logo{
         width:60px;
-        height:60px
+        height:60px;
       }
 
       .brand h1{
         font-size:22px;
-        letter-spacing:-.4px
+        letter-spacing:-.4px;
       }
 
       .brand p{font-size:11px}
@@ -841,12 +922,12 @@
 
       .service-card h3{
         font-size:17px;
-        padding:8px 4px 3px
+        padding:8px 4px 3px;
       }
 
       .service-card p{
         font-size:12px;
-        margin:4px
+        margin:4px;
       }
 
       .tracking-section{padding:30px 0}
@@ -855,23 +936,23 @@
 
       #tracking-form{
         grid-template-columns:minmax(0,1fr) 105px;
-        gap:7px
+        gap:7px;
       }
 
       #tracking-form input,
       #tracking-form button{
         min-height:49px;
-        font-size:13px
+        font-size:13px;
       }
 
       .result-heading{
         padding:10px 12px;
-        font-size:18px
+        font-size:18px;
       }
 
       .result-main{
         padding:9px;
-        gap:8px
+        gap:8px;
       }
 
       .tracking-number-card{padding:11px}
@@ -880,28 +961,28 @@
 
       .status-hero{
         gap:9px;
-        padding:11px
+        padding:11px;
       }
 
       .status-check{
         width:48px;
         height:48px;
         font-size:29px;
-        border-width:3px
+        border-width:3px;
       }
 
       .status-hero strong{font-size:22px}
 
       .status-date{
         min-width:88px;
-        padding-left:8px
+        padding-left:8px;
       }
 
       .status-date strong{font-size:13px}
 
       .detail-grid{
         padding:0 9px 9px;
-        gap:6px
+        gap:6px;
       }
 
       .detail-card{padding:9px}
@@ -915,14 +996,14 @@
       .history-section{
         margin-left:9px;
         margin-right:9px;
-        margin-bottom:9px
+        margin-bottom:9px;
       }
 
       .people-grid{grid-template-columns:1fr}
 
       .person-card+.person-card{
         border-left:0;
-        border-top:1px solid #e1e5ea
+        border-top:1px solid #e1e5ea;
       }
 
       .person-card{padding:10px}
@@ -932,52 +1013,77 @@
       .fact{
         border-right:0;
         border-bottom:1px solid #e1e5ea;
-        padding:9px 11px
+        padding:9px 11px;
       }
 
       .fact:last-child{border-bottom:0}
 
       .status-step{
         font-size:9px;
-        padding:7px 1px
+        padding:7px 1px;
+      }
+
+      .history-title{
+        padding:10px;
       }
 
       .history-title h4{font-size:16px}
-      .history-title span{font-size:9px}
+      .history-title span{font-size:8px}
 
-      /* Keep all four journey columns visible on mobile. */
+      .journey-intro{
+        padding:8px 10px;
+        font-size:10px;
+      }
+
+      /* All four columns remain visible on phone screens. */
+
       .history-table{
         width:100%;
         min-width:0;
         table-layout:fixed;
-        font-size:9px
+        font-size:9px;
       }
 
       .history-table th{
-        padding:7px 3px;
+        padding:8px 3px;
         font-size:8px;
-        line-height:1.25
+        line-height:1.25;
       }
 
       .history-table td{
-        padding:8px 3px;
+        padding:9px 3px;
         font-size:9px;
         line-height:1.35;
         overflow-wrap:anywhere;
-        word-break:break-word
+        word-break:break-word;
       }
 
       .history-table th:nth-child(1),
-      .history-table td:nth-child(1){width:25%}
+      .history-table td:nth-child(1){width:24%}
 
       .history-table th:nth-child(2),
-      .history-table td:nth-child(2){width:26%}
+      .history-table td:nth-child(2){width:29%}
 
       .history-table th:nth-child(3),
       .history-table td:nth-child(3){width:23%}
 
       .history-table th:nth-child(4),
-      .history-table td:nth-child(4){width:26%}
+      .history-table td:nth-child(4){width:24%}
+
+      .activity-cell{
+        padding-left:12px !important;
+      }
+
+      .activity-cell::before{
+        width:7px;
+        height:7px;
+        left:-5px;
+        top:13px;
+      }
+
+      .activity-name{font-size:9px}
+
+      .activity-details{font-size:8px}
 
       .journey-status{
         display:block;
@@ -986,7 +1092,7 @@
         text-align:center;
         font-size:8px;
         line-height:1.25;
-        border-radius:5px
+        border-radius:4px;
       }
 
       .result-footnote{padding:0 10px 10px}
@@ -995,34 +1101,43 @@
     @media(max-width:360px){
       .history-table th{
         font-size:7px;
-        padding:6px 2px
+        padding:7px 2px;
       }
 
       .history-table td{
         font-size:8px;
-        padding:7px 2px
+        padding:7px 2px;
       }
 
       .journey-status{font-size:7px}
 
       .history-title h4{font-size:14px}
-      .history-title span{font-size:8px}
+      .history-title span{font-size:7px}
+
+      .activity-name{font-size:8px}
+      .activity-details{font-size:7px}
     }
   </style>
 </head>
 
 <body>
+
   <div class="top-strip"></div>
 
   <header>
     <div class="header-inner">
-      <img class="logo" src="logo.png.png" alt="TrustNova Express company logo">
+
+      <img
+        class="logo"
+        src="logo.png.png"
+        alt="TrustNova Express company logo">
 
       <div class="brand">
         <h1>TRUSTNOVA <span>EXPRESS</span></h1>
         <p>Your Package, Our Priority</p>
         <small>INTERNATIONAL PARCEL &amp; LOGISTICS SERVICES</small>
       </div>
+
     </div>
   </header>
 
@@ -1032,19 +1147,32 @@
     <a href="#services">Our Services</a>
     <a href="#track">Track Package</a>
     <a href="#contact">Contact Us</a>
-    <div id="google_translate_element" aria-label="Choose website language"></div>
+
+    <div
+      id="google_translate_element"
+      aria-label="Choose website language">
+    </div>
   </nav>
 
   <main>
-    <section class="hero-banner" id="home" aria-label="TrustNova Express logistics">
+
+    <section
+      class="hero-banner"
+      id="home"
+      aria-label="TrustNova Express logistics">
+
       <img
         src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&amp;fit=crop&amp;w=2000&amp;q=85"
         alt="Freight truck travelling on a road"
         fetchpriority="high">
+
     </section>
 
+
     <section class="intro" id="about">
+
       <div class="container">
+
         <h2>About TrustNova Express</h2>
 
         <p>
@@ -1070,17 +1198,27 @@
 
         <h3>Our Commitment</h3>
 
-        <p>We value clear communication and accessible shipment information.</p>
+        <p>
+          We value clear communication and accessible shipment information.
+        </p>
 
-        <p><strong>TrustNova Express — Your Package, Our Priority.</strong></p>
+        <p>
+          <strong>TrustNova Express — Your Package, Our Priority.</strong>
+        </p>
+
       </div>
+
     </section>
 
+
     <section class="services-section" id="services">
+
       <div class="container">
+
         <div class="service-grid">
 
           <article class="service-card">
+
             <img
               src="https://images.unsplash.com/photo-1494412519320-aa613dfb7738?auto=format&amp;fit=crop&amp;w=1000&amp;q=85"
               alt="Cargo containers aboard a shipping vessel"
@@ -1091,9 +1229,12 @@
             <p>
               Sea-freight options for cargo and goods moving across international ports.
             </p>
+
           </article>
 
+
           <article class="service-card">
+
             <img
               src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&amp;fit=crop&amp;w=1000&amp;q=85"
               alt="Aircraft in flight"
@@ -1104,9 +1245,12 @@
             <p>
               Air-freight options for shipments moving between destinations.
             </p>
+
           </article>
 
+
           <article class="service-card">
+
             <img
               src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&amp;fit=crop&amp;w=1000&amp;q=85"
               alt="Heavy goods truck on a highway"
@@ -1117,13 +1261,18 @@
             <p>
               Road transport for parcels and goods between connected locations.
             </p>
+
           </article>
 
         </div>
+
       </div>
+
     </section>
 
+
     <section class="tracking-section" id="track">
+
       <div class="container">
 
         <h2 class="section-heading">SHIPMENT TRACKING</h2>
@@ -1134,10 +1283,16 @@
         </p>
 
         <div class="tracking-box">
-          <p>Use the tracking number provided by TrustNova Express.</p>
+
+          <p>
+            Use the tracking number provided by TrustNova Express.
+          </p>
 
           <form id="tracking-form">
-            <label for="tracking-number">Tracking Number</label>
+
+            <label for="tracking-number">
+              Tracking Number
+            </label>
 
             <input
               id="tracking-number"
@@ -1150,32 +1305,47 @@
             <button class="button button-red" type="submit">
               TRACK PACKAGE
             </button>
+
           </form>
 
-          <div id="tracking-result" class="message" aria-live="polite"></div>
+          <div
+            id="tracking-result"
+            class="message"
+            aria-live="polite">
+          </div>
 
           <p class="small-note">
             For your privacy, keep your tracking number secure. Shipment details
             shown here are based on information recorded in our tracking system.
           </p>
+
         </div>
+
       </div>
+
     </section>
 
+
     <section class="contact-section" id="contact">
+
       <div class="container">
 
         <div class="contact-card">
+
           <h2 class="section-heading">CONTACT US</h2>
 
-          <p>Need help with your shipment? Our team is ready to hear from you.</p>
+          <p>
+            Need help with your shipment? Our team is ready to hear from you.
+          </p>
 
           <button
             id="contact-toggle"
             class="button button-red"
             type="button"
             aria-expanded="false">
+
             CONTACT US
+
           </button>
 
           <div
@@ -1188,22 +1358,37 @@
             <a href="mailto:trustnovaexpress@gmail.com">
               trustnovaexpress@gmail.com
             </a>
+
           </div>
+
         </div>
 
       </div>
+
     </section>
+
   </main>
 
+
   <footer>
+
     <strong>TRUSTNOVA EXPRESS</strong>
+
     <p>Your Package, Our Priority.</p>
-    <p>&copy; <span id="year"></span> TrustNova Express.</p>
+
+    <p>
+      &copy; <span id="year"></span> TrustNova Express.
+    </p>
+
   </footer>
 
+
   <script>
-    // Supabase connection
-    const SUPABASE_URL = "https://trydftaqqypqcxsgixto.supabase.co";
+
+    // SUPABASE CONNECTION
+
+    const SUPABASE_URL =
+      "https://trydftaqqypqcxsgixto.supabase.co";
 
     const SUPABASE_PUBLISHABLE_KEY =
       "sb_publishable_2h0EyOMhtBx3eWEiuoAOyg_qjw2QzED";
@@ -1219,7 +1404,9 @@
 
 
     // CONTACT EMAIL TOGGLE
+
     $("contact-toggle").addEventListener("click", () => {
+
       const panel = $("contact-email");
 
       const open = panel.classList.toggle("visible");
@@ -1233,11 +1420,14 @@
 
       $("contact-toggle").textContent =
         open ? "HIDE EMAIL" : "CONTACT US";
+
     });
 
 
-    // PROTECT CUSTOMER DATA FROM HTML INJECTION
+    // HTML SECURITY
+
     function escapeHTML(value) {
+
       return String(value ?? "").replace(/[&<>"']/g, ch => ({
         "&":"&amp;",
         "<":"&lt;",
@@ -1245,30 +1435,38 @@
         '"':"&quot;",
         "'":"&#39;"
       })[ch]);
+
     }
 
 
-    // SHOW TRACKING MESSAGES
+    // TRACKING MESSAGES
+
     function showMessage(text, type="info") {
+
       const el = $("tracking-result");
 
       el.className = "message " + type;
 
       el.textContent = text;
+
     }
 
 
     // DATE HELPERS
+
     function validDate(value) {
+
       if (!value) return null;
 
       const d = new Date(value);
 
       return Number.isNaN(d.getTime()) ? null : d;
+
     }
 
 
     function dateText(value) {
+
       if (!value) return "Not provided";
 
       const d = validDate(value);
@@ -1280,10 +1478,12 @@
             year:"numeric"
           })
         : String(value);
+
     }
 
 
     function dateTimeText(value) {
+
       if (!value) return "Not provided";
 
       const d = validDate(value);
@@ -1297,14 +1497,20 @@
             minute:"2-digit"
           })
         : String(value);
+
     }
 
 
     // STATUS CLASSIFICATION
+
     function statusClass(status) {
+
       const s = String(status || "").toLowerCase();
 
-      if (s.includes("deliver") && !s.includes("out for")) {
+      if (
+        s.includes("deliver") &&
+        !s.includes("out for")
+      ) {
         return "delivered";
       }
 
@@ -1316,23 +1522,30 @@
         return "hold";
       }
 
-      if (s.includes("out for")) return "out";
-
       if (
         s.includes("transit") ||
-        s.includes("arrived")
+        s.includes("arrived") ||
+        s.includes("out for")
       ) {
         return "transit";
       }
 
-      if (s.includes("pick")) return "picked";
+      if (
+        s.includes("registered") ||
+        s.includes("pending")
+      ) {
+        return "registered";
+      }
 
       return "registered";
+
     }
 
 
     // SHIPMENT PROGRESS
+
     function progressHTML(status) {
+
       const stages = [
         "Registered",
         "Picked Up",
@@ -1348,9 +1561,8 @@
         s.includes("stop order") ||
         s.includes("customs");
 
-      // Do not show In Transit as the active status when
-      // the actual parcel status is a hold or stop order.
       if (isHold) {
+
         return `
           ${stages.map(stage => `
             <div class="status-step">${stage}</div>
@@ -1360,35 +1572,62 @@
             Current shipment status: ${escapeHTML(status)}
           </div>
         `;
+
       }
 
       let active = 0;
 
-      if (s.includes("deliver") && !s.includes("out for")) {
+      if (
+        s.includes("deliver") &&
+        !s.includes("out for")
+      ) {
         active = 4;
+
       } else if (s.includes("out for")) {
+
         active = 3;
-      } else if (s.includes("transit") || s.includes("arrived")) {
+
+      } else if (
+        s.includes("transit") ||
+        s.includes("arrived")
+      ) {
+
         active = 2;
+
       } else if (s.includes("pick")) {
+
         active = 1;
+
       }
 
       return stages.map((stage, i) => `
+
         <div class="status-step ${
           i < active ? "done" : ""
         } ${
           i === active ? "active" : ""
-        }">${stage}</div>
+        }">
+
+          ${stage}
+
+        </div>
+
       `).join("");
+
     }
 
 
     // DETAIL CARD
+
     function detailCard(label, value, sub="") {
+
       return `
+
         <div class="detail-card">
-          <span class="label">${escapeHTML(label)}</span>
+
+          <span class="label">
+            ${escapeHTML(label)}
+          </span>
 
           <span class="value">
             ${escapeHTML(value || "Not provided")}
@@ -1399,14 +1638,20 @@
               ? `<span class="subvalue">${escapeHTML(sub)}</span>`
               : ""
           }
+
         </div>
+
       `;
+
     }
 
 
     // SENDER AND RECEIVER DETAILS
+
     function personBlock(title, name, address, phone, email) {
+
       return `
+
         <div class="person-card">
 
           <h5>${escapeHTML(title)}</h5>
@@ -1433,33 +1678,63 @@
           }
 
         </div>
+
       `;
+
     }
 
 
-    // LOAD SHIPMENT JOURNEY
-    // The current parcel status is passed into this function.
+    // JOURNEY STATUS BADGE
+
+    function journeyStatusBadge(status) {
+
+      const cls = statusClass(status);
+
+      return `
+        <span class="journey-status ${cls}">
+          ${escapeHTML(status || "Update")}
+        </span>
+      `;
+
+    }
+
+
+    // NEW SHIPMENT JOURNEY
+
     async function loadShipmentHistory(
       trackingNumber,
-      currentParcelStatus
+      parcel
     ) {
 
+      const currentParcelStatus =
+        parcel.status || "Status not yet updated";
+
+
       const { data, error } = await supabaseClient
+
         .from("shipment_history")
+
         .select("*")
+
         .eq("tracking_number", trackingNumber)
+
         .order("update_date", { ascending:false });
 
 
       if (error) {
+
         console.error("Shipment history error:", error);
 
         return `
+
           <section class="history-section">
 
             <div class="history-title">
+
               <h4>Shipment Journey</h4>
+
               <span>TRACKING UPDATES</span>
+
             </div>
 
             <p class="history-empty">
@@ -1468,117 +1743,179 @@
             </p>
 
           </section>
+
         `;
+
       }
 
 
-      if (!data || data.length === 0) {
-        return `
-          <section class="history-section">
+      let historyRows = data || [];
 
-            <div class="history-title">
-              <h4>Shipment Journey</h4>
-              <span>TRACKING UPDATES</span>
-            </div>
 
-            <p class="history-empty">
-              No shipment journey updates have been added yet.
-            </p>
+      /*
+        If there are no separate history records, show the current
+        parcel status as the latest available tracking update.
 
-          </section>
-        `;
+        This makes sure customers can still see the actual status.
+      */
+
+      if (historyRows.length === 0) {
+
+        historyRows = [{
+
+          activity:
+            parcel.admin_note ||
+            "Latest shipment update",
+
+          location:
+            parcel.destination ||
+            parcel.receiver_address ||
+            parcel.delivery_address ||
+            "Not provided",
+
+          update_date:
+            parcel.last_updated ||
+            parcel.created_at ||
+            parcel.ship_date,
+
+          status:currentParcelStatus,
+
+          details:""
+
+        }];
+
       }
 
 
-      const rows = data.map((item, index) => {
+      const rows = historyRows.map((item, index) => {
 
-        // Keep the recorded activity separate from the status.
-        const activity = item.activity || "Shipment update";
-
-        let eventStatus =
-          item.status ||
+        const activity =
           item.activity ||
-          "Update";
+          "Shipment update";
 
 
         /*
-          IMPORTANT FIX:
+          IMPORTANT STATUS RULE:
 
-          The newest journey row uses the current parcel status
-          returned by the track_parcel RPC.
+          The latest journey row always uses the current parcel
+          status returned by the track_parcel RPC.
 
-          Example:
-          If the current parcel status is "On Hold", the latest
-          journey status will show "On Hold", not "In Transit".
+          Therefore, if the admin's current status is On Hold,
+          the latest customer journey status will be On Hold.
+
+          Older rows use their own saved status.
         */
 
-        if (index === 0 && currentParcelStatus) {
+        let eventStatus =
+          item.status ||
+          "Update";
+
+
+        if (index === 0) {
+
           eventStatus = currentParcelStatus;
+
         }
 
 
-        const status = String(eventStatus);
+        const dateValue =
+          item.update_date ||
+          item.created_at ||
+          parcel.last_updated;
 
-        const cls = statusClass(status);
+
+        const location =
+          item.location ||
+          "Not provided";
 
 
         return `
+
           <tr class="${index === 0 ? "current-update" : ""}">
 
             <td>
-              ${escapeHTML(
-                dateTimeText(item.update_date || item.created_at)
-              )}
+              ${escapeHTML(dateTimeText(dateValue))}
             </td>
 
-            <td>
-              <strong>${escapeHTML(activity)}</strong>
+
+            <td class="activity-cell">
+
+              <span class="activity-name">
+                ${escapeHTML(activity)}
+              </span>
 
               ${
                 item.details
-                  ? `<br>${escapeHTML(item.details)}`
+                  ? `
+                    <span class="activity-details">
+                      ${escapeHTML(item.details)}
+                    </span>
+                  `
                   : ""
               }
+
             </td>
 
-            <td>
-              ${escapeHTML(item.location || "Not provided")}
-            </td>
 
             <td>
-              <span class="journey-status ${cls}">
-                ${escapeHTML(status)}
-              </span>
+              ${escapeHTML(location)}
+            </td>
+
+
+            <td>
+              ${journeyStatusBadge(eventStatus)}
             </td>
 
           </tr>
+
         `;
+
       }).join("");
 
 
       return `
+
         <section class="history-section">
 
           <div class="history-title">
+
             <h4>Shipment Journey</h4>
+
             <span>TRACKING UPDATES</span>
+
           </div>
+
+
+          <div class="journey-intro">
+            Follow the recorded movement and latest status of your shipment.
+          </div>
+
 
           <div class="history-table-wrapper">
 
             <table class="history-table">
 
               <thead>
+
                 <tr>
+
                   <th>DATE / TIME</th>
+
                   <th>ACTIVITY</th>
+
                   <th>LOCATION</th>
+
                   <th>STATUS</th>
+
                 </tr>
+
               </thead>
 
+
               <tbody>
+
                 ${rows}
+
               </tbody>
 
             </table>
@@ -1586,58 +1923,80 @@
           </div>
 
         </section>
+
       `;
+
     }
 
 
     // DISPLAY PARCEL INFORMATION
-    function renderParcel(parcel, historyHTML, trackingNumber) {
+
+    function renderParcel(
+      parcel,
+      historyHTML,
+      trackingNumber
+    ) {
 
       const status =
         parcel.status || "Status not yet updated";
+
 
       const shipDateTime =
         parcel.ship_date ||
         parcel.created_at ||
         parcel.last_updated;
 
-      const estimated = parcel.estimated_delivery;
+
+      const estimated =
+        parcel.estimated_delivery;
+
 
       const statusIsDelivered =
         String(status).toLowerCase().includes("delivered") &&
         !String(status).toLowerCase().includes("out for");
 
+
       const statusLine =
         parcel.admin_note ||
         "Your shipment information has been updated.";
+
 
       const destination =
         parcel.destination ||
         parcel.receiver_address ||
         "Not provided";
 
+
       const result = $("tracking-result");
 
       result.className = "message success";
+
 
       result.innerHTML = `
 
         <div class="tracking-result-card">
 
+
           <div class="result-heading">
+
             <span class="box-icon">▣</span>
+
             Parcel Information
+
           </div>
 
 
           <div class="result-main">
+
 
             <div class="tracking-number-card">
 
               <small>TRACKING NUMBER</small>
 
               <strong>
-                ${escapeHTML(parcel.tracking_number || trackingNumber)}
+                ${escapeHTML(
+                  parcel.tracking_number || trackingNumber
+                )}
               </strong>
 
             </div>
@@ -1649,16 +2008,26 @@
                 ${statusIsDelivered ? "✓" : "↗"}
               </div>
 
-              <div>
-                <strong>${escapeHTML(status)}</strong>
 
-                <small>${escapeHTML(statusLine)}</small>
+              <div>
+
+                <strong>
+                  ${escapeHTML(status)}
+                </strong>
+
+                <small>
+                  ${escapeHTML(statusLine)}
+                </small>
+
               </div>
+
 
               <div class="status-date">
 
                 <span>
-                  ${statusIsDelivered ? "DELIVERED ON" : "ESTIMATED DELIVERY"}
+                  ${statusIsDelivered
+                    ? "DELIVERED ON"
+                    : "ESTIMATED DELIVERY"}
                 </span>
 
                 <strong>
@@ -1678,7 +2047,10 @@
 
           <div class="detail-grid">
 
-            ${detailCard("Destination", destination)}
+            ${detailCard(
+              "Destination",
+              destination
+            )}
 
             ${detailCard(
               "Shipment Date",
@@ -1701,7 +2073,9 @@
               Sender &amp; Receiver Information
             </h4>
 
+
             <div class="people-grid">
+
 
               ${personBlock(
                 "SENDER / SHIPPER",
@@ -1711,6 +2085,7 @@
                 parcel.sender_email
               )}
 
+
               ${personBlock(
                 "RECEIVER / CONSIGNEE",
                 parcel.receiver_name,
@@ -1718,6 +2093,7 @@
                 parcel.receiver_phone,
                 parcel.receiver_email
               )}
+
 
             </div>
 
@@ -1731,28 +2107,48 @@
               Details
             </h4>
 
+
             <div class="shipment-facts">
 
+
               <div class="fact">
+
                 <small>Description</small>
+
                 <strong>
-                  ${escapeHTML(parcel.parcel_description || "Not provided")}
+                  ${escapeHTML(
+                    parcel.parcel_description || "Not provided"
+                  )}
                 </strong>
+
               </div>
 
+
               <div class="fact">
+
                 <small>Service Type</small>
+
                 <strong>
-                  ${escapeHTML(parcel.service_type || "Not provided")}
+                  ${escapeHTML(
+                    parcel.service_type || "Not provided"
+                  )}
                 </strong>
+
               </div>
 
+
               <div class="fact">
+
                 <small>Reference Number</small>
+
                 <strong>
-                  ${escapeHTML(parcel.reference_number || "Not provided")}
+                  ${escapeHTML(
+                    parcel.reference_number || "Not provided"
+                  )}
                 </strong>
+
               </div>
+
 
             </div>
 
@@ -1775,7 +2171,9 @@
 
           <div class="progress-wrap">
 
-            <p class="progress-title">Shipment Progress</p>
+            <p class="progress-title">
+              Shipment Progress
+            </p>
 
             <div
               class="status-progress"
@@ -1797,117 +2195,144 @@
             dates may change.
           </p>
 
+
         </div>
+
       `;
+
     }
 
 
     // CUSTOMER TRACKING FORM
-    $("tracking-form").addEventListener("submit", async (event) => {
 
-      event.preventDefault();
+    $("tracking-form").addEventListener(
+      "submit",
+      async (event) => {
 
-      const trackingNumber =
-        $("tracking-number").value.trim();
+        event.preventDefault();
 
-      if (!trackingNumber) {
+
+        const trackingNumber =
+          $("tracking-number").value.trim();
+
+
+        if (!trackingNumber) {
+
+          showMessage(
+            "Please enter your tracking number.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        const button =
+          $("tracking-form").querySelector(
+            'button[type="submit"]'
+          );
+
+
+        button.disabled = true;
+
+        button.textContent = "CHECKING...";
+
+
         showMessage(
-          "Please enter your tracking number.",
-          "error"
+          "Checking your tracking number...",
+          "info"
         );
-        return;
-      }
 
 
-      const button =
-        $("tracking-form").querySelector('button[type="submit"]');
-
-      button.disabled = true;
-
-      button.textContent = "CHECKING...";
-
-      showMessage(
-        "Checking your tracking number...",
-        "info"
-      );
+        try {
 
 
-      try {
+          // GET PARCEL INFORMATION
 
-        // Get parcel information from Supabase.
-        const { data, error } = await supabaseClient.rpc(
-          "track_parcel",
-          {
-            p_tracking_number: trackingNumber
+          const { data, error } =
+            await supabaseClient.rpc(
+              "track_parcel",
+              {
+                p_tracking_number: trackingNumber
+              }
+            );
+
+
+          if (error) {
+
+            console.error("Tracking error:", error);
+
+            showMessage(
+              "Tracking is temporarily unavailable. Please try again later.",
+              "error"
+            );
+
+            return;
+
           }
-        );
 
 
-        if (error) {
-          console.error("Tracking error:", error);
+          const parcel =
+            Array.isArray(data) ? data[0] : data;
+
+
+          if (!parcel) {
+
+            showMessage(
+              "No parcel was found. Please check your tracking number.",
+              "error"
+            );
+
+            return;
+
+          }
+
+
+          // LOAD SHIPMENT JOURNEY
+
+          const historyHTML =
+            await loadShipmentHistory(
+              parcel.tracking_number || trackingNumber,
+              parcel
+            );
+
+
+          // DISPLAY TRACKING RESULT
+
+          renderParcel(
+            parcel,
+            historyHTML,
+            trackingNumber
+          );
+
+
+        } catch (error) {
+
+          console.error(
+            "Unexpected tracking error:",
+            error
+          );
 
           showMessage(
-            "Tracking is temporarily unavailable. Please try again later.",
+            "Something went wrong. Please try again.",
             "error"
           );
 
-          return;
+        } finally {
+
+          button.disabled = false;
+
+          button.textContent = "TRACK PACKAGE";
+
         }
-
-
-        const parcel = Array.isArray(data) ? data[0] : data;
-
-
-        if (!parcel) {
-          showMessage(
-            "No parcel was found. Please check your tracking number.",
-            "error"
-          );
-
-          return;
-        }
-
-
-        /*
-          Pass the parcel's current status to the history function.
-          This ensures the latest journey status matches the actual
-          current parcel status returned by Supabase.
-        */
-
-        const historyHTML = await loadShipmentHistory(
-          parcel.tracking_number || trackingNumber,
-          parcel.status
-        );
-
-
-        renderParcel(
-          parcel,
-          historyHTML,
-          trackingNumber
-        );
-
-
-      } catch (error) {
-
-        console.error("Unexpected tracking error:", error);
-
-        showMessage(
-          "Something went wrong. Please try again.",
-          "error"
-        );
-
-      } finally {
-
-        button.disabled = false;
-
-        button.textContent = "TRACK PACKAGE";
 
       }
-
-    });
+    );
 
 
     // GOOGLE TRANSLATE
+
     function googleTranslateElementInit() {
 
       new google.translate.TranslateElement({
@@ -1927,14 +2352,18 @@
     }
 
 
-    const translateScript = document.createElement("script");
+    const translateScript =
+      document.createElement("script");
+
 
     translateScript.src =
       "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
 
+
     translateScript.async = true;
 
     document.body.appendChild(translateScript);
+
 
   </script>
 
