@@ -18,178 +18,995 @@
 
   <style>
     :root {
-      --red:#c8102e; --red-dark:#a30b24; --green:#16834a;
-      --green-dark:#086b38; --yellow:#ffd400; --ink:#17202b;
-      --muted:#667085; --line:#dce1e7; --soft:#f4f6f8;
+      --red:#c8102e;
+      --red-dark:#a30b24;
+      --green:#16834a;
+      --green-dark:#086b38;
+      --yellow:#ffd400;
+      --ink:#17202b;
+      --muted:#667085;
+      --line:#dce1e7;
+      --soft:#f4f6f8;
     }
+
     *{box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{margin:0;font-family:Arial,Helvetica,sans-serif;color:var(--ink);background:#fff;line-height:1.5}
+
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--ink);
+      background:#fff;
+      line-height:1.5
+    }
+
     button,input{font:inherit}
     a,button{cursor:pointer}
+
     .top-strip{height:7px;background:var(--yellow)}
-    header{background:#fff;border-bottom:4px solid var(--red);padding:14px 4%}
-    .header-inner{max-width:1250px;margin:auto;display:flex;align-items:center;gap:17px}
-    .logo{width:92px;height:88px;object-fit:contain;flex:none}
-    .brand h1{margin:0;color:var(--green);font-size:clamp(25px,4.5vw,43px);line-height:1;font-weight:950;letter-spacing:-.7px}
+
+    header{
+      background:#fff;
+      border-bottom:4px solid var(--red);
+      padding:14px 4%
+    }
+
+    .header-inner{
+      max-width:1250px;
+      margin:auto;
+      display:flex;
+      align-items:center;
+      gap:17px
+    }
+
+    .logo{
+      width:92px;
+      height:88px;
+      object-fit:contain;
+      flex:none
+    }
+
+    .brand h1{
+      margin:0;
+      color:var(--green);
+      font-size:clamp(25px,4.5vw,43px);
+      line-height:1;
+      font-weight:950;
+      letter-spacing:-.7px
+    }
+
     .brand h1 span{color:var(--red)}
-    .brand p{margin:6px 0 0;color:#333;font-weight:800;font-size:clamp(12px,1.8vw,17px)}
-    .brand small{display:block;margin-top:3px;color:#666;font-weight:700;font-size:11px;letter-spacing:.7px}
-    nav{display:flex;align-items:stretch;overflow-x:auto;background:var(--yellow);border-bottom:1px solid #d7b300;white-space:nowrap}
-    nav a{display:flex;align-items:center;justify-content:center;padding:15px 20px;color:#111;text-decoration:none;font-weight:900;border-right:2px solid #fff}
+
+    .brand p{
+      margin:6px 0 0;
+      color:#333;
+      font-weight:800;
+      font-size:clamp(12px,1.8vw,17px)
+    }
+
+    .brand small{
+      display:block;
+      margin-top:3px;
+      color:#666;
+      font-weight:700;
+      font-size:11px;
+      letter-spacing:.7px
+    }
+
+    nav{
+      display:flex;
+      align-items:stretch;
+      overflow-x:auto;
+      background:var(--yellow);
+      border-bottom:1px solid #d7b300;
+      white-space:nowrap
+    }
+
+    nav a{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:15px 20px;
+      color:#111;
+      text-decoration:none;
+      font-weight:900;
+      border-right:2px solid #fff
+    }
+
     nav a:hover,nav a:focus{background:#f0c500}
-    #google_translate_element{display:flex;align-items:center;padding:4px 9px;min-height:48px}
-    .hero-banner{height:clamp(220px,37vw,430px);overflow:hidden;background:#e8edf0}
-    .hero-banner img{width:100%;height:100%;display:block;object-fit:cover;object-position:center 55%}
-    .intro{padding:28px 5% 15px;text-align:center}
-    .intro h2{margin:0 0 8px;font-size:clamp(25px,4vw,35px);font-weight:950}
-    .intro h3{margin:20px 0 6px;color:var(--red);font-size:21px}
-    .intro p{max-width:800px;margin:auto;color:#555}
-    .container{width:min(1200px,94%);margin:auto}
+
+    #google_translate_element{
+      display:flex;
+      align-items:center;
+      padding:4px 9px;
+      min-height:48px
+    }
+
+    .hero-banner{
+      height:clamp(220px,37vw,430px);
+      overflow:hidden;
+      background:#e8edf0
+    }
+
+    .hero-banner img{
+      width:100%;
+      height:100%;
+      display:block;
+      object-fit:cover;
+      object-position:center 55%
+    }
+
+    .intro{
+      padding:28px 5% 15px;
+      text-align:center
+    }
+
+    .intro h2{
+      margin:0 0 8px;
+      font-size:clamp(25px,4vw,35px);
+      font-weight:950
+    }
+
+    .intro h3{
+      margin:20px 0 6px;
+      color:var(--red);
+      font-size:21px
+    }
+
+    .intro p{
+      max-width:800px;
+      margin:auto;
+      color:#555
+    }
+
+    .container{
+      width:min(1200px,94%);
+      margin:auto
+    }
+
     section{scroll-margin-top:12px}
+
     .services-section{padding:20px 0 42px}
-    .service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px}
-    .service-card{padding:8px;background:#f5f5f5;border:1px solid #ddd;min-width:0}
-    .service-card img{display:block;width:100%;height:180px;object-fit:cover;border-bottom:4px solid var(--red)}
-    .service-card h3{margin:0;padding:10px 7px 4px;font-size:23px;font-weight:500;text-transform:uppercase}
-    .service-card h3 span{color:var(--red);font-weight:900}
-    .service-card p{margin:6px 7px 12px;color:#444}
-    .tracking-section{background:#f3f5f7;padding:42px 0 50px}
-    .section-heading{text-align:center;margin:0 0 8px;font-size:clamp(25px,3vw,35px);font-weight:950}
-    .section-subtitle{text-align:center;max-width:720px;margin:0 auto 23px;color:var(--muted)}
-    .tracking-box{max-width:780px;margin:22px auto 0;padding:25px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 12px 32px #10182812}
-    .tracking-box>p:first-child{text-align:center;color:#596273;margin-top:0}
-    #tracking-form{display:grid;grid-template-columns:minmax(0,1fr) 175px;gap:10px;align-items:end}
-    #tracking-form label{grid-column:1/-1;font-weight:800;font-size:14px}
-    input{width:100%;min-height:54px;padding:12px;border:2px solid #cfd4dc;border-radius:7px}
-    input:focus{outline:3px solid #16834a20;border-color:var(--green)}
-    .button{display:inline-block;border:0;border-radius:7px;padding:13px 18px;text-align:center;text-decoration:none;font-weight:900}
-    .button-red{background:var(--red);color:#fff}
+
+    .service-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:17px
+    }
+
+    .service-card{
+      padding:8px;
+      background:#f5f5f5;
+      border:1px solid #ddd;
+      min-width:0
+    }
+
+    .service-card img{
+      display:block;
+      width:100%;
+      height:180px;
+      object-fit:cover;
+      border-bottom:4px solid var(--red)
+    }
+
+    .service-card h3{
+      margin:0;
+      padding:10px 7px 4px;
+      font-size:23px;
+      font-weight:500;
+      text-transform:uppercase
+    }
+
+    .service-card h3 span{
+      color:var(--red);
+      font-weight:900
+    }
+
+    .service-card p{
+      margin:6px 7px 12px;
+      color:#444
+    }
+
+    .tracking-section{
+      background:#f3f5f7;
+      padding:42px 0 50px
+    }
+
+    .section-heading{
+      text-align:center;
+      margin:0 0 8px;
+      font-size:clamp(25px,3vw,35px);
+      font-weight:950
+    }
+
+    .section-subtitle{
+      text-align:center;
+      max-width:720px;
+      margin:0 auto 23px;
+      color:var(--muted)
+    }
+
+    .tracking-box{
+      max-width:780px;
+      margin:22px auto 0;
+      padding:25px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:12px;
+      box-shadow:0 12px 32px #10182812
+    }
+
+    .tracking-box>p:first-child{
+      text-align:center;
+      color:#596273;
+      margin-top:0
+    }
+
+    #tracking-form{
+      display:grid;
+      grid-template-columns:minmax(0,1fr) 175px;
+      gap:10px;
+      align-items:end
+    }
+
+    #tracking-form label{
+      grid-column:1/-1;
+      font-weight:800;
+      font-size:14px
+    }
+
+    input{
+      width:100%;
+      min-height:54px;
+      padding:12px;
+      border:2px solid #cfd4dc;
+      border-radius:7px
+    }
+
+    input:focus{
+      outline:3px solid #16834a20;
+      border-color:var(--green)
+    }
+
+    .button{
+      display:inline-block;
+      border:0;
+      border-radius:7px;
+      padding:13px 18px;
+      text-align:center;
+      text-decoration:none;
+      font-weight:900
+    }
+
+    .button-red{
+      background:var(--red);
+      color:#fff
+    }
+
     .button-red:hover{background:var(--red-dark)}
-    #tracking-form button{min-height:54px;font-size:16px}
-    button:disabled{opacity:.65;cursor:wait}
-    .message{margin-top:16px;padding:13px;border-radius:9px;overflow-wrap:anywhere}
+
+    #tracking-form button{
+      min-height:54px;
+      font-size:16px
+    }
+
+    button:disabled{
+      opacity:.65;
+      cursor:wait
+    }
+
+    .message{
+      margin-top:16px;
+      padding:13px;
+      border-radius:9px;
+      overflow-wrap:anywhere
+    }
+
     .message:empty{display:none}
-    .success{background:#fff;color:var(--ink);padding:0}
-    .error{background:#fff0f0;color:#9a0013}
-    .info{background:#f0f3f8;color:#252525}
-    .small-note{color:#667085;font-size:12px}
-    /* Customer tracking result */
-    .tracking-result-card{overflow:hidden;border:1px solid #d5dbe2;border-radius:13px;background:#fff;box-shadow:0 8px 24px #10182812}
-    .result-heading{display:flex;align-items:center;gap:12px;padding:13px 18px;background:var(--green);color:#fff;font-size:clamp(19px,3vw,25px);font-weight:900}
+
+    .success{
+      background:#fff;
+      color:var(--ink);
+      padding:0
+    }
+
+    .error{
+      background:#fff0f0;
+      color:#9a0013
+    }
+
+    .info{
+      background:#f0f3f8;
+      color:#252525
+    }
+
+    .small-note{
+      color:#667085;
+      font-size:12px
+    }
+
+    /* CUSTOMER TRACKING RESULT */
+
+    .tracking-result-card{
+      overflow:hidden;
+      border:1px solid #d5dbe2;
+      border-radius:13px;
+      background:#fff;
+      box-shadow:0 8px 24px #10182812
+    }
+
+    .result-heading{
+      display:flex;
+      align-items:center;
+      gap:12px;
+      padding:13px 18px;
+      background:var(--green);
+      color:#fff;
+      font-size:clamp(19px,3vw,25px);
+      font-weight:900
+    }
+
     .result-heading .box-icon{font-size:27px}
-    .result-main{display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);gap:12px;padding:14px}
-    .tracking-number-card{background:var(--red);color:#fff;border-radius:11px;padding:15px;text-align:center;display:flex;flex-direction:column;justify-content:center;min-width:0}
-    .tracking-number-card small{font-size:14px;font-weight:800}
-    .tracking-number-card strong{font-size:clamp(17px,2.7vw,25px);overflow-wrap:anywhere;line-height:1.3}
-    .status-hero{display:flex;align-items:center;gap:15px;background:linear-gradient(110deg,#18a94d,#087b38);color:#fff;border-radius:11px;padding:15px;min-width:0}
-    .status-check{width:66px;height:66px;flex:none;border:4px solid #fff;border-radius:50%;display:grid;place-items:center;font-size:39px;font-weight:900}
-    .status-hero strong{display:block;font-size:clamp(21px,3.5vw,34px);line-height:1.1}
-    .status-hero small{display:block;margin-top:5px;font-size:13px}
-    .status-date{margin-left:auto;padding-left:13px;border-left:2px solid #ffffff90;min-width:120px}
-    .status-date span{display:block;font-size:12px;font-weight:700}
-    .status-date strong{font-size:16px;color:var(--yellow)}
-    .detail-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;padding:0 14px 14px}
-    .detail-card{min-width:0;padding:12px;background:#f5f7fa;border:1px solid #dbe1e8;border-radius:8px}
-    .detail-card .label{display:block;color:var(--green);font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.35px;margin-bottom:4px}
-    .detail-card .value{display:block;color:#17202b;font-size:14px;font-weight:700;overflow-wrap:anywhere;white-space:pre-wrap}
-    .detail-card .subvalue{display:block;margin-top:3px;color:#596273;font-size:12px;overflow-wrap:anywhere;white-space:pre-wrap}
-    .info-section{margin:0 14px 14px;border:1px solid #dce1e7;border-radius:9px;overflow:hidden}
-    .info-section h4{margin:0;padding:10px 13px;background:#f0f2f5;border-bottom:1px solid #dce1e7;color:#263445;font-size:16px}
+
+    .result-main{
+      display:grid;
+      grid-template-columns:minmax(0,.9fr) minmax(0,1.3fr);
+      gap:12px;
+      padding:14px
+    }
+
+    .tracking-number-card{
+      background:var(--red);
+      color:#fff;
+      border-radius:11px;
+      padding:15px;
+      text-align:center;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      min-width:0
+    }
+
+    .tracking-number-card small{
+      font-size:14px;
+      font-weight:800
+    }
+
+    .tracking-number-card strong{
+      font-size:clamp(17px,2.7vw,25px);
+      overflow-wrap:anywhere;
+      line-height:1.3
+    }
+
+    .status-hero{
+      display:flex;
+      align-items:center;
+      gap:15px;
+      background:linear-gradient(110deg,#18a94d,#087b38);
+      color:#fff;
+      border-radius:11px;
+      padding:15px;
+      min-width:0
+    }
+
+    .status-check{
+      width:66px;
+      height:66px;
+      flex:none;
+      border:4px solid #fff;
+      border-radius:50%;
+      display:grid;
+      place-items:center;
+      font-size:39px;
+      font-weight:900
+    }
+
+    .status-hero strong{
+      display:block;
+      font-size:clamp(21px,3.5vw,34px);
+      line-height:1.1;
+      overflow-wrap:anywhere
+    }
+
+    .status-hero small{
+      display:block;
+      margin-top:5px;
+      font-size:13px
+    }
+
+    .status-date{
+      margin-left:auto;
+      padding-left:13px;
+      border-left:2px solid #ffffff90;
+      min-width:120px
+    }
+
+    .status-date span{
+      display:block;
+      font-size:12px;
+      font-weight:700
+    }
+
+    .status-date strong{
+      font-size:16px;
+      color:var(--yellow)
+    }
+
+    .detail-grid{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:9px;
+      padding:0 14px 14px
+    }
+
+    .detail-card{
+      min-width:0;
+      padding:12px;
+      background:#f5f7fa;
+      border:1px solid #dbe1e8;
+      border-radius:8px
+    }
+
+    .detail-card .label{
+      display:block;
+      color:var(--green);
+      font-size:12px;
+      font-weight:900;
+      text-transform:uppercase;
+      letter-spacing:.35px;
+      margin-bottom:4px
+    }
+
+    .detail-card .value{
+      display:block;
+      color:#17202b;
+      font-size:14px;
+      font-weight:700;
+      overflow-wrap:anywhere;
+      white-space:pre-wrap
+    }
+
+    .detail-card .subvalue{
+      display:block;
+      margin-top:3px;
+      color:#596273;
+      font-size:12px;
+      overflow-wrap:anywhere;
+      white-space:pre-wrap
+    }
+
+    .info-section{
+      margin:0 14px 14px;
+      border:1px solid #dce1e7;
+      border-radius:9px;
+      overflow:hidden
+    }
+
+    .info-section h4{
+      margin:0;
+      padding:10px 13px;
+      background:#f0f2f5;
+      border-bottom:1px solid #dce1e7;
+      color:#263445;
+      font-size:16px
+    }
+
     .info-section h4 .accent{color:var(--red)}
-    .people-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
-    .person-card{padding:13px;min-width:0}
-    .person-card+ .person-card{border-left:1px solid #e1e5ea}
-    .person-card h5{margin:0 0 8px;color:var(--green);font-size:15px}
-    .person-card p{margin:4px 0;font-size:13px;overflow-wrap:anywhere;white-space:pre-wrap}
+
+    .people-grid{
+      display:grid;
+      grid-template-columns:repeat(2,minmax(0,1fr))
+    }
+
+    .person-card{
+      padding:13px;
+      min-width:0
+    }
+
+    .person-card+.person-card{
+      border-left:1px solid #e1e5ea
+    }
+
+    .person-card h5{
+      margin:0 0 8px;
+      color:var(--green);
+      font-size:15px
+    }
+
+    .person-card p{
+      margin:4px 0;
+      font-size:13px;
+      overflow-wrap:anywhere;
+      white-space:pre-wrap
+    }
+
     .person-card p strong{color:#4b5563}
-    .shipment-facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0}
-    .fact{padding:12px;border-right:1px solid #e1e5ea;min-width:0}
+
+    .shipment-facts{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:0
+    }
+
+    .fact{
+      padding:12px;
+      border-right:1px solid #e1e5ea;
+      min-width:0
+    }
+
     .fact:last-child{border-right:0}
-    .fact small{display:block;color:#657080;font-size:11px;font-weight:900;text-transform:uppercase}
-    .fact strong{display:block;margin-top:4px;font-size:13px;overflow-wrap:anywhere}
-    .admin-note{margin:0 14px 14px;padding:13px 15px;background:#eaf8ed;border:1px solid #bce5c7;border-left:5px solid var(--green);border-radius:8px}
-    .admin-note small{color:var(--green-dark);font-weight:900;text-transform:uppercase}
-    .admin-note p{margin:5px 0 0;font-size:14px;white-space:pre-wrap;overflow-wrap:anywhere}
+
+    .fact small{
+      display:block;
+      color:#657080;
+      font-size:11px;
+      font-weight:900;
+      text-transform:uppercase
+    }
+
+    .fact strong{
+      display:block;
+      margin-top:4px;
+      font-size:13px;
+      overflow-wrap:anywhere
+    }
+
+    .admin-note{
+      margin:0 14px 14px;
+      padding:13px 15px;
+      background:#eaf8ed;
+      border:1px solid #bce5c7;
+      border-left:5px solid var(--green);
+      border-radius:8px
+    }
+
+    .admin-note small{
+      color:var(--green-dark);
+      font-weight:900;
+      text-transform:uppercase
+    }
+
+    .admin-note p{
+      margin:5px 0 0;
+      font-size:14px;
+      white-space:pre-wrap;
+      overflow-wrap:anywhere
+    }
+
+    /* SHIPMENT PROGRESS */
+
     .progress-wrap{padding:15px 14px 6px}
-    .progress-title{margin:0 0 10px;font-weight:900;color:#253244}
-    .status-progress{display:flex;gap:3px;overflow:hidden}
-    .status-step{flex:1;min-width:0;padding:8px 3px;text-align:center;background:#cbd1d8;color:#fff;font-size:clamp(9px,1.3vw,12px);font-weight:800}
+
+    .progress-title{
+      margin:0 0 10px;
+      font-weight:900;
+      color:#253244
+    }
+
+    .status-progress{
+      display:flex;
+      gap:3px;
+      overflow:hidden
+    }
+
+    .status-step{
+      flex:1;
+      min-width:0;
+      padding:8px 3px;
+      text-align:center;
+      background:#cbd1d8;
+      color:#fff;
+      font-size:clamp(9px,1.3vw,12px);
+      font-weight:800
+    }
+
     .status-step:first-child{border-radius:6px 0 0 6px}
     .status-step:last-child{border-radius:0 6px 6px 0}
+
     .status-step.done{background:var(--green)}
-    .status-step.active{background:var(--yellow);color:#222;outline:2px solid #e5b900;outline-offset:-2px}
-    .history-section{margin:0 14px 14px;border:1px solid #dce1e7;border-radius:9px;overflow:hidden}
-    .history-title{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 13px;background:var(--red);color:#fff}
-    .history-title h4{margin:0;font-size:18px}
-    .history-title span{font-size:11px;font-weight:800;background:var(--yellow);color:#222;border-radius:20px;padding:5px 9px}
-    .history-table-wrapper{width:100%;overflow-x:auto}
-    .history-table{width:100%;min-width:600px;border-collapse:collapse;font-size:12px}
-    .history-table th{background:#f0f2f5;color:#374151;text-align:left;padding:10px 8px;font-size:11px}
-    .history-table td{padding:10px 8px;border-top:1px solid #e1e5ea;vertical-align:top;overflow-wrap:anywhere}
+
+    .status-step.active{
+      background:var(--yellow);
+      color:#222;
+      outline:2px solid #e5b900;
+      outline-offset:-2px
+    }
+
+    .progress-hold{
+      margin-top:9px;
+      padding:9px 12px;
+      background:#fff0f0;
+      border:1px solid #f1b8c0;
+      border-left:4px solid var(--red);
+      border-radius:6px;
+      color:#9a0013;
+      font-size:13px;
+      font-weight:800
+    }
+
+    /* SHIPMENT JOURNEY */
+
+    .history-section{
+      margin:0 14px 14px;
+      border:1px solid #dce1e7;
+      border-radius:9px;
+      overflow:hidden;
+      width:auto;
+      max-width:100%
+    }
+
+    .history-title{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+      padding:11px 13px;
+      background:var(--red);
+      color:#fff
+    }
+
+    .history-title h4{
+      margin:0;
+      font-size:18px
+    }
+
+    .history-title span{
+      font-size:11px;
+      font-weight:800;
+      background:var(--yellow);
+      color:#222;
+      border-radius:20px;
+      padding:5px 9px
+    }
+
+    /* Four columns always fit the available screen width. */
+    .history-table-wrapper{
+      width:100%;
+      max-width:100%;
+      overflow:hidden
+    }
+
+    .history-table{
+      width:100%;
+      max-width:100%;
+      table-layout:fixed;
+      border-collapse:collapse;
+      font-size:12px
+    }
+
+    .history-table th{
+      background:#f0f2f5;
+      color:#374151;
+      text-align:left;
+      padding:10px 7px;
+      font-size:11px;
+      overflow-wrap:anywhere
+    }
+
+    .history-table td{
+      padding:10px 7px;
+      border-top:1px solid #e1e5ea;
+      vertical-align:top;
+      overflow-wrap:anywhere;
+      word-break:break-word
+    }
+
+    .history-table th:nth-child(1),
+    .history-table td:nth-child(1){width:25%}
+
+    .history-table th:nth-child(2),
+    .history-table td:nth-child(2){width:26%}
+
+    .history-table th:nth-child(3),
+    .history-table td:nth-child(3){width:23%}
+
+    .history-table th:nth-child(4),
+    .history-table td:nth-child(4){width:26%}
+
     .history-table tbody tr:nth-child(even){background:#fafbfc}
+
     .history-table tbody tr.current-update{background:#fff4bd}
-    .journey-status{display:inline-block;padding:4px 8px;border-radius:20px;background:#e7f6ec;color:#116b38;font-weight:900}
-    .history-empty{padding:13px;margin:0;color:#596273;background:#fafbfc;font-size:13px}
-    .result-footnote{margin:0;padding:0 15px 14px;color:#667085;font-size:11px}
+
+    .journey-status{
+      display:inline-block;
+      max-width:100%;
+      padding:4px 7px;
+      border-radius:20px;
+      background:#e7f6ec;
+      color:#116b38;
+      font-weight:900;
+      overflow-wrap:anywhere;
+      word-break:break-word
+    }
+
+    .journey-status.hold{
+      background:#fff0f0;
+      color:#a30b24;
+      border:1px solid #f1b8c0
+    }
+
+    .journey-status.delivered{
+      background:#e7f6ec;
+      color:#116b38
+    }
+
+    .history-empty{
+      padding:13px;
+      margin:0;
+      color:#596273;
+      background:#fafbfc;
+      font-size:13px
+    }
+
+    .result-footnote{
+      margin:0;
+      padding:0 15px 14px;
+      color:#667085;
+      font-size:11px
+    }
+
     .contact-section{padding:42px 0}
-    .contact-card{max-width:700px;margin:auto;text-align:center;padding:28px 20px;background:#fff;border:1px solid var(--line);border-radius:12px;box-shadow:0 10px 30px #0000000a}
-    .contact-email{display:none;margin:17px auto 0;padding:14px;background:#f0fff5;border:1px solid #bde8cc;border-radius:9px;max-width:360px;font-weight:800;overflow-wrap:anywhere}
-    .contact-email a{color:var(--green);text-decoration:none}
+
+    .contact-card{
+      max-width:700px;
+      margin:auto;
+      text-align:center;
+      padding:28px 20px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:12px;
+      box-shadow:0 10px 30px #0000000a
+    }
+
+    .contact-email{
+      display:none;
+      margin:17px auto 0;
+      padding:14px;
+      background:#f0fff5;
+      border:1px solid #bde8cc;
+      border-radius:9px;
+      max-width:360px;
+      font-weight:800;
+      overflow-wrap:anywhere
+    }
+
+    .contact-email a{
+      color:var(--green);
+      text-decoration:none
+    }
+
     .contact-email.visible{display:block}
-    footer{background:#171717;color:#fff;padding:28px 15px;text-align:center;border-top:6px solid var(--yellow)}
-    footer p{margin:5px 0;color:#d4d9e1}
+
+    footer{
+      background:#171717;
+      color:#fff;
+      padding:28px 15px;
+      text-align:center;
+      border-top:6px solid var(--yellow)
+    }
+
+    footer p{
+      margin:5px 0;
+      color:#d4d9e1
+    }
+
     @media(max-width:760px){
       .logo{width:72px;height:72px}
-      nav a{padding:13px 14px;font-size:14px}
-      .service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+
+      nav a{
+        padding:13px 14px;
+        font-size:14px
+      }
+
+      .service-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr))
+      }
+
       .service-card img{height:145px}
+
       .result-main{grid-template-columns:1fr}
-      .detail-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+
+      .detail-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr))
+      }
     }
+
     @media(max-width:520px){
       header{padding:11px}
+
       .header-inner{gap:10px}
-      .logo{width:60px;height:60px}
-      .brand h1{font-size:22px;letter-spacing:-.4px}
+
+      .logo{
+        width:60px;
+        height:60px
+      }
+
+      .brand h1{
+        font-size:22px;
+        letter-spacing:-.4px
+      }
+
       .brand p{font-size:11px}
       .brand small{font-size:9px}
+
       .hero-banner{height:235px}
+
       .intro{padding:22px 5% 10px}
+
       .service-grid{gap:9px}
+
       .service-card{padding:5px}
+
       .service-card img{height:105px}
-      .service-card h3{font-size:17px;padding:8px 4px 3px}
-      .service-card p{font-size:12px;margin:4px}
+
+      .service-card h3{
+        font-size:17px;
+        padding:8px 4px 3px
+      }
+
+      .service-card p{
+        font-size:12px;
+        margin:4px
+      }
+
       .tracking-section{padding:30px 0}
+
       .tracking-box{padding:15px}
-      #tracking-form{grid-template-columns:minmax(0,1fr) 105px;gap:7px}
-      #tracking-form input,#tracking-form button{min-height:49px;font-size:13px}
-      .result-heading{padding:10px 12px;font-size:18px}
-      .result-main{padding:9px;gap:8px}
+
+      #tracking-form{
+        grid-template-columns:minmax(0,1fr) 105px;
+        gap:7px
+      }
+
+      #tracking-form input,
+      #tracking-form button{
+        min-height:49px;
+        font-size:13px
+      }
+
+      .result-heading{
+        padding:10px 12px;
+        font-size:18px
+      }
+
+      .result-main{
+        padding:9px;
+        gap:8px
+      }
+
       .tracking-number-card{padding:11px}
+
       .tracking-number-card strong{font-size:18px}
-      .status-hero{gap:9px;padding:11px}
-      .status-check{width:48px;height:48px;font-size:29px;border-width:3px}
+
+      .status-hero{
+        gap:9px;
+        padding:11px
+      }
+
+      .status-check{
+        width:48px;
+        height:48px;
+        font-size:29px;
+        border-width:3px
+      }
+
       .status-hero strong{font-size:22px}
-      .status-date{min-width:88px;padding-left:8px}
+
+      .status-date{
+        min-width:88px;
+        padding-left:8px
+      }
+
       .status-date strong{font-size:13px}
-      .detail-grid{padding:0 9px 9px;gap:6px}
+
+      .detail-grid{
+        padding:0 9px 9px;
+        gap:6px
+      }
+
       .detail-card{padding:9px}
+
       .detail-card .label{font-size:10px}
       .detail-card .value{font-size:12px}
       .detail-card .subvalue{font-size:11px}
-      .info-section,.admin-note,.history-section{margin-left:9px;margin-right:9px;margin-bottom:9px}
+
+      .info-section,
+      .admin-note,
+      .history-section{
+        margin-left:9px;
+        margin-right:9px;
+        margin-bottom:9px
+      }
+
       .people-grid{grid-template-columns:1fr}
-      .person-card+ .person-card{border-left:0;border-top:1px solid #e1e5ea}
+
+      .person-card+.person-card{
+        border-left:0;
+        border-top:1px solid #e1e5ea
+      }
+
       .person-card{padding:10px}
+
       .shipment-facts{grid-template-columns:1fr}
-      .fact{border-right:0;border-bottom:1px solid #e1e5ea;padding:9px 11px}
+
+      .fact{
+        border-right:0;
+        border-bottom:1px solid #e1e5ea;
+        padding:9px 11px
+      }
+
       .fact:last-child{border-bottom:0}
-      .status-step{font-size:9px;padding:7px 1px}
+
+      .status-step{
+        font-size:9px;
+        padding:7px 1px
+      }
+
       .history-title h4{font-size:16px}
       .history-title span{font-size:9px}
+
+      /* Keep all four journey columns visible on mobile. */
+      .history-table{
+        width:100%;
+        min-width:0;
+        table-layout:fixed;
+        font-size:9px
+      }
+
+      .history-table th{
+        padding:7px 3px;
+        font-size:8px;
+        line-height:1.25
+      }
+
+      .history-table td{
+        padding:8px 3px;
+        font-size:9px;
+        line-height:1.35;
+        overflow-wrap:anywhere;
+        word-break:break-word
+      }
+
+      .history-table th:nth-child(1),
+      .history-table td:nth-child(1){width:25%}
+
+      .history-table th:nth-child(2),
+      .history-table td:nth-child(2){width:26%}
+
+      .history-table th:nth-child(3),
+      .history-table td:nth-child(3){width:23%}
+
+      .history-table th:nth-child(4),
+      .history-table td:nth-child(4){width:26%}
+
+      .journey-status{
+        display:block;
+        width:100%;
+        padding:4px 2px;
+        text-align:center;
+        font-size:8px;
+        line-height:1.25;
+        border-radius:5px
+      }
+
       .result-footnote{padding:0 10px 10px}
+    }
+
+    @media(max-width:360px){
+      .history-table th{
+        font-size:7px;
+        padding:6px 2px
+      }
+
+      .history-table td{
+        font-size:8px;
+        padding:7px 2px
+      }
+
+      .journey-status{font-size:7px}
+
+      .history-title h4{font-size:14px}
+      .history-title span{font-size:8px}
     }
   </style>
 </head>
@@ -200,6 +1017,7 @@
   <header>
     <div class="header-inner">
       <img class="logo" src="logo.png.png" alt="TrustNova Express company logo">
+
       <div class="brand">
         <h1>TRUSTNOVA <span>EXPRESS</span></h1>
         <p>Your Package, Our Priority</p>
@@ -219,19 +1037,41 @@
 
   <main>
     <section class="hero-banner" id="home" aria-label="TrustNova Express logistics">
-      <img src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&amp;fit=crop&amp;w=2000&amp;q=85" alt="Freight truck travelling on a road" fetchpriority="high">
+      <img
+        src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&amp;fit=crop&amp;w=2000&amp;q=85"
+        alt="Freight truck travelling on a road"
+        fetchpriority="high">
     </section>
 
     <section class="intro" id="about">
       <div class="container">
         <h2>About TrustNova Express</h2>
-        <p>TrustNova Express is a parcel and logistics service brand focused on making shipment information accessible and convenient for customers. Use your tracking number to view recorded parcel details and the latest available updates.</p>
+
+        <p>
+          TrustNova Express is a parcel and logistics service brand focused on
+          making shipment information accessible and convenient for customers.
+          Use your tracking number to view recorded parcel details and the latest
+          available updates.
+        </p>
+
         <h3>Our Mission</h3>
-        <p>Our mission is to provide a convenient, transparent and customer-focused experience for people seeking parcel and logistics information.</p>
+
+        <p>
+          Our mission is to provide a convenient, transparent and customer-focused
+          experience for people seeking parcel and logistics information.
+        </p>
+
         <h3>Our Services</h3>
-        <p>Our website introduces sea, air and road transport options and provides shipment tracking information based on records in our tracking system.</p>
+
+        <p>
+          Our website introduces sea, air and road transport options and provides
+          shipment tracking information based on records in our tracking system.
+        </p>
+
         <h3>Our Commitment</h3>
+
         <p>We value clear communication and accessible shipment information.</p>
+
         <p><strong>TrustNova Express — Your Package, Our Priority.</strong></p>
       </div>
     </section>
@@ -239,51 +1079,118 @@
     <section class="services-section" id="services">
       <div class="container">
         <div class="service-grid">
+
           <article class="service-card">
-            <img src="https://images.unsplash.com/photo-1494412519320-aa613dfb7738?auto=format&amp;fit=crop&amp;w=1000&amp;q=85" alt="Cargo containers aboard a shipping vessel" loading="lazy">
+            <img
+              src="https://images.unsplash.com/photo-1494412519320-aa613dfb7738?auto=format&amp;fit=crop&amp;w=1000&amp;q=85"
+              alt="Cargo containers aboard a shipping vessel"
+              loading="lazy">
+
             <h3><span>Sea</span> Shipping »</h3>
-            <p>Sea-freight options for cargo and goods moving across international ports.</p>
+
+            <p>
+              Sea-freight options for cargo and goods moving across international ports.
+            </p>
           </article>
+
           <article class="service-card">
-            <img src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&amp;fit=crop&amp;w=1000&amp;q=85" alt="Aircraft in flight" loading="lazy">
+            <img
+              src="https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&amp;fit=crop&amp;w=1000&amp;q=85"
+              alt="Aircraft in flight"
+              loading="lazy">
+
             <h3><span>Air</span> Transport »</h3>
-            <p>Air-freight options for shipments moving between destinations.</p>
+
+            <p>
+              Air-freight options for shipments moving between destinations.
+            </p>
           </article>
+
           <article class="service-card">
-            <img src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&amp;fit=crop&amp;w=1000&amp;q=85" alt="Heavy goods truck on a highway" loading="lazy">
+            <img
+              src="https://images.unsplash.com/photo-1519003722824-194d4455a60c?auto=format&amp;fit=crop&amp;w=1000&amp;q=85"
+              alt="Heavy goods truck on a highway"
+              loading="lazy">
+
             <h3><span>Road</span> Transport »</h3>
-            <p>Road transport for parcels and goods between connected locations.</p>
+
+            <p>
+              Road transport for parcels and goods between connected locations.
+            </p>
           </article>
+
         </div>
       </div>
     </section>
 
     <section class="tracking-section" id="track">
       <div class="container">
+
         <h2 class="section-heading">SHIPMENT TRACKING</h2>
-        <p class="section-subtitle">Enter your unique tracking number to view your parcel information and shipment journey.</p>
+
+        <p class="section-subtitle">
+          Enter your unique tracking number to view your parcel information
+          and shipment journey.
+        </p>
 
         <div class="tracking-box">
           <p>Use the tracking number provided by TrustNova Express.</p>
+
           <form id="tracking-form">
             <label for="tracking-number">Tracking Number</label>
-            <input id="tracking-number" type="text" placeholder="Enter your tracking number" autocomplete="off" autocapitalize="characters" required>
-            <button class="button button-red" type="submit">TRACK PACKAGE</button>
+
+            <input
+              id="tracking-number"
+              type="text"
+              placeholder="Enter your tracking number"
+              autocomplete="off"
+              autocapitalize="characters"
+              required>
+
+            <button class="button button-red" type="submit">
+              TRACK PACKAGE
+            </button>
           </form>
+
           <div id="tracking-result" class="message" aria-live="polite"></div>
-          <p class="small-note">For your privacy, keep your tracking number secure. Shipment details shown here are based on information recorded in our tracking system.</p>
+
+          <p class="small-note">
+            For your privacy, keep your tracking number secure. Shipment details
+            shown here are based on information recorded in our tracking system.
+          </p>
         </div>
       </div>
     </section>
 
     <section class="contact-section" id="contact">
       <div class="container">
+
         <div class="contact-card">
           <h2 class="section-heading">CONTACT US</h2>
+
           <p>Need help with your shipment? Our team is ready to hear from you.</p>
-          <button id="contact-toggle" class="button button-red" type="button" aria-expanded="false">CONTACT US</button>
-          <div id="contact-email" class="contact-email" aria-hidden="true">Email our team<br><a href="mailto:trustnovaexpress@gmail.com">trustnovaexpress@gmail.com</a></div>
+
+          <button
+            id="contact-toggle"
+            class="button button-red"
+            type="button"
+            aria-expanded="false">
+            CONTACT US
+          </button>
+
+          <div
+            id="contact-email"
+            class="contact-email"
+            aria-hidden="true">
+
+            Email our team<br>
+
+            <a href="mailto:trustnovaexpress@gmail.com">
+              trustnovaexpress@gmail.com
+            </a>
+          </div>
         </div>
+
       </div>
     </section>
   </main>
@@ -295,243 +1202,741 @@
   </footer>
 
   <script>
-    // Use only the Supabase publishable/anon key in public browser code.
+    // Supabase connection
     const SUPABASE_URL = "https://trydftaqqypqcxsgixto.supabase.co";
-    const SUPABASE_PUBLISHABLE_KEY = "sb_publishable_2h0EyOMhtBx3eWEiuoAOyg_qjw2QzED";
 
-    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY);
+    const SUPABASE_PUBLISHABLE_KEY =
+      "sb_publishable_2h0EyOMhtBx3eWEiuoAOyg_qjw2QzED";
+
+    const supabaseClient = window.supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_PUBLISHABLE_KEY
+    );
+
     const $ = (id) => document.getElementById(id);
+
     $("year").textContent = new Date().getFullYear();
 
+
+    // CONTACT EMAIL TOGGLE
     $("contact-toggle").addEventListener("click", () => {
       const panel = $("contact-email");
+
       const open = panel.classList.toggle("visible");
+
       panel.setAttribute("aria-hidden", String(!open));
-      $("contact-toggle").setAttribute("aria-expanded", String(open));
-      $("contact-toggle").textContent = open ? "HIDE EMAIL" : "CONTACT US";
+
+      $("contact-toggle").setAttribute(
+        "aria-expanded",
+        String(open)
+      );
+
+      $("contact-toggle").textContent =
+        open ? "HIDE EMAIL" : "CONTACT US";
     });
 
+
+    // PROTECT CUSTOMER DATA FROM HTML INJECTION
     function escapeHTML(value) {
       return String(value ?? "").replace(/[&<>"']/g, ch => ({
-        "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;"
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#39;"
       })[ch]);
     }
 
+
+    // SHOW TRACKING MESSAGES
     function showMessage(text, type="info") {
       const el = $("tracking-result");
+
       el.className = "message " + type;
+
       el.textContent = text;
     }
 
+
+    // DATE HELPERS
     function validDate(value) {
       if (!value) return null;
+
       const d = new Date(value);
+
       return Number.isNaN(d.getTime()) ? null : d;
     }
 
+
     function dateText(value) {
       if (!value) return "Not provided";
+
       const d = validDate(value);
-      return d ? d.toLocaleDateString(undefined,{day:"numeric",month:"short",year:"numeric"}) : String(value);
+
+      return d
+        ? d.toLocaleDateString(undefined, {
+            day:"numeric",
+            month:"short",
+            year:"numeric"
+          })
+        : String(value);
     }
+
 
     function dateTimeText(value) {
       if (!value) return "Not provided";
+
       const d = validDate(value);
-      return d ? d.toLocaleString(undefined,{day:"numeric",month:"short",year:"numeric",hour:"2-digit",minute:"2-digit"}) : String(value);
+
+      return d
+        ? d.toLocaleString(undefined, {
+            day:"numeric",
+            month:"short",
+            year:"numeric",
+            hour:"2-digit",
+            minute:"2-digit"
+          })
+        : String(value);
     }
 
+
+    // STATUS CLASSIFICATION
     function statusClass(status) {
       const s = String(status || "").toLowerCase();
-      if (s.includes("deliver") && !s.includes("out for")) return "delivered";
-      if (s.includes("hold") || s.includes("stop order") || s.includes("customs")) return "hold";
+
+      if (s.includes("deliver") && !s.includes("out for")) {
+        return "delivered";
+      }
+
+      if (
+        s.includes("hold") ||
+        s.includes("stop order") ||
+        s.includes("customs")
+      ) {
+        return "hold";
+      }
+
       if (s.includes("out for")) return "out";
-      if (s.includes("transit") || s.includes("arrived")) return "transit";
+
+      if (
+        s.includes("transit") ||
+        s.includes("arrived")
+      ) {
+        return "transit";
+      }
+
       if (s.includes("pick")) return "picked";
+
       return "registered";
     }
 
-    function progressHTML(status) {
-      const stages = ["Registered","Picked Up","In Transit","Out for Delivery","Delivered"];
-      const s = String(status || "").toLowerCase();
-      let active = 0;
-      if (s.includes("deliver") && !s.includes("out for")) active = 4;
-      else if (s.includes("out for")) active = 3;
-      else if (s.includes("transit") || s.includes("arrived")) active = 2;
-      else if (s.includes("pick")) active = 1;
-      else if (s.includes("hold") || s.includes("stop order") || s.includes("customs")) active = 2;
 
-      return stages.map((stage,i) => `
-        <div class="status-step ${i < active ? "done" : ""} ${i === active ? "active" : ""}">${stage}</div>
+    // SHIPMENT PROGRESS
+    function progressHTML(status) {
+      const stages = [
+        "Registered",
+        "Picked Up",
+        "In Transit",
+        "Out for Delivery",
+        "Delivered"
+      ];
+
+      const s = String(status || "").toLowerCase();
+
+      const isHold =
+        s.includes("hold") ||
+        s.includes("stop order") ||
+        s.includes("customs");
+
+      // Do not show In Transit as the active status when
+      // the actual parcel status is a hold or stop order.
+      if (isHold) {
+        return `
+          ${stages.map(stage => `
+            <div class="status-step">${stage}</div>
+          `).join("")}
+
+          <div class="progress-hold">
+            Current shipment status: ${escapeHTML(status)}
+          </div>
+        `;
+      }
+
+      let active = 0;
+
+      if (s.includes("deliver") && !s.includes("out for")) {
+        active = 4;
+      } else if (s.includes("out for")) {
+        active = 3;
+      } else if (s.includes("transit") || s.includes("arrived")) {
+        active = 2;
+      } else if (s.includes("pick")) {
+        active = 1;
+      }
+
+      return stages.map((stage, i) => `
+        <div class="status-step ${
+          i < active ? "done" : ""
+        } ${
+          i === active ? "active" : ""
+        }">${stage}</div>
       `).join("");
     }
 
-    function detailCard(label,value,sub="") {
-      return `<div class="detail-card"><span class="label">${escapeHTML(label)}</span><span class="value">${escapeHTML(value || "Not provided")}</span>${sub ? `<span class="subvalue">${escapeHTML(sub)}</span>` : ""}</div>`;
+
+    // DETAIL CARD
+    function detailCard(label, value, sub="") {
+      return `
+        <div class="detail-card">
+          <span class="label">${escapeHTML(label)}</span>
+
+          <span class="value">
+            ${escapeHTML(value || "Not provided")}
+          </span>
+
+          ${
+            sub
+              ? `<span class="subvalue">${escapeHTML(sub)}</span>`
+              : ""
+          }
+        </div>
+      `;
     }
 
-    function personBlock(title,name,address,phone,email) {
+
+    // SENDER AND RECEIVER DETAILS
+    function personBlock(title, name, address, phone, email) {
       return `
         <div class="person-card">
+
           <h5>${escapeHTML(title)}</h5>
-          <p><strong>Name:</strong> ${escapeHTML(name || "Not provided")}</p>
-          <p><strong>Address:</strong> ${escapeHTML(address || "Not provided")}</p>
-          <p><strong>Phone:</strong> ${escapeHTML(phone || "Not provided")}</p>
-          ${email ? `<p><strong>Email:</strong> ${escapeHTML(email)}</p>` : ""}
-        </div>`;
+
+          <p>
+            <strong>Name:</strong>
+            ${escapeHTML(name || "Not provided")}
+          </p>
+
+          <p>
+            <strong>Address:</strong>
+            ${escapeHTML(address || "Not provided")}
+          </p>
+
+          <p>
+            <strong>Phone:</strong>
+            ${escapeHTML(phone || "Not provided")}
+          </p>
+
+          ${
+            email
+              ? `<p><strong>Email:</strong> ${escapeHTML(email)}</p>`
+              : ""
+          }
+
+        </div>
+      `;
     }
 
-    async function loadShipmentHistory(trackingNumber) {
-      // SELECT * allows the display to use a per-event status column if it
-      // exists, while remaining compatible with older history table layouts.
-      const {data,error} = await supabaseClient
+
+    // LOAD SHIPMENT JOURNEY
+    // The current parcel status is passed into this function.
+    async function loadShipmentHistory(
+      trackingNumber,
+      currentParcelStatus
+    ) {
+
+      const { data, error } = await supabaseClient
         .from("shipment_history")
         .select("*")
-        .eq("tracking_number",trackingNumber)
-        .order("update_date",{ascending:false});
+        .eq("tracking_number", trackingNumber)
+        .order("update_date", { ascending:false });
+
 
       if (error) {
-        console.error("Shipment history error:",error);
-        return `<section class="history-section"><div class="history-title"><h4>Shipment Journey</h4><span>TRACKING UPDATES</span></div><p class="history-empty">Shipment journey updates are temporarily unavailable. Please try again later.</p></section>`;
+        console.error("Shipment history error:", error);
+
+        return `
+          <section class="history-section">
+
+            <div class="history-title">
+              <h4>Shipment Journey</h4>
+              <span>TRACKING UPDATES</span>
+            </div>
+
+            <p class="history-empty">
+              Shipment journey updates are temporarily unavailable.
+              Please try again later.
+            </p>
+
+          </section>
+        `;
       }
+
 
       if (!data || data.length === 0) {
-        return `<section class="history-section"><div class="history-title"><h4>Shipment Journey</h4><span>TRACKING UPDATES</span></div><p class="history-empty">No shipment journey updates have been added yet.</p></section>`;
+        return `
+          <section class="history-section">
+
+            <div class="history-title">
+              <h4>Shipment Journey</h4>
+              <span>TRACKING UPDATES</span>
+            </div>
+
+            <p class="history-empty">
+              No shipment journey updates have been added yet.
+            </p>
+
+          </section>
+        `;
       }
 
-      const rows = data.map((item,index) => {
-        const eventStatus = item.status || item.activity || "Update";
+
+      const rows = data.map((item, index) => {
+
+        // Keep the recorded activity separate from the status.
+        const activity = item.activity || "Shipment update";
+
+        let eventStatus =
+          item.status ||
+          item.activity ||
+          "Update";
+
+
+        /*
+          IMPORTANT FIX:
+
+          The newest journey row uses the current parcel status
+          returned by the track_parcel RPC.
+
+          Example:
+          If the current parcel status is "On Hold", the latest
+          journey status will show "On Hold", not "In Transit".
+        */
+
+        if (index === 0 && currentParcelStatus) {
+          eventStatus = currentParcelStatus;
+        }
+
+
         const status = String(eventStatus);
+
         const cls = statusClass(status);
-        return `<tr class="${index === 0 ? "current-update" : ""}">
-          <td>${escapeHTML(dateTimeText(item.update_date || item.created_at))}</td>
-          <td><strong>${escapeHTML(item.activity || "Shipment update")}</strong>${item.details ? `<br>${escapeHTML(item.details)}` : ""}</td>
-          <td>${escapeHTML(item.location || "Not provided")}</td>
-          <td><span class="journey-status">${escapeHTML(status)}</span></td>
-        </tr>`;
+
+
+        return `
+          <tr class="${index === 0 ? "current-update" : ""}">
+
+            <td>
+              ${escapeHTML(
+                dateTimeText(item.update_date || item.created_at)
+              )}
+            </td>
+
+            <td>
+              <strong>${escapeHTML(activity)}</strong>
+
+              ${
+                item.details
+                  ? `<br>${escapeHTML(item.details)}`
+                  : ""
+              }
+            </td>
+
+            <td>
+              ${escapeHTML(item.location || "Not provided")}
+            </td>
+
+            <td>
+              <span class="journey-status ${cls}">
+                ${escapeHTML(status)}
+              </span>
+            </td>
+
+          </tr>
+        `;
       }).join("");
+
 
       return `
         <section class="history-section">
-          <div class="history-title"><h4>Shipment Journey</h4><span>TRACKING UPDATES</span></div>
-          <div class="history-table-wrapper">
-            <table class="history-table">
-              <thead><tr><th>DATE / TIME</th><th>ACTIVITY</th><th>LOCATION</th><th>STATUS</th></tr></thead>
-              <tbody>${rows}</tbody>
-            </table>
+
+          <div class="history-title">
+            <h4>Shipment Journey</h4>
+            <span>TRACKING UPDATES</span>
           </div>
-        </section>`;
+
+          <div class="history-table-wrapper">
+
+            <table class="history-table">
+
+              <thead>
+                <tr>
+                  <th>DATE / TIME</th>
+                  <th>ACTIVITY</th>
+                  <th>LOCATION</th>
+                  <th>STATUS</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                ${rows}
+              </tbody>
+
+            </table>
+
+          </div>
+
+        </section>
+      `;
     }
 
-    function renderParcel(parcel,historyHTML,trackingNumber) {
-      const status = parcel.status || "Status not yet updated";
-      const shipDateTime = parcel.ship_date || parcel.created_at || parcel.last_updated;
+
+    // DISPLAY PARCEL INFORMATION
+    function renderParcel(parcel, historyHTML, trackingNumber) {
+
+      const status =
+        parcel.status || "Status not yet updated";
+
+      const shipDateTime =
+        parcel.ship_date ||
+        parcel.created_at ||
+        parcel.last_updated;
+
       const estimated = parcel.estimated_delivery;
-      const statusIsDelivered = String(status).toLowerCase().includes("delivered") && !String(status).toLowerCase().includes("out for");
-      const statusLine = parcel.admin_note || "Your shipment information has been updated.";
-      const destination = parcel.destination || parcel.receiver_address || "Not provided";
+
+      const statusIsDelivered =
+        String(status).toLowerCase().includes("delivered") &&
+        !String(status).toLowerCase().includes("out for");
+
+      const statusLine =
+        parcel.admin_note ||
+        "Your shipment information has been updated.";
+
+      const destination =
+        parcel.destination ||
+        parcel.receiver_address ||
+        "Not provided";
+
       const result = $("tracking-result");
 
       result.className = "message success";
+
       result.innerHTML = `
+
         <div class="tracking-result-card">
-          <div class="result-heading"><span class="box-icon">▣</span> Parcel Information</div>
+
+          <div class="result-heading">
+            <span class="box-icon">▣</span>
+            Parcel Information
+          </div>
+
 
           <div class="result-main">
+
             <div class="tracking-number-card">
+
               <small>TRACKING NUMBER</small>
-              <strong>${escapeHTML(parcel.tracking_number || trackingNumber)}</strong>
+
+              <strong>
+                ${escapeHTML(parcel.tracking_number || trackingNumber)}
+              </strong>
+
             </div>
+
+
             <div class="status-hero">
-              <div class="status-check">${statusIsDelivered ? "✓" : "↗"}</div>
-              <div><strong>${escapeHTML(status)}</strong><small>${escapeHTML(statusLine)}</small></div>
-              <div class="status-date"><span>${statusIsDelivered ? "DELIVERED ON" : "ESTIMATED DELIVERY"}</span><strong>${escapeHTML(statusIsDelivered ? dateText(parcel.last_updated || shipDateTime) : dateText(estimated))}</strong></div>
+
+              <div class="status-check">
+                ${statusIsDelivered ? "✓" : "↗"}
+              </div>
+
+              <div>
+                <strong>${escapeHTML(status)}</strong>
+
+                <small>${escapeHTML(statusLine)}</small>
+              </div>
+
+              <div class="status-date">
+
+                <span>
+                  ${statusIsDelivered ? "DELIVERED ON" : "ESTIMATED DELIVERY"}
+                </span>
+
+                <strong>
+                  ${escapeHTML(
+                    statusIsDelivered
+                      ? dateText(parcel.last_updated || shipDateTime)
+                      : dateText(estimated)
+                  )}
+                </strong>
+
+              </div>
+
             </div>
+
           </div>
+
 
           <div class="detail-grid">
-            ${detailCard("Destination",destination)}
-            ${detailCard("Shipment Date",dateText(shipDateTime),shipDateTime ? dateTimeText(shipDateTime) : "")}
-            ${detailCard("Estimated Delivery",dateText(estimated))}
+
+            ${detailCard("Destination", destination)}
+
+            ${detailCard(
+              "Shipment Date",
+              dateText(shipDateTime),
+              shipDateTime ? dateTimeText(shipDateTime) : ""
+            )}
+
+            ${detailCard(
+              "Estimated Delivery",
+              dateText(estimated)
+            )}
+
           </div>
 
-          <section class="info-section">
-            <h4><span class="accent">Shipment</span> Sender &amp; Receiver Information</h4>
-            <div class="people-grid">
-              ${personBlock("SENDER / SHIPPER",parcel.sender_name,parcel.sender_address || parcel.pickup_address,parcel.sender_phone,parcel.sender_email)}
-              ${personBlock("RECEIVER / CONSIGNEE",parcel.receiver_name,parcel.receiver_address || parcel.delivery_address,parcel.receiver_phone,parcel.receiver_email)}
-            </div>
-          </section>
 
           <section class="info-section">
-            <h4><span class="accent">Shipment</span> Details</h4>
-            <div class="shipment-facts">
-              <div class="fact"><small>Description</small><strong>${escapeHTML(parcel.parcel_description || "Not provided")}</strong></div>
-              <div class="fact"><small>Service Type</small><strong>${escapeHTML(parcel.service_type || "Not provided")}</strong></div>
-              <div class="fact"><small>Reference Number</small><strong>${escapeHTML(parcel.reference_number || "Not provided")}</strong></div>
+
+            <h4>
+              <span class="accent">Shipment</span>
+              Sender &amp; Receiver Information
+            </h4>
+
+            <div class="people-grid">
+
+              ${personBlock(
+                "SENDER / SHIPPER",
+                parcel.sender_name,
+                parcel.sender_address || parcel.pickup_address,
+                parcel.sender_phone,
+                parcel.sender_email
+              )}
+
+              ${personBlock(
+                "RECEIVER / CONSIGNEE",
+                parcel.receiver_name,
+                parcel.receiver_address || parcel.delivery_address,
+                parcel.receiver_phone,
+                parcel.receiver_email
+              )}
+
             </div>
+
           </section>
+
+
+          <section class="info-section">
+
+            <h4>
+              <span class="accent">Shipment</span>
+              Details
+            </h4>
+
+            <div class="shipment-facts">
+
+              <div class="fact">
+                <small>Description</small>
+                <strong>
+                  ${escapeHTML(parcel.parcel_description || "Not provided")}
+                </strong>
+              </div>
+
+              <div class="fact">
+                <small>Service Type</small>
+                <strong>
+                  ${escapeHTML(parcel.service_type || "Not provided")}
+                </strong>
+              </div>
+
+              <div class="fact">
+                <small>Reference Number</small>
+                <strong>
+                  ${escapeHTML(parcel.reference_number || "Not provided")}
+                </strong>
+              </div>
+
+            </div>
+
+          </section>
+
 
           <div class="admin-note">
+
             <small>Latest Shipment Update</small>
-            <p>${escapeHTML(parcel.admin_note || "No additional shipment update has been provided yet.")}</p>
+
+            <p>
+              ${escapeHTML(
+                parcel.admin_note ||
+                "No additional shipment update has been provided yet."
+              )}
+            </p>
+
           </div>
+
 
           <div class="progress-wrap">
+
             <p class="progress-title">Shipment Progress</p>
-            <div class="status-progress" aria-label="Shipment progress">${progressHTML(status)}</div>
+
+            <div
+              class="status-progress"
+              aria-label="Shipment progress">
+
+              ${progressHTML(status)}
+
+            </div>
+
           </div>
 
+
           ${historyHTML}
-          <p class="result-footnote">Shipment details reflect information recorded in the TrustNova Express tracking system. Estimated delivery dates may change.</p>
-        </div>`;
+
+
+          <p class="result-footnote">
+            Shipment details reflect information recorded in the
+            TrustNova Express tracking system. Estimated delivery
+            dates may change.
+          </p>
+
+        </div>
+      `;
     }
 
-    $("tracking-form").addEventListener("submit",async(event)=>{
+
+    // CUSTOMER TRACKING FORM
+    $("tracking-form").addEventListener("submit", async (event) => {
+
       event.preventDefault();
-      const trackingNumber=$("tracking-number").value.trim();
-      if(!trackingNumber){showMessage("Please enter your tracking number.","error");return;}
 
-      const button=$("tracking-form").querySelector('button[type="submit"]');
-      button.disabled=true;
-      button.textContent="CHECKING...";
-      showMessage("Checking your tracking number...","info");
+      const trackingNumber =
+        $("tracking-number").value.trim();
 
-      try{
-        const {data,error}=await supabaseClient.rpc("track_parcel",{p_tracking_number:trackingNumber});
-        if(error){
-          console.error("Tracking error:",error);
-          showMessage("Tracking is temporarily unavailable. Please try again later.","error");
-          return;
-        }
-        const parcel=Array.isArray(data)?data[0]:data;
-        if(!parcel){
-          showMessage("No parcel was found. Please check your tracking number.","error");
-          return;
-        }
-        const historyHTML=await loadShipmentHistory(parcel.tracking_number || trackingNumber);
-        renderParcel(parcel,historyHTML,trackingNumber);
-      }catch(error){
-        console.error("Unexpected tracking error:",error);
-        showMessage("Something went wrong. Please try again.","error");
-      }finally{
-        button.disabled=false;
-        button.textContent="TRACK PACKAGE";
+      if (!trackingNumber) {
+        showMessage(
+          "Please enter your tracking number.",
+          "error"
+        );
+        return;
       }
+
+
+      const button =
+        $("tracking-form").querySelector('button[type="submit"]');
+
+      button.disabled = true;
+
+      button.textContent = "CHECKING...";
+
+      showMessage(
+        "Checking your tracking number...",
+        "info"
+      );
+
+
+      try {
+
+        // Get parcel information from Supabase.
+        const { data, error } = await supabaseClient.rpc(
+          "track_parcel",
+          {
+            p_tracking_number: trackingNumber
+          }
+        );
+
+
+        if (error) {
+          console.error("Tracking error:", error);
+
+          showMessage(
+            "Tracking is temporarily unavailable. Please try again later.",
+            "error"
+          );
+
+          return;
+        }
+
+
+        const parcel = Array.isArray(data) ? data[0] : data;
+
+
+        if (!parcel) {
+          showMessage(
+            "No parcel was found. Please check your tracking number.",
+            "error"
+          );
+
+          return;
+        }
+
+
+        /*
+          Pass the parcel's current status to the history function.
+          This ensures the latest journey status matches the actual
+          current parcel status returned by Supabase.
+        */
+
+        const historyHTML = await loadShipmentHistory(
+          parcel.tracking_number || trackingNumber,
+          parcel.status
+        );
+
+
+        renderParcel(
+          parcel,
+          historyHTML,
+          trackingNumber
+        );
+
+
+      } catch (error) {
+
+        console.error("Unexpected tracking error:", error);
+
+        showMessage(
+          "Something went wrong. Please try again.",
+          "error"
+        );
+
+      } finally {
+
+        button.disabled = false;
+
+        button.textContent = "TRACK PACKAGE";
+
+      }
+
     });
 
-    function googleTranslateElementInit(){
+
+    // GOOGLE TRANSLATE
+    function googleTranslateElementInit() {
+
       new google.translate.TranslateElement({
+
         pageLanguage:"en",
-        includedLanguages:"en,fr,de,es,pt,it,nl,pl,ru,tr,ar,zh-CN,ja,ko,hi,ha,yo,ig,sw",
+
+        includedLanguages:
+          "en,fr,de,es,pt,it,nl,pl,ru,tr,ar,zh-CN,ja,ko,hi,ha,yo,ig,sw",
+
         autoDisplay:false,
-        layout:google.translate.TranslateElement.InlineLayout.SIMPLE
-      },"google_translate_element");
+
+        layout:
+          google.translate.TranslateElement.InlineLayout.SIMPLE
+
+      }, "google_translate_element");
+
     }
-    const translateScript=document.createElement("script");
-    translateScript.src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
-    translateScript.async=true;
+
+
+    const translateScript = document.createElement("script");
+
+    translateScript.src =
+      "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+
+    translateScript.async = true;
+
     document.body.appendChild(translateScript);
+
   </script>
+
 </body>
 </html>
